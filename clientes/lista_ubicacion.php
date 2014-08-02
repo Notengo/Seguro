@@ -13,7 +13,7 @@ if (isset($_GET['getLocalidadByLetters']) && isset($_GET['letters'])) {
     while ($inf = mysql_fetch_array($resultado)) {
         $cod = $inf["idlocalidades"];
         if ($inf['localidad'] <> null) {
-            $nombre = htmlentities($inf["localidad"]);
+            $nombre = utf8_encode($inf["localidad"]);
             echo $cod . "###" . $nombre . "|";
         } /*$cod . " " . */
     }

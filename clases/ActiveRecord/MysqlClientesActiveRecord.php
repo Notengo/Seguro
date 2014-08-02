@@ -61,7 +61,7 @@ class MysqlClientesActiveRecord implements ActiveRecord{
         }
         $resultado = mysql_query($sql) or die(false);
         if($resultado){
-            $fila = mysql_fetch_object(resultado);
+            $fila = mysql_fetch_object($resultado);
             $oValueObject->set_altura($fila->altura) ;
             $oValueObject->set_apellido($fila->apellido) ;
             $oValueObject->set_cc1($fila->cc1) ;
@@ -86,12 +86,13 @@ class MysqlClientesActiveRecord implements ActiveRecord{
     }
 
     public function buscarTodo() {
-        $sql = "SELECT * FROM clientes WHERE idclientes = " . $oValueObject->get_idclientes() . ";" ;
+//        $sql = "SELECT * FROM clientes WHERE idclientes = " . $oValueObject->get_idclientes() . ";" ;
+        $sql = "SELECT * FROM clientes;" ;
         $resultado = mysql_query($sql) or die(false);
         if($resultado){
             $aClientes = array();
-            while ($fila = mysql_fetch_object(resultado)) {
-                $oValueObject = new ClientesActiveRecord();
+            while ($fila = mysql_fetch_object($resultado)) {
+                $oValueObject = new ClientesValueObject();
                 $oValueObject->set_altura($fila->altura) ;
                 $oValueObject->set_apellido($fila->apellido) ;
                 $oValueObject->set_cc1($fila->cc1) ;
@@ -112,7 +113,7 @@ class MysqlClientesActiveRecord implements ActiveRecord{
                 $aClientes[] = $oValueObject;
                 unset($oValueObject);
             }
-            return $oValueObject;
+            return $aClientes;
         } else {
             return FALSE;
         }

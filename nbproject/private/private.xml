@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/BaucherSeguro/clientes/js/funciones.js</file>
-            <file>file:/C:/xampp/htdocs/BaucherSeguro/clientes/index.php</file>
-            <file>file:/C:/xampp/htdocs/BaucherSeguro/clientes/lista_ubicacion.php</file>
-            <file>file:/C:/xampp/htdocs/BaucherSeguro/clases/ActiveRecord/MysqlClientesActiveRecord.php</file>
-            <file>file:/C:/xampp/htdocs/BaucherSeguro/clientes/js/ajax-dynamic-list.js</file>
-            <file>file:/C:/xampp/htdocs/BaucherSeguro/clientes/guardarCliente.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlClientesActiveRecord.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clientes/js/funciones.js</file>
+            <file>file:/C:/xampp/htdocs/seguro/clientes/buscarTodos.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clientes/buscarCliente.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clientes/index.php</file>
         </group>
     </open-files>
 </project-private>

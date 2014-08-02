@@ -137,42 +137,17 @@ $oMysql->conectar();
                 </div>
                 
                 <div class="form-group">
-                    <div class="col-lg-3"></div>
                     <div class="col-lg-3">
                         <input type="button" id="guardar" value="Guardar" class="btn btn-large btn-block btn-primary" onclick="guardarCliente()" />
                     </div>
                     <div class="col-lg-3">
-                        <input type="button" id="guardar" value="Eliminar" class="btn btn-large btn-block btn-danger" onclick="EliminarCliente()" />
+                        <input type="button" id="eliminar" value="Eliminar" class="btn btn-large btn-block btn-danger oculto" onclick="EliminarCliente()" />
                     </div>
-                </div>
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6" id="divResultado"></div>
+                    <div class="col-lg-6" id="divResultado"></div>
             </form>
             <legend>Listado</legend>
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                    <tr class="success">
-                        <th>Id</th>
-                        <th>Item</th>
-                        <th>Apellido y nombre</th>
-                        <th>Documento</th>
-                        <th>Acciones</th>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>P</td>
-                        <td>Vergara, Leonardo Javier</td>
-                        <td>11122233</td>
-                        <td>iconos</td>
-                    </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>P</td>
-                        <td>Remedi, Rolando Martin</td>
-                        <td>33344455</td>
-                        <td>iconos</td>
-                    </tr>
-                </table>
+            <div class="table-responsive" id="listadoCliente">
+                <?php include 'buscarTodos.php'; ?>
             </div>
         </div>
         <div id="div_listar"></div>
