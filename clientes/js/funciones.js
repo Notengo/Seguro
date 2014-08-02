@@ -299,3 +299,45 @@ function soloNumeros(evt){
         return false;
     }
 }
+function ver(idclientes, accion){
+    if(accion === 'b'){
+        document.getElementById("guardar").value = "Cancelar";
+        document.getElementById("eliminar").className = "btn btn-large btn-block btn-danger";
+    }
+    if(accion === 'e'){
+        document.getElementById("guardar").value = "Actualizar";
+    }
+    var divResultado = document.getElementById('divResultado');
+    
+    ajax=objetoAjax();
+    ajax.open("POST", "buscarCliente.php" ,true);
+    ajax.onreadystatechange=function() {
+        if (ajax.readyState === 1) {
+//            divResultado.innerHTML= '<img src="../images/cargando.gif"><br/>Guardando los datos...';
+        } else if (ajax.readyState === 4) {
+            divResultado.innerHTML = ajax.responseText;
+            document.getElementById('apellido').value = document.getElementById('cliente01').value;
+            document.getElementById('nombre').value = document.getElementById('cliente02').value;
+            document.getElementById('nacimiento').value = document.getElementById('cliente03').value;
+            document.getElementById('tipodoc').value = document.getElementById('cliente04').value;
+            document.getElementById('documento').value = document.getElementById('cliente05').value;
+            document.getElementById('cuit').value = document.getElementById('cliente06').value;
+            document.getElementById('condicionfiscal').value = document.getElementById('cliente07').value;
+            document.getElementById('cp').value = document.getElementById('cliente08').value;
+            document.getElementById('localidad').value = document.getElementById('cliente09').value;
+            document.getElementById('localidad_hidden').value = document.getElementById('cliente09').value;
+            document.getElementById('barrio').value = document.getElementById('cliente10').value;
+            document.getElementById('barrio_hidden').value = document.getElementById('cliente10').value;
+            document.getElementById('calle').value = document.getElementById('cliente11').value;
+            document.getElementById('numero').value = document.getElementById('cliente12').value;
+            document.getElementById('piso').value = document.getElementById('cliente13').value;
+            document.getElementById('dpto').value = document.getElementById('cliente14').value;
+//            document.getElementById('telefono').value = document.getElementById('clientes1').value;
+//            document.getElementById('celular').value = document.getElementById('clientes1').value;
+            document.getElementById('correo').value = document.getElementById('cliente15').value;
+            window.scroll(0,0);
+        }
+    };
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    ajax.send("idclientes="+idclientes);
+}
