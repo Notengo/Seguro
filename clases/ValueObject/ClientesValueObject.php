@@ -6,7 +6,7 @@
  */
 class ClientesValueObject {
     private $_idclientes, $_apellido, $_nombre, $_idtipodocumentos, $_documento;
-    private $_idcondfiscales, $_cc1, $_cc2, $_idcalles, $_altura, $_piso, $_dpto;
+    private $_idcondfiscales, $_cc, $_idcalles, $_altura, $_piso, $_dpto;
     private $_idbarrios, $_idlocalidad, $_cp, $_email, $_fechanacimiento;
 
     public function get_idclientes() {
@@ -33,12 +33,8 @@ class ClientesValueObject {
         return $this->_idcondfiscales;
     }
 
-    public function get_cc1() {
-        return $this->_cc1;
-    }
-
-    public function get_cc2() {
-        return $this->_cc2;
+    public function get_cc() {
+        return $this->_cc;
     }
 
     public function get_idcalles() {
@@ -101,12 +97,8 @@ class ClientesValueObject {
         $this->_idcondfiscales = $_idcondfiscales;
     }
 
-    public function set_cc1($_cc1) {
-        $this->_cc1 = $_cc1;
-    }
-
-    public function set_cc2($_cc2) {
-        $this->_cc2 = $_cc2;
+    public function set_cc($_cc) {
+        $this->_cc = $_cc;
     }
 
     public function set_idcalles($_idcalles) {

@@ -105,7 +105,8 @@ class MysqlTelefonosActiveRecord implements ActiveRecord{
         $sql = "INSERT INTO telefonos (idclientes, numero) VALUES ("
                 . $oValueObject->get_idclientes() . ", '"
                 . $oValueObject->get_numero() . "');";
-        $resultado = mysql_query($sql) or die(false);
+//        $resultado = mysql_query($sql) or die('false');
+        $resultado = mysql_query($sql);
         if($resultado){return TRUE;}
         else {return FALSE;}
     }
