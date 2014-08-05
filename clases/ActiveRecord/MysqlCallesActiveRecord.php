@@ -8,11 +8,16 @@ include_once '../clases/ValueObject/CallesValueObject.php';
  * @author Martin
  */
 class MysqlCallesActiveRecord implements ActiveRecord{
+    /**
+     * 
+     * @param CallesValueObject $oValueObject
+     * @return boolean
+     */
     public function actualizar($oValueObject) {
         $sql = "UPDATE calles SET nombre = '"
-                . $oValueObject->get_nombre() ."' "
+                . $oValueObject->getNombre() ."' "
                 . "WHERE idcalles = "
-                . $oValueObject->get_idcalles() . ";";
+                . $oValueObject->getIdcalles() . ";";
         if (mysql_query($sql)) {
             return TRUE;
         } else {
@@ -31,11 +36,32 @@ class MysqlCallesActiveRecord implements ActiveRecord{
      */
     public function buscar($oValueObject) {
         $sql = "SELECT * FROM calles WHERE idcalles = "
-                . $oValueObject->get_idcalles() . ";";
+                . $oValueObject->getIdcalles() . ";";
         $resultado = mysql_query($sql) or die(false);
         if($resultado){
             $fila = mysql_fetch_object($resultado);
-            $oValueObject->set_nombre($fila->nombre);
+            $oValueObject->setNombre($fila->nombre);
+        } else {
+            return FALSE;
+        }
+    }
+    
+    /**
+     * Busca el id de la calle, se necesita que se le pase el nombre de la calle.
+     * @param CallesValueObject $oValueObject
+     * @return boolean
+     */
+    public function buscarPorNombre($oValueObject) {
+        $sql = "SELECT * FROM calles WHERE nombre = '"
+                . $oValueObject->getNombre() . "';";
+//        echo $sql;
+//        $resultado = mysql_query($sql) or die(false);
+        $resultado = mysql_query($sql);
+        if($resultado){
+            $fila = mysql_fetch_object($resultado);
+            $oValueObject->setNombre($fila->nombre);
+            $oValueObject->setIdcalles($fila->idcalles);
+            return $oValueObject;
         } else {
             return FALSE;
         }
@@ -52,8 +78,8 @@ class MysqlCallesActiveRecord implements ActiveRecord{
         if($resultado){
             while ($fila = mysql_fetch_object($resultado)) {
                 $oValueObject = new CallesValueObject();
-                $oValueObject->set_idcalles($fila->idcalles);
-                $oValueObject->set_nombre($fila->nombre);
+                $oValueObject->setIdcalles($fila->idcalles);
+                $oValueObject->setNombre($fila->nombre);
                 $aCalles[] = $oValueObject;
                 unset($oValueObject);
             }
@@ -66,9 +92,21 @@ class MysqlCallesActiveRecord implements ActiveRecord{
     public function contar() {
         
     }
-
+    
+    /**
+     * 
+     * @param CallesValueObject $oValueObject
+     * @return boolean
+     */
     public function existe($oValueObject) {
-        
+        $sql = "SELECT COUNT(*) FROM calles WHERE nombre = '" . $oValueObject->getNombre() . "';";
+        $resultado = mysql_query($sql);
+        $resultado = mysql_fetch_array($resultado);
+        if($resultado[0] > 0){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
     /**
@@ -77,9 +115,13 @@ class MysqlCallesActiveRecord implements ActiveRecord{
      * @return boolean
      */
     public function guardar($oValueObject) {
-        $sql = "INSERT INTO calles (nombre) VALUES ('"
-                . $oValueObject->get_nombre() ."');";
+        $sql = "INSERT INTO calles (nombre) VALUES ('" . $oValueObject->getNombre() ."');";
         if (mysql_query($sql) or die(false)) {
+            $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM calles");
+            $id = mysql_fetch_array($result);
+            if($id[0]<>0) {
+                $oValueObject->setIdcalles($id[0]);
+            }
             return TRUE;
         } else {
             return FALSE;

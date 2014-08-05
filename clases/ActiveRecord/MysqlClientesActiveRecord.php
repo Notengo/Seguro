@@ -20,8 +20,7 @@ class MysqlClientesActiveRecord implements ActiveRecord{
                 . "', idtipodocumentos = " . $oValueObject->get_idtipodocumentos()
                 . ", documento = " . $oValueObject->get_documento()
                 . ", idcondfiscales = " . $oValueObject->get_idcondfiscales()
-                . ", cc1 = " . $oValueObject->get_cc1()
-                . ", cc2 = " . $oValueObject->get_cc2()
+                . ", cc = " . $oValueObject->get_cc()
                 . ", idcalles = " . $oValueObject->get_idcalles()
                 . ", altura = " . $oValueObject->get_altura()
                 . ", piso = " . $oValueObject->get_piso()
@@ -64,8 +63,7 @@ class MysqlClientesActiveRecord implements ActiveRecord{
             $fila = mysql_fetch_object($resultado);
             $oValueObject->set_altura($fila->altura) ;
             $oValueObject->set_apellido($fila->apellido) ;
-            $oValueObject->set_cc1($fila->cc1) ;
-            $oValueObject->set_cc2($fila->cc2) ;
+            $oValueObject->set_cc($fila->cc) ;
             $oValueObject->set_cp($fila->cp) ;
             $oValueObject->set_documento($fila->documento) ;
             $oValueObject->set_dpto($fila->dpto) ;
@@ -95,8 +93,7 @@ class MysqlClientesActiveRecord implements ActiveRecord{
                 $oValueObject = new ClientesValueObject();
                 $oValueObject->set_altura($fila->altura) ;
                 $oValueObject->set_apellido($fila->apellido) ;
-                $oValueObject->set_cc1($fila->cc1) ;
-                $oValueObject->set_cc2($fila->cc2) ;
+                $oValueObject->set_cc($fila->cc);
                 $oValueObject->set_cp($fila->cp) ;
                 $oValueObject->set_documento($fila->documento) ;
                 $oValueObject->set_dpto($fila->dpto) ;
@@ -134,21 +131,24 @@ class MysqlClientesActiveRecord implements ActiveRecord{
      */
     public function guardar($oValueObject) {
         $sql = "INSERT INTO clientes (apellido, nombre, idtipodocumentos, "
-                . "documento, idcondfiscales, cc1, cc2, idcalles, altura, piso, "
+                . "documento, idcondfiscales, cc, idcalles, altura, piso, "
                 . "dpto, idbarrios, idlocalidad, cp, email, fechanacimiento) "
                 . "VALUES ('"
                 . $oValueObject->get_apellido() . "', '" . $oValueObject->get_nombre() . "', "
-                . $oValueObject->get_idtipodocumentos() . ", " 
-                . $oValueObject->get_documento() . ", " . $oValueObject->get_idcondfiscales() . ", "
-                . "NULL, NULL, "
-//                . $oValueObject->get_cc1() . ", " . $oValueObject->get_cc2() . ", "
-                . "1, " . $oValueObject->get_altura() . ", NULL"
-//                . $oValueObject->get_idcalles() . "', " . $oValueObject->get_altura() . ", '"
-                . $oValueObject->get_piso() . ", '" . $oValueObject->get_dpto() . "', "
+                . $oValueObject->get_idtipodocumentos() . ", " . $oValueObject->get_documento() . ", " 
+                . $oValueObject->get_idcondfiscales() . ", '" . $oValueObject->get_cc() . "', "
+                . $oValueObject->get_idcalles() . ", " . $oValueObject->get_altura(). ", ";
+        if($oValueObject->get_piso()){
+            $sql .= $oValueObject->get_piso() . ", '";
+        } else {
+            $sql .= "NULL, '";
+        } 
+        $sql .= $oValueObject->get_dpto() . "', "
                 . $oValueObject->get_idbarrios() . ", " . $oValueObject->get_idlocalidad() . ", '"
                 . $oValueObject->get_cp() . "', '" . $oValueObject->get_email() . "', '"
                 . $oValueObject->get_fechanacimiento() . "');";
-        if (mysql_query($sql) or die(false)) {
+//        if (mysql_query($sql) or die(false)) {
+        if (mysql_query($sql)) {
             return TRUE;
         } else {
             return FALSE;

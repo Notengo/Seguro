@@ -16,6 +16,7 @@ $localidad_hidden = $_POST['localidad_hidden'];
 $barrio = $_POST['barrio'];
 $barrio_hidden = $_POST['barrio_hidden'];
 $calle = $_POST['calle'];
+$calle_hidden = $_POST['calle_hidden'];
 $numero = $_POST['numero'];
 $piso = $_POST['piso'];
 $dpto = $_POST['dpto'];
@@ -30,9 +31,7 @@ $oCliente->set_nombre($nombre);
 $oCliente->set_fechanacimiento($nacimiento);
 $oCliente->set_idtipodocumentos($tipodoc);
 $oCliente->set_documento($documento);
-$oCliente->set_cc1($cuit);
-//$oCliente->set_cc1($_cc1);
-//$oCliente->set_cc2($_cc2);
+$oCliente->set_cc($cuit);
 //$oCliente->set_idcondfiscales($condicionfiscal);
 $oCliente->set_idcondfiscales(1);
 $oCliente->set_cp($cp);
@@ -44,11 +43,51 @@ $oCliente->set_piso($piso);
 $oCliente->set_dpto($dpto);
 $oCliente->set_email($correo);
 
+/* Veo si existe la calle para buscar su id o almacenarla. */
+$oMysqlCalle = $oMysql->getCallesActiveRecord();
+$oCalle = new CallesValueObject();
+$oCalle->setNombre($calle);
+
+if($oMysqlCalle->existe($oCalle) > 0){
+    $oCallePrueba = $oMysqlCalle->buscarPorNombre($oCalle);
+    $oCliente->set_idcalles($oCallePrueba->getIdcalles());
+} else {
+    $oMysqlCalle->guardar($oCalle);
+    $oCliente->set_idcalles($oCalle->getIdcalles());
+}
+/* Fin de buscar la calle. */
 $error = 0;
 /* Grabacion del cliente. */
-if(!$oMysqlCliente->guardar($oCliente)){
-    $error = 1;
+if ($_POST['accion'] == 'Guardar'){
+    if(!$oMysqlCliente->guardar($oCliente)){
+        $error = 1;
+    }
+    /* Comienzo Almacenamiento de los telefonos. */
+    $oMysqlTel = $oMysql->getTelefonosActiveRecord();
+    $oTelefono = new TelefonosValueObject();
+    if($telefono != ''){
+        $oTelefono->set_idclientes($oCliente->get_idclientes());
+        $oTelefono->set_numero($telefono);
+        if($oMysqlTel->guardar($oTelefono)){
+            $error = 3;
+        }
+    }
+    if($celular != ''){
+        $oTelefono->set_idclientes($oCliente->get_idclientes());
+        $oTelefono->set_numero($celular);
+        if($oMysqlTel->guardar($oTelefono)){
+            $error = 4;
+        }
+    }
+    /* Fin Almacenamiento de los telefonos. */
+} else {
+    if(!$oMysqlCliente->actualizar($oCliente)){
+        $error = 2;
+    }
 }
+echo $error;
+
+//$error = 1;
 
 if($error == 0){
     mysql_query("COMMIT;");

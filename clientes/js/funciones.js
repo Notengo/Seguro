@@ -16,6 +16,11 @@ function objetoAjax(){
 }
 
 function guardarCliente(){
+    if(document.getElementById("guardar").value === "Cancelar" || document.getElementById("guardar").value === "Aceptar"){
+        windows.reload();
+    } else {
+        var accion = document.getElementById("guardar").value;
+    }
     var apellido = document.getElementById('apellido').value;
     var nombre = document.getElementById('nombre').value;
     var nacimiento = document.getElementById('nacimiento').value;
@@ -29,6 +34,7 @@ function guardarCliente(){
     var barrio = document.getElementById('barrio').value;
     var barrio_hidden = document.getElementById('barrio_hidden').value;
     var calle = document.getElementById('calle').value;
+    var calle_hidden = document.getElementById('calle_hidden').value;
     var numero = document.getElementById('numero').value;
     var piso = document.getElementById('piso').value;
     var dpto = document.getElementById('dpto').value;
@@ -45,28 +51,22 @@ function guardarCliente(){
 //            divResultado.innerHTML= '<img src="../images/cargando.gif"><br/>Guardando los datos...';
         } else if (ajax.readyState === 4) {
             divResultado.innerHTML = ajax.responseText;
+            document.getElementById("guardar").value = "Aceptar";
         }
     };
     ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 
-//    alert("apellido="+apellido+"&nombre="+nombre
-//        +"&nacimiento="+nacimiento+"&tipodoc="+tipodoc
-//        +"&documento="+documento+"&cuit="+cuit
-//        +"&condicionfiscal="+condicionfiscal+"&cp="+cp
-//        +"&localidad="+localidad+"&localidad_hidden="+localidad_hidden
-//        +"&barrio="+barrio+"&barrio_hidden="+barrio_hidden
-//        +"&calle="+calle+"&numero="+numero
-//        +"&piso="+piso+"&dpto="+dpto
-//        +"&telefono="+telefono+"&celular="+celular+"&correo="+correo);
     ajax.send("apellido="+apellido+"&nombre="+nombre
         +"&nacimiento="+nacimiento+"&tipodoc="+tipodoc
         +"&documento="+documento+"&cuit="+cuit
         +"&condicionfiscal="+condicionfiscal+"&cp="+cp
         +"&localidad="+localidad+"&localidad_hidden="+localidad_hidden
         +"&barrio="+barrio+"&barrio_hidden="+barrio_hidden
-        +"&calle="+calle+"&numero="+numero
+        +"&calle="+calle+"&calle_hidden="+calle_hidden
+        +"&numero="+numero
         +"&piso="+piso+"&dpto="+dpto
-        +"&telefono="+telefono+"&celular="+celular+"&correo="+correo);
+        +"&telefono="+telefono+"&celular="+celular
+        +"&correo="+correo+"&accion="+accion);
 }
 
 function guardarDatos(){
