@@ -16,11 +16,18 @@ function objetoAjax(){
 }
 
 function guardarCliente(){
-    if(document.getElementById("guardar").value === "Cancelar" || document.getElementById("guardar").value === "Aceptar"){
-        windows.reload();
+//    if(document.getElementById("guardar").value === "Cancelar" || document.getElementById("guardar").value === "Aceptar"){
+    var cliente = '';
+    if(document.getElementById("guardar").value === "Eliminar" || document.getElementById("guardar").value === "Actualizar"){
+        cliente = document.getElementById('cliente').value;
+    }
+    if(document.getElementById("guardar").value === "Aceptar"){
+        location.reload();
+        return false;
     } else {
         var accion = document.getElementById("guardar").value;
     }
+
     var apellido = document.getElementById('apellido').value;
     var nombre = document.getElementById('nombre').value;
     var nacimiento = document.getElementById('nacimiento').value;
@@ -66,111 +73,111 @@ function guardarCliente(){
         +"&numero="+numero
         +"&piso="+piso+"&dpto="+dpto
         +"&telefono="+telefono+"&celular="+celular
-        +"&correo="+correo+"&accion="+accion);
+        +"&correo="+correo+"&accion="+accion+"&cliente="+cliente);
 }
 
-function guardarDatos(){
-//    alert ('Tincho');
-    var archivo = document.getElementById('archivo');
-    archivo = archivo.files[0];
-    
-    var identificador = document.getElementById('identificador').value;
-    var denominacion = document.getElementById('denominacion').value;
-    var ubicacion  = document.getElementById('ubicacion').value;
-    var comitente = document.getElementById('comitente').value;
-    var tipoobra = document.getElementById('tipoobra').value;
-    var observacion = document.getElementById('observacion').value;
-    var longitud = document.getElementById('longitud').value;
-    var terraplen = document.getElementById('terraplen').value;
-    var basenobitu = document.getElementById('basenobitu').value;
-    var banquina = document.getElementById('banquina').value;
-    var tratatriple = document.getElementById('tratatriple').value;
-    var hormigon = document.getElementById('hormigon').value;
-    var recubrimiento = document.getElementById('recubrimiento').value;
-    var reforestacion = document.getElementById('reforestacion').value;
-    
-    var fechalic = document.getElementById('fechalic').value;
-    var montoco = document.getElementById('montoco').value;
-    var replanteo = document.getElementById('replanteo').value;
-    var financiada = document.getElementById('financiada').value;
-    var fechato = document.getElementById('fechato').value;
-    var fechacont = document.getElementById('fechacont').value;
-    var montocf = document.getElementById('montocf').value;
-    var plazocf = document.getElementById('plazocf').value;
-    var participacion = document.getElementById('participacion').value;
-    var fechatf = document.getElementById('fechatf').value;
-    var personeria = document.getElementById('personeria').value;
-    var ute = document.getElementById('ute').value;
-    var fechainicio = document.getElementById('fechainicio').value;
-    var comentarios = document.getElementById('comentarios').value;
-    
-    divResultado = document.getElementById('resultado');
-    
-    fechalic = fechaInvertir(fechalic);
-    replanteo = fechaInvertir(replanteo);
-    fechato = fechaInvertir(fechato);
-    fechacont = fechaInvertir(fechacont);
-    plazocf = fechaInvertir(plazocf);
-    fechatf = fechaInvertir(fechatf);
-    fechainicio = fechaInvertir(fechainicio);
-    
-    var limit = 1048576*2,xhr;
-    console.log(limit);
-    if( archivo ){
-        if( archivo.size < limit ){
-            xhr = new XMLHttpRequest();
-            xhr.upload.addEventListener('load',function(e){
-                ajax=objetoAjax();
-                //usando del medoto POST
-                //archivo que realizará la operacion
-                ajax.open("POST", "guardarObra.php" ,true);
-                ajax.onreadystatechange=function() {
-                    if (ajax.readyState==1) {
-                        divResultado.innerHTML= '<center><img src="../images/cargando.gif"><br/>Guardando los datos...</center>';
-                    } else if (ajax.readyState==4) {
-                        //mostrar los nuevos registros en esta capa
-                        divResultado.innerHTML = ajax.responseText;
-                        document.getElementById('idOdontologia').value = document.getElementById('idOdontologiaAuxiliar').value;
-                    }
-                }
-                //muy importante este encabezado ya que hacemos uso de un formulario
-                ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-                //enviando los valores
-                ajax.send("identificador="+identificador+"&denominacion="+denominacion
-                        +"&ubicacion="+ubicacion+"&comitente="+comitente+"&tipoobra="+tipoobra
-                        +"&observacion="+observacion+"&longitud="+longitud+"&terraplen="+terraplen
-                        +"&basenobitu="+basenobitu+"&banquina="+banquina
-                        +"&tratatriple="+tratatriple+"&hormigon="+hormigon
-                        +"&recubrimiento="+recubrimiento+"&reforestacion="+reforestacion
-                        +"&fechalic="+fechalic+"&montoco="+montoco
-                        +"&replanteo="+replanteo
-                        +"&financiada="+financiada
-                        +"&fechato="+fechato
-                        +"&fechacont="+fechacont
-                        +"&fechainicio="+fechainicio
-                        +"&montocf="+montocf
-                        +"&plazocf="+plazocf
-                        +"&participacion="+participacion
-                        +"&fechatf="+fechatf
-                        +"&personeria="+personeria
-                        +"&comentarios="+comentarios
-                        +"&ute="+ute
-                        +"&kml="+archivo.name);
-                }, false);
-            xhr.upload.addEventListener('error',function(e){
-                divResultado.innerHTML = "<h1>Ocurrio Un Error</h1>";
-            }, false);
-            xhr.open('POST','subirArchivo.php');
-            xhr.setRequestHeader("Cache-Control", "no-cache");
-            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-            xhr.setRequestHeader("X-File-Name", archivo.name);
-            xhr.send(archivo);
-        } else {
-            alert('El archivo es mayor que 2MB!');
-        }
-    }
-    return true;
-}
+//function guardarDatos(){
+////    alert ('Tincho');
+//    var archivo = document.getElementById('archivo');
+//    archivo = archivo.files[0];
+//    
+//    var identificador = document.getElementById('identificador').value;
+//    var denominacion = document.getElementById('denominacion').value;
+//    var ubicacion  = document.getElementById('ubicacion').value;
+//    var comitente = document.getElementById('comitente').value;
+//    var tipoobra = document.getElementById('tipoobra').value;
+//    var observacion = document.getElementById('observacion').value;
+//    var longitud = document.getElementById('longitud').value;
+//    var terraplen = document.getElementById('terraplen').value;
+//    var basenobitu = document.getElementById('basenobitu').value;
+//    var banquina = document.getElementById('banquina').value;
+//    var tratatriple = document.getElementById('tratatriple').value;
+//    var hormigon = document.getElementById('hormigon').value;
+//    var recubrimiento = document.getElementById('recubrimiento').value;
+//    var reforestacion = document.getElementById('reforestacion').value;
+//    
+//    var fechalic = document.getElementById('fechalic').value;
+//    var montoco = document.getElementById('montoco').value;
+//    var replanteo = document.getElementById('replanteo').value;
+//    var financiada = document.getElementById('financiada').value;
+//    var fechato = document.getElementById('fechato').value;
+//    var fechacont = document.getElementById('fechacont').value;
+//    var montocf = document.getElementById('montocf').value;
+//    var plazocf = document.getElementById('plazocf').value;
+//    var participacion = document.getElementById('participacion').value;
+//    var fechatf = document.getElementById('fechatf').value;
+//    var personeria = document.getElementById('personeria').value;
+//    var ute = document.getElementById('ute').value;
+//    var fechainicio = document.getElementById('fechainicio').value;
+//    var comentarios = document.getElementById('comentarios').value;
+//    
+//    divResultado = document.getElementById('resultado');
+//    
+//    fechalic = fechaInvertir(fechalic);
+//    replanteo = fechaInvertir(replanteo);
+//    fechato = fechaInvertir(fechato);
+//    fechacont = fechaInvertir(fechacont);
+//    plazocf = fechaInvertir(plazocf);
+//    fechatf = fechaInvertir(fechatf);
+//    fechainicio = fechaInvertir(fechainicio);
+//    
+//    var limit = 1048576*2,xhr;
+//    console.log(limit);
+//    if( archivo ){
+//        if( archivo.size < limit ){
+//            xhr = new XMLHttpRequest();
+//            xhr.upload.addEventListener('load',function(e){
+//                ajax=objetoAjax();
+//                //usando del medoto POST
+//                //archivo que realizará la operacion
+//                ajax.open("POST", "guardarObra.php" ,true);
+//                ajax.onreadystatechange=function() {
+//                    if (ajax.readyState==1) {
+//                        divResultado.innerHTML= '<center><img src="../images/cargando.gif"><br/>Guardando los datos...</center>';
+//                    } else if (ajax.readyState==4) {
+//                        //mostrar los nuevos registros en esta capa
+//                        divResultado.innerHTML = ajax.responseText;
+//                        document.getElementById('idOdontologia').value = document.getElementById('idOdontologiaAuxiliar').value;
+//                    }
+//                }
+//                //muy importante este encabezado ya que hacemos uso de un formulario
+//                ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+//                //enviando los valores
+//                ajax.send("identificador="+identificador+"&denominacion="+denominacion
+//                        +"&ubicacion="+ubicacion+"&comitente="+comitente+"&tipoobra="+tipoobra
+//                        +"&observacion="+observacion+"&longitud="+longitud+"&terraplen="+terraplen
+//                        +"&basenobitu="+basenobitu+"&banquina="+banquina
+//                        +"&tratatriple="+tratatriple+"&hormigon="+hormigon
+//                        +"&recubrimiento="+recubrimiento+"&reforestacion="+reforestacion
+//                        +"&fechalic="+fechalic+"&montoco="+montoco
+//                        +"&replanteo="+replanteo
+//                        +"&financiada="+financiada
+//                        +"&fechato="+fechato
+//                        +"&fechacont="+fechacont
+//                        +"&fechainicio="+fechainicio
+//                        +"&montocf="+montocf
+//                        +"&plazocf="+plazocf
+//                        +"&participacion="+participacion
+//                        +"&fechatf="+fechatf
+//                        +"&personeria="+personeria
+//                        +"&comentarios="+comentarios
+//                        +"&ute="+ute
+//                        +"&kml="+archivo.name);
+//                }, false);
+//            xhr.upload.addEventListener('error',function(e){
+//                divResultado.innerHTML = "<h1>Ocurrio Un Error</h1>";
+//            }, false);
+//            xhr.open('POST','subirArchivo.php');
+//            xhr.setRequestHeader("Cache-Control", "no-cache");
+//            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+//            xhr.setRequestHeader("X-File-Name", archivo.name);
+//            xhr.send(archivo);
+//        } else {
+//            alert('El archivo es mayor que 2MB!');
+//        }
+//    }
+//    return true;
+//}
 
 function soloFecha(evt){
     //asignamos el valor de la tecla a keynum
@@ -299,13 +306,19 @@ function soloNumeros(evt){
         return false;
     }
 }
+
 function ver(idclientes, accion){
     if(accion === 'b'){
-        document.getElementById("guardar").value = "Cancelar";
-        document.getElementById("eliminar").className = "btn btn-large btn-block btn-danger";
+        document.getElementById("guardar").value = "Eliminar";
+        document.getElementById("guardar").className = "btn btn-large btn-block btn-danger";
+        document.getElementById("eliminar").className = "btn btn-large btn-block btn-primary";
+        document.getElementById("eliminar").value = "Cancelar";
     }
     if(accion === 'e'){
         document.getElementById("guardar").value = "Actualizar";
+        document.getElementById("guardar").className = "btn btn-large btn-block btn-primary";
+        document.getElementById("eliminar").className = "btn btn-large btn-block btn-primary";
+        document.getElementById("eliminar").value = "Cancelar";
     }
     var divResultado = document.getElementById('divResultado');
     
@@ -323,17 +336,19 @@ function ver(idclientes, accion){
             document.getElementById('documento').value = document.getElementById('cliente05').value;
             document.getElementById('cuit').value = document.getElementById('cliente06').value;
             document.getElementById('condicionfiscal').value = document.getElementById('cliente07').value;
+//            document.forms['formulario']['condicionfiscal'].value = document.getElementById('cliente07').value;
             document.getElementById('cp').value = document.getElementById('cliente08').value;
-            document.getElementById('localidad').value = document.getElementById('cliente09').value;
+            document.getElementById('localidad').value = document.getElementById('cliente23').value;
             document.getElementById('localidad_hidden').value = document.getElementById('cliente09').value;
-            document.getElementById('barrio').value = document.getElementById('cliente10').value;
+            document.getElementById('barrio').value = document.getElementById('cliente22').value;
             document.getElementById('barrio_hidden').value = document.getElementById('cliente10').value;
-            document.getElementById('calle').value = document.getElementById('cliente11').value;
+            document.getElementById('calle').value = document.getElementById('cliente21').value;
+            document.getElementById('calle_hidden').value = document.getElementById('cliente11').value;
             document.getElementById('numero').value = document.getElementById('cliente12').value;
             document.getElementById('piso').value = document.getElementById('cliente13').value;
             document.getElementById('dpto').value = document.getElementById('cliente14').value;
-//            document.getElementById('telefono').value = document.getElementById('clientes1').value;
-//            document.getElementById('celular').value = document.getElementById('clientes1').value;
+            document.getElementById('telefono').value = document.getElementById('cliente17').value;
+            document.getElementById('celular').value = document.getElementById('cliente18').value;
             document.getElementById('correo').value = document.getElementById('cliente15').value;
             window.scroll(0,0);
         }

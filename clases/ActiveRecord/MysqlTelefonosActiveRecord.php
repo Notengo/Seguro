@@ -51,10 +51,11 @@ class MysqlTelefonosActiveRecord implements ActiveRecord{
     public function buscarPorCliente($oValueObject) {
         $sql = "SELECT * FROM telefonos WHERE idclientes = "
                 . $oValueObject->get_idclientes();
-        $resultado = mysql_query($sql) or die(false);
+//        $resultado = mysql_query($sql) or die(false);
+        $resultado = mysql_query($sql);
         if($resultado){
             $aTelefonos = array();
-            while ($fila = mysql_fetch_array($resultado)) {
+            while ($fila = mysql_fetch_object($resultado)) {
                 $oTelefonos = new TelefonosValueObject();
                 $oTelefonos->set_idtelefonos($fila->idtelefonos);
                 $oTelefonos->set_idclientes($fila->idclientes);

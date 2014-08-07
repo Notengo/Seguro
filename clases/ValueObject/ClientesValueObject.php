@@ -7,7 +7,7 @@
 class ClientesValueObject {
     private $_idclientes, $_apellido, $_nombre, $_idtipodocumentos, $_documento;
     private $_idcondfiscales, $_cc, $_idcalles, $_altura, $_piso, $_dpto;
-    private $_idbarrios, $_idlocalidad, $_cp, $_email, $_fechanacimiento;
+    private $_idbarrios, $_idlocalidad, $_cp, $_email, $_fechanacimiento, $_baja;
 
     public function get_idclientes() {
         return $this->_idclientes;
@@ -136,4 +136,14 @@ class ClientesValueObject {
     public function set_fechanacimiento($_fechanacimiento) {
         $this->_fechanacimiento = $_fechanacimiento;
     }
+
+    public function get_Baja() {
+        return $this->_baja;
+    }
+
+    public function set_Baja($baja) {
+        $this->_baja = $baja;
+    }
+
+
 }

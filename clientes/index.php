@@ -23,7 +23,7 @@ $oMysql->conectar();
     <body onload="document.getElementById('apellido').focus();">
         <?php include_once '../includes/php/header.php'; ?>
         <div class="container">
-            <form class="form-horizontal">
+            <form class="form-horizontal" name="formulario" >
                 <legend>Contactos</legend>
                 <div class="form-group">
                     <div class="col-lg-4">
@@ -72,7 +72,7 @@ $oMysql->conectar();
                             <?php
                             foreach ($oCondFiscal as $aCondFiscal) {
                             ?>
-                            <option <?php echo $aCondFiscal->get_idcondfiscales(); ?>><?php echo $aCondFiscal->get_descripcion();?> </option>
+                            <option value="<?php echo $aCondFiscal->get_idcondfiscales(); ?>"><?php echo $aCondFiscal->get_descripcion();?> </option>
                             <?php
                             }
                             ?>
@@ -137,13 +137,13 @@ $oMysql->conectar();
                 </div>
                 
                 <div class="form-group">
-                    <div class="col-lg-3">
+                    <div class="col-sm-2">
                         <input type="button" id="guardar" value="Guardar" class="btn btn-large btn-block btn-primary" onclick="guardarCliente()" />
                     </div>
-                    <div class="col-lg-3">
-                        <input type="button" id="eliminar" value="Eliminar" class="btn btn-large btn-block btn-danger oculto" onclick="EliminarCliente()" />
+                    <div class="col-sm-2">
+                        <input type="button" id="eliminar" value="Eliminar" class="btn btn-large btn-block btn-danger oculto" onclick="location.reload();" />
                     </div>
-                    <div class="col-lg-6" id="divResultado"></div>
+                    <div class="col-sm-8" id="divResultado"></div>
             </form>
             <legend>Listado</legend>
             <div class="table-responsive" id="listadoCliente">

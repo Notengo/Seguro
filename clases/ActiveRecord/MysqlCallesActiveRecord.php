@@ -41,6 +41,7 @@ class MysqlCallesActiveRecord implements ActiveRecord{
         if($resultado){
             $fila = mysql_fetch_object($resultado);
             $oValueObject->setNombre($fila->nombre);
+            return $oValueObject;
         } else {
             return FALSE;
         }

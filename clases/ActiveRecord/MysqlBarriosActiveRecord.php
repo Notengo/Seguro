@@ -36,6 +36,7 @@ class MysqlBarriosActiveRecord implements ActiveRecord{
         if($resultado){
             $fila = mysql_fetch_object($resultado);
             $oValueObject->set_nombre($fila->nombre);
+            return $oValueObject;
         } else {
             return FALSE;
         }

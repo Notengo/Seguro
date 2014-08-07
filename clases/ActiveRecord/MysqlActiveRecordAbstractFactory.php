@@ -5,6 +5,7 @@ require_once '../clases/ActiveRecord/MysqlBarriosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCallesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlClientesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCondfiscalesActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlLocalidadesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlTelefonosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlUsuarioActiveRecord.php';
 
@@ -26,14 +27,19 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
         return parent::getActiveRecordFactory($motor);
     }
 
-//   const HOST = 'mysql15.000webhost.com';
-//   const USER = 'a5248503_kiosco';
-//   const PASS = 'T1nch0_web';
-//   const DB = 'a5248503_kiosco';
-   const HOST = 'localhost';
-   const USER = 'root';
-   const PASS = 'root';
-   const DB = 'seguro';
+//    $mysql_host = "mysql4.000webhost.com";
+//    $mysql_database = "a1226679_seguro";
+//    $mysql_user = "a1226679_seguro";
+//    $mysql_password = "S3gur0";
+
+   const HOST = 'mysql4.000webhost.com';
+   const USER = 'a1226679_seguro';
+   const PASS = 'S3gur0';
+   const DB = 'a1226679_seguro';
+//   const HOST = 'localhost';
+//   const USER = 'root';
+//   const PASS = 'root';
+//   const DB = 'seguro';
 
    /**
     * Nos permite conectar al motor MySQL con los datos de
@@ -92,6 +98,14 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
     */
    public function getUsuarioActiveRecord() {
        return new MysqlUsuarioActiveRecord();
+   }
+   
+   /**
+    * 
+    * @return \MysqlLocalidadesActiveRecord
+    */
+   public function getLocalidadesActiveRecord() {
+       return new MysqlLocalidadesActiveRecord();
    }
 
 }

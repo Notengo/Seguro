@@ -39,7 +39,13 @@ class MysqlClientesActiveRecord implements ActiveRecord{
     }
 
     public function borrar($oValueObject) {
-        
+        $sql = "UPDATE clientes SET baja = DATE_FORMAT(NOW(), '%Y-%m-%d')"
+                . " WHERE idclientes = " . $oValueObject->get_idclientes() . ";" ;
+        if (mysql_query($sql) or die(false)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
     
     /**
@@ -85,7 +91,7 @@ class MysqlClientesActiveRecord implements ActiveRecord{
 
     public function buscarTodo() {
 //        $sql = "SELECT * FROM clientes WHERE idclientes = " . $oValueObject->get_idclientes() . ";" ;
-        $sql = "SELECT * FROM clientes;" ;
+        $sql = "SELECT * FROM clientes WHERE baja IS NULL OR baja = '0000-00-00';" ;
         $resultado = mysql_query($sql) or die(false);
         if($resultado){
             $aClientes = array();
@@ -149,6 +155,11 @@ class MysqlClientesActiveRecord implements ActiveRecord{
                 . $oValueObject->get_fechanacimiento() . "');";
 //        if (mysql_query($sql) or die(false)) {
         if (mysql_query($sql)) {
+            $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM calles");
+            $id = mysql_fetch_array($result);
+            if($id[0]<>0) {
+                $oValueObject->set_idclientes($id[0]);
+            }
             return TRUE;
         } else {
             return FALSE;
