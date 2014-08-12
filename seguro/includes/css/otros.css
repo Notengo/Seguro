@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 31/07/2014, 12:10:42
+    Author     : Martin
+*/
+
+/* select con ajax*/
+
+#ajax_listOfOptions{position: absolute;/* Never change this one */ width: 465px;/* Width of box */ height: 250px;/* Height of box */ overflow: auto;/* Scrolling features */ border: 1px solid #5789D5;/* Dark green border */ background-color: #FFF;/* White background color */ text-align: left; font-size: 0.9em; z-index: 100;}
+
+#ajax_listOfOptions div{/* General rule for both .optionDiv and .optionDivSelected */margin: 1px; padding: 1px; cursor: pointer; font-size: 0.9em;}
+
+#ajax_listOfOptions .optionDiv{/* Div for each item in list */}
+
+#ajax_listOfOptions .optionDivSelected{/* Selected item in the list */background-color: #5789D5; color: #FFF;}
+
+#ajax_listOfOptions_iframe{background-color: #F00; position: absolute; z-index: 5;}
+
+
+#ajax_listOfOptionsSmall{position: absolute;/* Never change this one */ width: 350px;/* Width of box */ height: 250px;/* Height of box */ overflow: auto;/* Scrolling features */ border: 1px solid #5789D5;/* Dark green border */ background-color: #FFF;/* White background color */ text-align: left; font-size: 0.9em; z-index: 100;}
+
+#ajax_listOfOptionsSmall div{/* General rule for both .optionDiv and .optionDivSelected */margin: 1px; padding: 1px; cursor: pointer; font-size: 0.9em;}
+
+#ajax_listOfOptionsSmall .optionDiv{/* Div for each item in list */}
+
+#ajax_listOfOptionsSmall .optionDivSelected{/* Selected item in the list */background-color: #5789D5; color: #FFF;}
+
+#ajax_listOfOptionsSmall_iframe{background-color: #F00; position: absolute; z-index: 5;}
+
+/*Mis css*/
+.oculto {
+    display: none;
+}

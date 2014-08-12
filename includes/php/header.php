@@ -21,11 +21,13 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Parametros&nbsp;<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vah&iacute;culos&nbsp;<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="../parametros/marcas.php">Marcas de veh&iacute;culos</a></li>
-                        <li><a href="../parametros/modelos.php">Modelos de veh&iacute;culos</a></li>
-                        <li><a href="../parametros/usos.php">Usos de veh&iacute;culos</a></li>
+                        <li><a href="../vehiculos/marcas.php">Marcas</a></li>
+                        <li><a href="../vehiculos/modelos.php">Modelos</a></li>
+                        <li><a href="../vehiculos/usos.php">Usos</a></li>
+                        <li><a href="../vehiculos/tipos.php">Tipos</a></li>
+                        <li><a href="../vehiculos">Veh&iacute;culos</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

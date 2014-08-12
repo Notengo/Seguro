@@ -22,7 +22,11 @@ abstract class ActiveRecordAbstractFactory {
     public abstract function getClientesActiveRecord();
     public abstract function getCondfiscalesActiveRecord();
     public abstract function getLocalidadesActiveRecord();
+    public abstract function getMarcasActiveRecord();
+    public abstract function getModelosActiveRecord();
     public abstract function getTelefonosActiveRecord();
+    public abstract function getTiposActiveRecord();
+    public abstract function getUsosActiveRecord();
     public abstract function getUsuarioActiveRecord();
 
     /**

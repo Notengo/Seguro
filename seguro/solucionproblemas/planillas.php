@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Baucher Seguros - Parametros</title>
+        <title>Baucher Seguros - Planillas</title>
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../bootstrap/css/bootstrap-theme.min.css">
     </head>
@@ -11,7 +11,7 @@
         <?php include_once '../includes/php/header.php'; ?>
         <div class="container">
             <form class="form-horizontal">
-                <legend>Parametros - Modelos</legend>
+                <legend>Planillas</legend>
                 <div class="form-group">
                     <div class="col-lg-3">
                         <label class="label-success label">Compa&ntilde;ia</label><br />
@@ -25,11 +25,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-lg-12">
-                        <label class="label-success label">Modelo</label><br />
-                        <input class="form-control" data-toggle="tooltip" name="modelo" id="modelo" title="Descripci&oacute;n del modelo" alt="Descripci&oacute;n del modelo" placeholder="Descripci&oacute;n del modelo" type="text"
-                               onkeyup="ajax_showOptionsDependencia(this, 'getListadoByLetters', event);" /><br/>
-                        <input type="hidden" id="modelo_hidden" name="modelo_ID" value="" />
+                    <div class="col-lg-2">
+                        <label class="label-success label">Ultima planilla</label><br />
+                        <input class="form-control" data-toggle="tooltip" name="planilla" id="planilla" title="Ultima planilla" alt="Ultima planilla" type="number" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,8 +56,21 @@
             <table class="table table-striped table-bordered table-hover table-responsive">
                 <tr>
                     <th>Id</th>
-                    <th>Modelos</th>
+                    <th>Compa&ntilde;ia</th>
+                    <th>Planilla</th>
                     <th>Acciones</th>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Aseg.Federeal Argentina S.A.</td>
+                    <td>45</td>
+                    <td>Modificar/Eliminar</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>San Cristobal Seg. de Retiro S.A.</td>
+                    <td>31</td>
+                    <td>Modificar/Eliminar</td>
                 </tr>
             </table>
         </div>

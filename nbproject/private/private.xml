@@ -6,9 +6,9 @@
             <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlClientesActiveRecord.php</file>
             <file>file:/C:/xampp/htdocs/seguro/clientes/js/funciones.js</file>
             <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlTelefonosActiveRecord.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clientes/buscarCliente.php</file>
             <file>file:/C:/xampp/htdocs/seguro/clientes/guardarCliente.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/clientes/index.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlCallesActiveRecord.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlActiveRecordAbstractFactory.php</file>
         </group>
     </open-files>
 </project-private>

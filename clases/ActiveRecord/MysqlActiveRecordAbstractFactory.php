@@ -6,7 +6,11 @@ require_once '../clases/ActiveRecord/MysqlCallesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlClientesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCondfiscalesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlLocalidadesActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlMarcasActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlModelosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlTelefonosActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlTiposActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlUsosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlUsuarioActiveRecord.php';
 
 /**
@@ -32,14 +36,14 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
 //    $mysql_user = "a1226679_seguro";
 //    $mysql_password = "S3gur0";
 
-   const HOST = 'mysql4.000webhost.com';
-   const USER = 'a1226679_seguro';
-   const PASS = 'S3gur0';
-   const DB = 'a1226679_seguro';
-//   const HOST = 'localhost';
-//   const USER = 'root';
-//   const PASS = 'root';
-//   const DB = 'seguro';
+//   const HOST = 'mysql4.000webhost.com';
+//   const USER = 'a1226679_seguro';
+//   const PASS = 'S3gur0';
+//   const DB = 'a1226679_seguro';
+   const HOST = 'localhost';
+   const USER = 'root';
+   const PASS = 'root';
+   const DB = 'seguro';
 
    /**
     * Nos permite conectar al motor MySQL con los datos de
@@ -91,6 +95,14 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
    public function getTelefonosActiveRecord() {
        return new MysqlTelefonosActiveRecord();
    }
+
+   /**
+    * 
+    * @return \MysqlTiposActiveRecord
+    */
+   public function getTiposActiveRecord() {
+       return new MysqlTiposActiveRecord();
+   }
  
    /**
     * 
@@ -107,5 +119,28 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
    public function getLocalidadesActiveRecord() {
        return new MysqlLocalidadesActiveRecord();
    }
-
+   
+   /**
+    * 
+    * @return \MysqlMarcasActiveRecord
+    */
+   public function getMarcasActiveRecord() {
+       return new MysqlMarcasActiveRecord();
+   }
+   
+   /**
+    * 
+    * @return \MysqlModelosActiveRecord
+    */
+   public function getModelosActiveRecord() {
+       return new MysqlModelosActiveRecord();
+   }
+   
+   /**
+    * 
+    * @return \MysqlUsosActiveRecord
+    */
+   public function getUsosActiveRecord() {
+       return new MysqlUsosActiveRecord();
+   }
 }
