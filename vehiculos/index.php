@@ -15,6 +15,7 @@ $oMysql->conectar();
         <script src="js/ajax-dynamic-list.js" type="text/javascript"></script>
         <script src="js/ajax.js" type="text/javascript"></script>
         <script src="js/funciones.js" type="text/javascript"></script>
+        
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../bootstrap/css/bootstrap-theme.min.css">
         <link href="../includes/css/otros.css" rel="stylesheet" type="text/css"/>
@@ -22,20 +23,22 @@ $oMysql->conectar();
     <body>
         <?php include_once '../includes/php/header.php'; ?>
         <div class="container">
-            <form class="form-horizontal" action="#" method="post">
+            <form name="vehiculo" class="form-horizontal" action="#" method="post" autocomplete="off">
                 <legend>Agregando Vehiculos</legend>
                 <div id="nuevo" style="display: none;">
-                    <div class="form-group">
+                    <div class="row">
                         <div class="col-sm-8">
                             <label class="label-success label">Cliente</label>    
-                            <input type="text" name="cliente" id="cliente" class="form-control" data-toggle="tooltip" placeholder="Cliente Asegurado" title="Cliente Asegurado" alt="Cliente Asegurado" />
+                            <input type="text" name="cliente" id="cliente" class="form-control" data-toggle="tooltip" 
+                                   placeholder="Cliente Asegurado" title="Cliente Asegurado" alt="Cliente Asegurado"
+                                   onkeyup="ajax_showOptionsCliente(this,'getClienteByLetters',event);" />
                             <input type="hidden" name="cliente_ID" id="cliente_hidden"value="" />
                         </div>
                         <div class="col-sm-4">
                         </div>
                     </div>
-
-                    <div class="form-group">
+                    <br>
+                    <div class="row">
                         <div class="col-lg-2">
                             <label class="label-success label">Patente</label>    
                             <input type="text" name="patente" id="patente" class="form-control"/>
@@ -53,55 +56,69 @@ $oMysql->conectar();
                             <input type="date" name="fabricacion" id="fabricacion" class="form-control"/>
                         </div>
                     </div>
-
-                    <div class="form-group">
+                    <br>
+                    <div class="row">
                         <div class="col-lg-3">
                             <label class="label-success label">Marca</label> 
-                            <input type="text" name="marca" id="marca" class="form-control" data-toggle="tooltip" title="Marca del Vehiculo" alt="Marca del Vehiculo" placeholder="seleccione"/>
+                            <input type="text" name="marca" id="marca" class="form-control" data-toggle="tooltip" title="Marca del Vehiculo" alt="Marca del Vehiculo" placeholder="seleccione"
+                                   onkeyup="ajax_showOptionsMarca(this,'getMarcaByLetters',event);" />
+                            <input type="hidden" name="marca_ID" id="marca_hidden"value="" />
                         </div>
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
-                            <!--<a href="#"><img src="../images/done.png" /></a>-->
+                            <a href="marcas.php">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                         </div>
                         <div class="col-lg-3">
                             <label class="label-success label">Modelo</label>    
-                            <input type="text" name="modelo" id="modelo" class="form-control" data-toggle="tooltip" title="Modelo Vehiculo" alt="Modelo Vehiculo"/>
+                            <input type="text" name="modelo" id="modelo" class="form-control" data-toggle="tooltip" title="Modelo Vehiculo" alt="Modelo Vehiculo"
+                                   onkeyup="ajax_showOptionsModelo(this,'getModeloByLetters',event);" />
+                            <input type="hidden" name="modelo_ID" id="modelo_hidden"value="" />
                         </div>
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
-                            <!--<a href="#"><img src="../images/done.png" /></a>-->
+                            <a href="modelos.php">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                         </div>
                         <div class="col-lg-4">
                             <label class="label-success label">Version</label>    
                             <input type="text" name="version" id="version" class="form-control" data-toggle="tooltip" title="version del Vehiculo" alt="Version del Vehiculo"/>
                         </div>
                     </div>
-
-                    <div class="form-group">  
+                    <br>
+                    <div class="row">  
                         <div class="col-lg-3">
                             <label class="label-success label">Tipo</label>
-                            <input type="text" name="tipo" id="tipo" class="form-control" placeholder="seleccione"/>
+                            <input type="text" name="tipo" id="tipo" class="form-control" placeholder="seleccione"
+                                   onkeyup="ajax_showOptionsTipo(this,'getTipoByLetters',event);" />
+                            <input type="hidden" name="tipo_ID" id="tipo_hidden"value="" />
                         </div>
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
-                            <!--<a href="#"><img src="../images/done.png" /></a>-->
+                            <a href="tipos.php">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                         </div>
                         <div class="col-lg-3">
                             <label class="label-success label">Uso</label>
-                            <input type="text" name="uso" id="uso" class="form-control" placeholder="seleccione"/>
+                            <input type="text" name="uso" id="uso" class="form-control" placeholder="seleccione"
+                                   onkeyup="ajax_showOptionsUso(this,'getUsoByLetters',event);" />
+                            <input type="hidden" name="uso_ID" id="uso_hidden"value="" />
                         </div>
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
+                            <!--<div class="glyphicon glyphicon-plus"></div>-->
+                            <a href="usos.php">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                             <!--<a href="#"><img src="../images/done.png" /></a>-->
                         </div>
                         <div class="col-lg-2">
                             <label class="label-success label">Naftero</label><br />
                             <div class="radio-inline">
-                                <input type="radio" name="naftero" id="naftero" value="Si" /> Si
+                                <input type="radio" name="naftero" id="naftero" value="Si" checked /> Si
                             </div>
                             <div class="radio-inline">
                                 <input type="radio" name="naftero" id="naftero" value="No" /> No
@@ -110,26 +127,40 @@ $oMysql->conectar();
 
                         <div class="col-lg-2">
                             <label class="label-success label">Valor Asegurado</label>    
-                            <input type="text" name="valor" id="valor" class="form-control"/>
+                            <input type="text" name="valor" id="valor" class="form-control" onkeypress="return soloNumeros(event);" />
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <div class="col-lg-6">
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <!--<img src="verimagen.php" width="150px" />-->
+                        </div>
+                        <div class="col-lg-4">
                             <label class="label label-primary">Cargar Foto 1:</label>
-                            <input type="file" class=""/><br>
+                            <input type="file" id="archivo1" /><br>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-2">
+                            <!--<img src="verimagen.php" width="150px" />-->
+                        </div>
+                        <div class="col-lg-4">
                             <label class="label label-primary">Cargar Foto 2:</label>
-                            <input type="file" class=""/><br>
+                            <input type="file" id="archivo2" /><br>
                         </div>
-                        <div class="col-lg-6">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <!--<img src="verimagen.php" width="150px" />-->
+                        </div>
+                        <div class="col-lg-4">
                             <label class="label label-primary">Cargar Foto 3:</label>
-                            <input type="file" class=""/><br>
+                            <input type="file"  id="archivo3" /><br>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-2">
+                            <!--<img src="verimagen.php" width="150px" />-->
+                        </div>
+                        <div class="col-lg-4">
                             <label class="label label-primary">Cargar Foto 4:</label>
-                            <input type="file" class=""/><br>
+                            <input type="file"  id="archivo4" /><br>
                         </div>
                     </div>
                     <div class="form-group">
@@ -153,19 +184,19 @@ $oMysql->conectar();
                                 <label class="label-success label">Marca Regulador</label>    
                                 <input type="text" name="marcaReg" id="marcaReg" class="form-control"/>
                             </div>
-                            <div class="col-lg-1">
-                                <label class="label-success label">Cantidad de Cilindro</label>    
-                                <input type="number" name="cantidadC" id="cantidadC" class="form-control"/>
+                            <div class="col-lg-4">
+<!--                                <label class="label-success label">Cantidad de Cilindro</label>    
+                                <input type="number" name="cantidadC" id="cantidadC" class="form-control" onkeypress="return soloNumeros(event);"/>-->
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-lg-4">
                                 <label class="label-success label">Marca de Cilindro</label>    
-                                <input type="text" name="marcaC" id="marcaC" class="form-control"/>
+                                <input type="text" name="marcaC1" id="marcaC1" class="form-control"/>
                             </div>
                             <div class="col-lg-2">
                                 <label class="label-success label">Nº Cilindro</label>    
-                                <input type="text" name="numeroC" id="numeroC" class="form-control"/>
+                                <input type="text" name="numeroC1" id="numeroC1" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -200,6 +231,11 @@ $oMysql->conectar();
                     <div class="col-sm-8" id="divResultado"></div>
                 </div>
             </form>
+            <legend>Listado</legend>
+            <div id="listado" class="table-responsive">
+                <?php include 'listadoVehiculos.php'; ?>
+            </div>
+            <div id="div_oculto"></div>
         </div>
         <?php include_once '../includes/php/footer.php'; ?>
         <script src="../bootstrap/js/jquery.min.js"></script>

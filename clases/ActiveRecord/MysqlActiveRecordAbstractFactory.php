@@ -4,7 +4,9 @@ require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
 require_once '../clases/ActiveRecord/MysqlBarriosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCallesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlClientesActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlCilindrosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCondfiscalesActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlGncActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlLocalidadesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlMarcasActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlModelosActiveRecord.php';
@@ -12,6 +14,7 @@ require_once '../clases/ActiveRecord/MysqlTelefonosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlTiposActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlUsosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlUsuarioActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlVehiculosActiveRecord.php';
 
 /**
 * Clase que nos permite conectar al motor MySQL y crear objetos
@@ -82,6 +85,14 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
 
    /**
     * 
+    * @return \MysqlCilindrosActiveRecord
+    */
+   public function getCilindrosActiveRecord() {
+       return new MysqlCilindrosActiveRecord();
+   }
+
+   /**
+    * 
     * @return \MysqlCondfiscalesActiveRecord
     */
    public function getCondfiscalesActiveRecord() {
@@ -122,6 +133,14 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
    
    /**
     * 
+    * @return \MysqlGncActiveRecord
+    */
+   public function getGncActiveRecord() {
+       return new MysqlGncActiveRecord();
+   }
+   
+   /**
+    * 
     * @return \MysqlMarcasActiveRecord
     */
    public function getMarcasActiveRecord() {
@@ -142,5 +161,13 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
     */
    public function getUsosActiveRecord() {
        return new MysqlUsosActiveRecord();
+   }
+   
+   /**
+    * 
+    * @return MysqlVehiculosActiveRecord
+    */
+   public function getVehiculoActiveRecord() {
+       return new MysqlVehiculosActiveRecord();
    }
 }

@@ -1,4 +1,0 @@
-Seguro
-======
-
-Promotores de seguros

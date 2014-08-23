@@ -20,8 +20,8 @@ $oTipos = $oMysqlTipos->buscarTodo();
         <tr>
             <td><?php echo $aTipos->get_descripcion(); ?></td>
             <td>
-                <img src="../images/editar.png" alt="" onclick="verTipo(<?php echo $aTipos->get_idusos(); ?>, 'e', '<?php echo $aTipos->get_descripcion(); ?>')"/>
-                <img src="../images/borrar.png" alt="" onclick="verTipo(<?php echo $aTipos->get_idusos(); ?>, 'b', '<?php echo $aTipos->get_descripcion(); ?>')"/>
+                <img src="../images/editar.png" alt="" onclick="verTipo(<?php echo $aTipos->get_idtipos(); ?>, 'e', '<?php echo $aTipos->get_descripcion(); ?>')"/>
+                <img src="../images/borrar.png" alt="" onclick="verTipo(<?php echo $aTipos->get_idtipos(); ?>, 'b', '<?php echo $aTipos->get_descripcion(); ?>')"/>
             </td>
         </tr>
         <?php

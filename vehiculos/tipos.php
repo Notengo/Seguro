@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-2">
-                        <input type="button" id="guardar" value="Nuevo" class="btn btn-large btn-block btn-primary" onclick="guardarUso();" />
+                        <input type="button" id="guardar" value="Nuevo" class="btn btn-large btn-block btn-primary" onclick="guardarTipo();" />
                     </div>
                     <div class="col-sm-2">
                         <input type="button" id="cancelar" value="Cancelar" class="btn btn-large btn-block btn-primary oculto" onclick="location.reload();" />

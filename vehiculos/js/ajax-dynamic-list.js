@@ -156,8 +156,8 @@ function ajax_option_resize(inputObj)
 
 }
 
-function ajax_showOptionsUbicacion(inputObj, paramToExternalFile, e) {
-    var ajax_list_externalFile = 'lista_ubicacion.php';	// Path to external file
+function ajax_showOptionsMarca(inputObj, paramToExternalFile, e) {
+    var ajax_list_externalFile = 'lista_marca.php';	// Path to external file
     if (e.keyCode === 13 || e.keyCode === 9)
         return;
     if (ajax_list_currentLetters[inputObj.name] === inputObj.value)
@@ -246,8 +246,282 @@ function ajax_showOptionsUbicacion(inputObj, paramToExternalFile, e) {
 
 
 }
-function ajax_showOptionsBarrio(inputObj, paramToExternalFile, e) {
-    var ajax_list_externalFile = 'lista_barrio.php';	// Path to external file
+
+function ajax_showOptionsModelo(inputObj, paramToExternalFile, e) {
+    var ajax_list_externalFile = 'lista_modelo.php';	// Path to external file
+    if (e.keyCode === 13 || e.keyCode === 9)
+        return;
+    if (ajax_list_currentLetters[inputObj.name] === inputObj.value)
+        return;
+    if (!ajax_list_cachedLists[paramToExternalFile])
+        ajax_list_cachedLists[paramToExternalFile] = new Array();
+    ajax_list_currentLetters[inputObj.name] = inputObj.value;
+    
+//    ajax_list_currentLetters[inputObj.name] = document.getElementById('marca_hidden').value + "-" + inputObj.value;
+    if (!ajax_optionDiv) {
+        ajax_optionDiv = document.createElement('DIV');
+        ajax_optionDiv.id = 'ajax_listOfOptions';
+        document.body.appendChild(ajax_optionDiv);
+
+        if (ajax_list_MSIE) {
+            ajax_optionDiv_iframe = document.createElement('IFRAME');
+            ajax_optionDiv_iframe.border = '0';
+            ajax_optionDiv_iframe.style.width = ajax_optionDiv.clientWidth + 'px';
+            ajax_optionDiv_iframe.style.height = ajax_optionDiv.clientHeight + 'px';
+            ajax_optionDiv_iframe.id = 'ajax_listOfOptions_iframe';
+
+            document.body.appendChild(ajax_optionDiv_iframe);
+        }
+
+        var allInputs = document.getElementsByTagName('INPUT');
+        for (var no = 0; no < allInputs.length; no++) {
+            if (!allInputs[no].onkeyup)
+                allInputs[no].onfocus = ajax_options_hide;
+        }
+        var allSelects = document.getElementsByTagName('SELECT');
+        for (var no = 0; no < allSelects.length; no++) {
+            allSelects[no].onfocus = ajax_options_hide;
+        }
+
+        var oldonkeydown = document.body.onkeydown;
+        if (typeof oldonkeydown !== 'function') {
+            document.body.onkeydown = ajax_option_keyNavigation;
+        } else {
+            document.body.onkeydown = function() {
+                oldonkeydown();
+                ajax_option_keyNavigation();
+            };
+        }
+        var oldonresize = document.body.onresize;
+        if (typeof oldonresize !== 'function') {
+            document.body.onresize = function() {
+                ajax_option_resize(inputObj);
+            };
+        } else {
+            document.body.onresize = function() {
+                oldonresize();
+                ajax_option_resize(inputObj);
+            };
+        }
+
+    }
+
+    if (inputObj.value.length < minimumLettersBeforeLookup) {
+        ajax_options_hide();
+        return;
+    }
+
+
+    ajax_optionDiv.style.top = (ajax_getTopPos(inputObj) + inputObj.offsetHeight + ajaxBox_offsetY) + 'px';
+    ajax_optionDiv.style.left = (ajax_getLeftPos(inputObj) + ajaxBox_offsetX) + 'px';
+    if (ajax_optionDiv_iframe) {
+        ajax_optionDiv_iframe.style.left = ajax_optionDiv.style.left;
+        ajax_optionDiv_iframe.style.top = ajax_optionDiv.style.top;
+    }
+
+    ajax_list_activeInput = inputObj;
+    ajax_optionDiv.onselectstart = ajax_list_cancelEvent;
+    currentListIndex++;
+    if (ajax_list_cachedLists[paramToExternalFile][inputObj.value.toLowerCase()]) {
+        ajax_option_list_buildList(inputObj.value, paramToExternalFile, currentListIndex);
+    } else {
+        var tmpIndex = currentListIndex / 1;
+        ajax_optionDiv.innerHTML = '';
+        var ajaxIndex = ajax_list_objects.length;
+        ajax_list_objects[ajaxIndex] = new sack();
+        var url = ajax_list_externalFile + '?' + paramToExternalFile + '=1&letters=' + inputObj.value.replace(" ", "+") + "&filtro="+document.getElementById('marca_hidden').value;
+        ajax_list_objects[ajaxIndex].requestFile = url;	// Specifying which file to get
+        ajax_list_objects[ajaxIndex].onCompletion = function() {
+            ajax_option_list_showContent(ajaxIndex, inputObj, paramToExternalFile, tmpIndex);
+        };	// Specify function that will be executed after file has been found
+        ajax_list_objects[ajaxIndex].runAJAX();		// Execute AJAX function
+    }
+}
+
+function ajax_showOptionsTipo(inputObj, paramToExternalFile, e) {
+    var ajax_list_externalFile = 'lista_tipo.php';	// Path to external file
+    if (e.keyCode === 13 || e.keyCode === 9)
+        return;
+    if (ajax_list_currentLetters[inputObj.name] === inputObj.value)
+        return;
+    if (!ajax_list_cachedLists[paramToExternalFile])
+        ajax_list_cachedLists[paramToExternalFile] = new Array();
+    ajax_list_currentLetters[inputObj.name] = inputObj.value;
+    
+//    ajax_list_currentLetters[inputObj.name] = document.getElementById('marca_hidden').value + "-" + inputObj.value;
+    if (!ajax_optionDiv) {
+        ajax_optionDiv = document.createElement('DIV');
+        ajax_optionDiv.id = 'ajax_listOfOptions';
+        document.body.appendChild(ajax_optionDiv);
+
+        if (ajax_list_MSIE) {
+            ajax_optionDiv_iframe = document.createElement('IFRAME');
+            ajax_optionDiv_iframe.border = '0';
+            ajax_optionDiv_iframe.style.width = ajax_optionDiv.clientWidth + 'px';
+            ajax_optionDiv_iframe.style.height = ajax_optionDiv.clientHeight + 'px';
+            ajax_optionDiv_iframe.id = 'ajax_listOfOptions_iframe';
+
+            document.body.appendChild(ajax_optionDiv_iframe);
+        }
+
+        var allInputs = document.getElementsByTagName('INPUT');
+        for (var no = 0; no < allInputs.length; no++) {
+            if (!allInputs[no].onkeyup)
+                allInputs[no].onfocus = ajax_options_hide;
+        }
+        var allSelects = document.getElementsByTagName('SELECT');
+        for (var no = 0; no < allSelects.length; no++) {
+            allSelects[no].onfocus = ajax_options_hide;
+        }
+
+        var oldonkeydown = document.body.onkeydown;
+        if (typeof oldonkeydown !== 'function') {
+            document.body.onkeydown = ajax_option_keyNavigation;
+        } else {
+            document.body.onkeydown = function() {
+                oldonkeydown();
+                ajax_option_keyNavigation();
+            };
+        }
+        var oldonresize = document.body.onresize;
+        if (typeof oldonresize !== 'function') {
+            document.body.onresize = function() {
+                ajax_option_resize(inputObj);
+            };
+        } else {
+            document.body.onresize = function() {
+                oldonresize();
+                ajax_option_resize(inputObj);
+            };
+        }
+
+    }
+
+    if (inputObj.value.length < minimumLettersBeforeLookup) {
+        ajax_options_hide();
+        return;
+    }
+
+
+    ajax_optionDiv.style.top = (ajax_getTopPos(inputObj) + inputObj.offsetHeight + ajaxBox_offsetY) + 'px';
+    ajax_optionDiv.style.left = (ajax_getLeftPos(inputObj) + ajaxBox_offsetX) + 'px';
+    if (ajax_optionDiv_iframe) {
+        ajax_optionDiv_iframe.style.left = ajax_optionDiv.style.left;
+        ajax_optionDiv_iframe.style.top = ajax_optionDiv.style.top;
+    }
+
+    ajax_list_activeInput = inputObj;
+    ajax_optionDiv.onselectstart = ajax_list_cancelEvent;
+    currentListIndex++;
+    if (ajax_list_cachedLists[paramToExternalFile][inputObj.value.toLowerCase()]) {
+        ajax_option_list_buildList(inputObj.value, paramToExternalFile, currentListIndex);
+    } else {
+        var tmpIndex = currentListIndex / 1;
+        ajax_optionDiv.innerHTML = '';
+        var ajaxIndex = ajax_list_objects.length;
+        ajax_list_objects[ajaxIndex] = new sack();
+        var url = ajax_list_externalFile + '?' + paramToExternalFile + '=1&letters=' + inputObj.value.replace(" ", "+");
+        ajax_list_objects[ajaxIndex].requestFile = url;	// Specifying which file to get
+        ajax_list_objects[ajaxIndex].onCompletion = function() {
+            ajax_option_list_showContent(ajaxIndex, inputObj, paramToExternalFile, tmpIndex);
+        };	// Specify function that will be executed after file has been found
+        ajax_list_objects[ajaxIndex].runAJAX();		// Execute AJAX function
+    }
+}
+
+function ajax_showOptionsUso(inputObj, paramToExternalFile, e) {
+    var ajax_list_externalFile = 'lista_uso.php';	// Path to external file
+    if (e.keyCode === 13 || e.keyCode === 9)
+        return;
+    if (ajax_list_currentLetters[inputObj.name] === inputObj.value)
+        return;
+    if (!ajax_list_cachedLists[paramToExternalFile])
+        ajax_list_cachedLists[paramToExternalFile] = new Array();
+    ajax_list_currentLetters[inputObj.name] = inputObj.value;
+    
+//    ajax_list_currentLetters[inputObj.name] = document.getElementById('marca_hidden').value + "-" + inputObj.value;
+    if (!ajax_optionDiv) {
+        ajax_optionDiv = document.createElement('DIV');
+        ajax_optionDiv.id = 'ajax_listOfOptions';
+        document.body.appendChild(ajax_optionDiv);
+
+        if (ajax_list_MSIE) {
+            ajax_optionDiv_iframe = document.createElement('IFRAME');
+            ajax_optionDiv_iframe.border = '0';
+            ajax_optionDiv_iframe.style.width = ajax_optionDiv.clientWidth + 'px';
+            ajax_optionDiv_iframe.style.height = ajax_optionDiv.clientHeight + 'px';
+            ajax_optionDiv_iframe.id = 'ajax_listOfOptions_iframe';
+
+            document.body.appendChild(ajax_optionDiv_iframe);
+        }
+
+        var allInputs = document.getElementsByTagName('INPUT');
+        for (var no = 0; no < allInputs.length; no++) {
+            if (!allInputs[no].onkeyup)
+                allInputs[no].onfocus = ajax_options_hide;
+        }
+        var allSelects = document.getElementsByTagName('SELECT');
+        for (var no = 0; no < allSelects.length; no++) {
+            allSelects[no].onfocus = ajax_options_hide;
+        }
+
+        var oldonkeydown = document.body.onkeydown;
+        if (typeof oldonkeydown !== 'function') {
+            document.body.onkeydown = ajax_option_keyNavigation;
+        } else {
+            document.body.onkeydown = function() {
+                oldonkeydown();
+                ajax_option_keyNavigation();
+            };
+        }
+        var oldonresize = document.body.onresize;
+        if (typeof oldonresize !== 'function') {
+            document.body.onresize = function() {
+                ajax_option_resize(inputObj);
+            };
+        } else {
+            document.body.onresize = function() {
+                oldonresize();
+                ajax_option_resize(inputObj);
+            };
+        }
+
+    }
+
+    if (inputObj.value.length < minimumLettersBeforeLookup) {
+        ajax_options_hide();
+        return;
+    }
+
+
+    ajax_optionDiv.style.top = (ajax_getTopPos(inputObj) + inputObj.offsetHeight + ajaxBox_offsetY) + 'px';
+    ajax_optionDiv.style.left = (ajax_getLeftPos(inputObj) + ajaxBox_offsetX) + 'px';
+    if (ajax_optionDiv_iframe) {
+        ajax_optionDiv_iframe.style.left = ajax_optionDiv.style.left;
+        ajax_optionDiv_iframe.style.top = ajax_optionDiv.style.top;
+    }
+
+    ajax_list_activeInput = inputObj;
+    ajax_optionDiv.onselectstart = ajax_list_cancelEvent;
+    currentListIndex++;
+    if (ajax_list_cachedLists[paramToExternalFile][inputObj.value.toLowerCase()]) {
+        ajax_option_list_buildList(inputObj.value, paramToExternalFile, currentListIndex);
+    } else {
+        var tmpIndex = currentListIndex / 1;
+        ajax_optionDiv.innerHTML = '';
+        var ajaxIndex = ajax_list_objects.length;
+        ajax_list_objects[ajaxIndex] = new sack();
+        var url = ajax_list_externalFile + '?' + paramToExternalFile + '=1&letters=' + inputObj.value.replace(" ", "+");
+        ajax_list_objects[ajaxIndex].requestFile = url;	// Specifying which file to get
+        ajax_list_objects[ajaxIndex].onCompletion = function() {
+            ajax_option_list_showContent(ajaxIndex, inputObj, paramToExternalFile, tmpIndex);
+        };	// Specify function that will be executed after file has been found
+        ajax_list_objects[ajaxIndex].runAJAX();		// Execute AJAX function
+    }
+}
+
+function ajax_showOptionsCliente(inputObj, paramToExternalFile, e) {
+    var ajax_list_externalFile = 'lista_cliente.php';	// Path to external file
     if (e.keyCode === 13 || e.keyCode === 9)
         return;
     if (ajax_list_currentLetters[inputObj.name] === inputObj.value)

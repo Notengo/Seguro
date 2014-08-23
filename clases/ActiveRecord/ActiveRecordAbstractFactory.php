@@ -20,7 +20,9 @@ abstract class ActiveRecordAbstractFactory {
     public abstract function getBarriosActiveRecord();
     public abstract function getCallesActiveRecord();
     public abstract function getClientesActiveRecord();
+    public abstract function getCilindrosActiveRecord();
     public abstract function getCondfiscalesActiveRecord();
+    public abstract function getGncActiveRecord();
     public abstract function getLocalidadesActiveRecord();
     public abstract function getMarcasActiveRecord();
     public abstract function getModelosActiveRecord();
@@ -28,6 +30,7 @@ abstract class ActiveRecordAbstractFactory {
     public abstract function getTiposActiveRecord();
     public abstract function getUsosActiveRecord();
     public abstract function getUsuarioActiveRecord();
+    public abstract function getVehiculoActiveRecord();
 
     /**
      * Permite obtener la factoria de un Active Record.
