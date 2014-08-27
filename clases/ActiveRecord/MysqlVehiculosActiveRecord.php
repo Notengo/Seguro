@@ -55,32 +55,25 @@ class MysqlVehiculosActiveRecord implements ActiveRecord{
         $sql = "SELECT * FROM vehiculos WHERE ";
         if($oValueObject->get_idclientes() != ''){
             $sql .= "idclientes = " . $oValueObject->get_idclientes() . ";" ;
-        } elseif($oValueObject->get_documento() != ''){
-            $sql .= "documento = " . $oValueObject->get_documento() . ";" ;
-        } elseif($oValueObject->get_apellido() != ''){
-            $sql .= "apellido = " . $oValueObject->get_apellido() . ";" ;
-        } elseif($oValueObject->get_nombre() != ''){
-            $sql .= "nombre = " . $oValueObject->get_nombre() . ";" ;
+        } elseif($oValueObject->get_idvehiculos() != ''){
+            $sql .= "idvehiculos = " . $oValueObject->get_idvehiculos() . ";" ;
         }
         $resultado = mysql_query($sql) or die(false);
         if($resultado){
             $fila = mysql_fetch_object($resultado);
-            $oValueObject->set_altura($fila->altura) ;
-            $oValueObject->set_apellido($fila->apellido) ;
-            $oValueObject->set_cc($fila->cc) ;
-            $oValueObject->set_cp($fila->cp) ;
-            $oValueObject->set_documento($fila->documento) ;
-            $oValueObject->set_dpto($fila->dpto) ;
-            $oValueObject->set_email($fila->email) ;
-            $oValueObject->set_fechanacimiento($fila->fechanacimiento) ;
-            $oValueObject->set_idbarrios($fila->idbarrios) ;
-            $oValueObject->set_idcalles($fila->idcalles) ;
+            $oValueObject->set_idvehiculos($fila->idvehiculos) ;
             $oValueObject->set_idclientes($fila->idclientes) ;
-            $oValueObject->set_idcondfiscales($fila->idcondfiscales) ;
-            $oValueObject->set_idlocalidad($fila->idlocalidad) ;
-            $oValueObject->set_idtipodocumentos($fila->idtipodocumentos) ;
-            $oValueObject->set_nombre($fila->nombre) ;
-            $oValueObject->set_piso($fila->piso) ;
+            $oValueObject->set_patente($fila->patente) ;
+            $oValueObject->set_motor($fila->motor) ;
+            $oValueObject->set_chacis($fila->chacis) ;
+            $oValueObject->set_fechafabricacion($fila->fechafabricacion) ;
+            $oValueObject->set_idmarcas($fila->idmarcas) ;
+            $oValueObject->set_idmodelos($fila->idmodelos) ;
+            $oValueObject->set_version($fila->version) ;
+            $oValueObject->set_idtipos($fila->idtipos) ;
+            $oValueObject->set_idusos($fila->idusos) ;
+            $oValueObject->set_naftero($fila->naftero) ;
+            $oValueObject->set_valorasegurado($fila->valorasegurado) ;
             return $oValueObject;
         } else {
             return FALSE;

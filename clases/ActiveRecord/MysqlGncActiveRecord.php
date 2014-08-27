@@ -87,6 +87,29 @@ class MysqlGncActiveRecord {
 
     /**
      * 
+     * @param GncValueObject $oValueObject
+     * @return boolean
+     */
+    public function buscarPorVehiculo($oValueObject) {
+        $sql = "SELECT * FROM gnc WHERE idvehiculos = "
+                . $oValueObject->get_idvehiculos() . ";";
+        $resultado = mysql_query($sql) or die(false);
+//        $resultado = mysql_query($sql);
+        $fila = mysql_fetch_object($resultado);
+//        if ($resultado) {
+        if ($fila) {
+            $oValueObject->set_idgnc($fila->idgnc);
+            $oValueObject->set_marca($fila->marca);
+            $oValueObject->set_regulador($fila->regulador);
+            $oValueObject->set_idvehiculos($fila->idvehiculos);
+            return $oValueObject;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * 
      * @return boolean|\CallesValueObject
      */
     public function buscarTodo() {

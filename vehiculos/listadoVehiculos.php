@@ -45,7 +45,10 @@ foreach ($oModelo as $aModelo) {
         <th></th>
     </tr>
     <?php
+    $vehiculos = array();
     foreach ($oVehiculo as $aVehiculo) {
+        $vehiculos[$aVehiculo->get_idvehiculos()] = new VehiculosValueObject();
+        $vehiculos[$aVehiculo->get_idvehiculos()] = $aVehiculo;
         ?>
         <tr>
             <td><?php echo $cliente[$aVehiculo->get_idclientes()]; ?></td>
@@ -53,7 +56,7 @@ foreach ($oModelo as $aModelo) {
             <td><?php echo $marcas[$aVehiculo->get_idmarcas()]; ?></td>
             <td><?php echo $modelos[$aVehiculo->get_idmodelos()]; ?></td>
             <td>
-                <img src="../images/editar.png" alt="" onclick="verVehiculo(<?php echo $aVehiculo->get_idvehiculos(); ?>, 'e', '<?php echo $aModelo->get_descripcion(); ?>', <?php echo $aModelo->get_idmarcas(); ?>)"/>
+                <img src="../images/editar.png" alt="" onclick="verVehiculo(<?php echo $aVehiculo->get_idvehiculos(); ?>, 'e', <?php echo $vehiculos; ?>)"/>
                 <img src="../images/borrar.png" alt="" onclick="verVehiculo(<?php echo $aVehiculo->get_idvehiculos(); ?>, 'b', '<?php echo $aModelo->get_descripcion(); ?>', <?php echo $aModelo->get_idmarcas(); ?>)"/>
             </td>
         </tr>

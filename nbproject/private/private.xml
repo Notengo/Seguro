@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlClientesActiveRecord.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/vehiculos/listadoVehiculos.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/vehiculos/marcas.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/vehiculos/buscarVehiculo.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/vehiculos/js/funciones.js</file>
             <file>file:/C:/xampp/htdocs/seguro/vehiculos/index.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/vehiculos/guardarVehiculo.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlVehiculosActiveRecord.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlGncActiveRecord.php</file>
         </group>
     </open-files>
 </project-private>

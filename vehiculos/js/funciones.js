@@ -282,7 +282,11 @@ function guardarVehiculos(){
     var version = document.getElementById('version').value;
     var idtipos = document.getElementById('tipo_hidden').value;
     var idusos = document.getElementById('uso_hidden').value;
-    var naftero = document.getElementById('naftero').value;
+    var naftero = 'N';
+    if(document.vehiculo.naftero[0].checked){
+        naftero = 'S';
+    }
+//    var naftero = document.getElementById('nafteroSi').value;
     var valor = document.getElementById('valor').value;
     var vehiculo = "idclientes="+idclientes+"&patente="+patente
             +"&motor="+motor+"&chasis="+chasis
@@ -373,3 +377,43 @@ function guardarVehiculos(){
     /* Fin Almacenamiento del vehiculo. */
     return true;
 };
+
+function verVehiculo(idvehiculo, accion){
+    var divResultado = document.getElementById('divResultado');
+    cambio(accion);
+
+    ajax=objetoAjax();
+    ajax.open("POST", "buscarVehiculo.php" ,true);
+    ajax.onreadystatechange=function() {
+        if (ajax.readyState === 1) {
+//            divResultado.innerHTML= '<img src="../images/cargando.gif"><br/>Guardando los datos...';
+        } else if (ajax.readyState === 4) {
+            divResultado.innerHTML = ajax.responseText;
+            window.scroll(0,0);
+            
+            document.getElementById('cliente_hidden').value = document.getElementById('v02').value;
+            document.getElementById('cliente').value = document.getElementById('v021').value;
+            document.getElementById('patente').value = document.getElementById('v03').value;
+            document.getElementById('motor').value = document.getElementById('v04').value;
+            document.getElementById('chasis').value = document.getElementById('v05').value;
+            document.getElementById('fabricacion').value = document.getElementById('v06').value;
+            document.getElementById('marca_hidden').value = document.getElementById('v07').value;
+            document.getElementById('marca').value = document.getElementById('v071').value;
+            document.getElementById('modelo_hidden').value = document.getElementById('v08').value;
+            document.getElementById('modelo').value = document.getElementById('v081').value;
+            document.getElementById('version').value = document.getElementById('v09').value;
+            document.getElementById('tipo_hidden').value = document.getElementById('v10').value;
+            document.getElementById('tipo').value = document.getElementById('v101').value;
+            document.getElementById('uso_hidden').value = document.getElementById('v11').value;
+            document.getElementById('uso').value = document.getElementById('v111').value;
+            if(document.getElementById('v12').value === 'S'){
+                document.vehiculo.naftero[0].checked = true;
+            } else {
+                document.vehiculo.naftero[1].checked = true ;
+            }
+            document.getElementById('valor').value = document.getElementById('v13').value;
+        }
+    };
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    ajax.send("idvehiculo="+idvehiculo);
+}
