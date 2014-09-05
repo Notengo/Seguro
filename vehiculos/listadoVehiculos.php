@@ -1,4 +1,9 @@
 <?php
+if(isset($_GET['usu'])){
+    $filtro = $_GET['usu'];
+} elseif(isset($_POST['usu'])){
+    $filtro = $_POST['usu'];
+}
 require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
 //require_once '../clases/ActiveRecord/MysqlActiveRecordAbstractFactory.php';
 
@@ -7,7 +12,13 @@ $oMysql->conectar();
 
 $oMysqlVehiculo = $oMysql->getVehiculoActiveRecord();
 $oVehiculo = new VehiculosValueObject();
-$oVehiculo = $oMysqlVehiculo->buscarTodo();
+/* Busco todos los vehiculos si es que no se posee un id de cliente. */
+if(!isset($filtro)){
+    $oVehiculo = $oMysqlVehiculo->buscarTodo();
+} else {
+    $oVehiculo->set_idclientes($filtro);
+    $oVehiculo = $oMysqlVehiculo->filtro($oVehiculo);
+}
 
 $oMysqlCliente = $oMysql->getClientesActiveRecord();
 $oCliente = new ClientesValueObject();

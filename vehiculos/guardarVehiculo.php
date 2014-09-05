@@ -45,7 +45,7 @@ if ($_POST['accion'] == 'Eliminar'){
 }
 
 /* Inicio grabacion gnc */
-if (isset($_POST['gnc']) == 'Si') {
+if (isset($_POST['gnc']) && $_POST['gnc'] == 'Si') {
     $oMysqlGnc = $oMysql->getGncActiveRecord();
     $oGnc = new GncValueObject();
     $oGnc->set_idvehiculos($oVehiculo->get_idvehiculos());

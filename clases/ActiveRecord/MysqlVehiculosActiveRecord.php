@@ -79,6 +79,41 @@ class MysqlVehiculosActiveRecord implements ActiveRecord{
             return FALSE;
         }
     }
+    
+    /**
+     * 
+     * @param VehiculosValueObject $oValueObject
+     * @return boolean
+     */
+    public function filtro($oValueObject) {
+        $sql = "SELECT * FROM vehiculos WHERE idclientes = " . $oValueObject->get_idclientes() . ";";
+
+        $resultado = mysql_query($sql) or die(false);
+        if($resultado){
+            $aVehiculo = array();
+            while ($fila = mysql_fetch_object($resultado)) {
+                $oValueObject = new VehiculosValueObject();
+                $oValueObject->set_idvehiculos($fila->idvehiculos);
+                $oValueObject->set_idclientes($fila->idclientes);
+                $oValueObject->set_patente($fila->patente);
+                $oValueObject->set_motor($fila->motor);
+                $oValueObject->set_chacis($fila->chacis);
+                $oValueObject->set_fechafabricacion($fila->fechafabricacion);
+                $oValueObject->set_idmarcas($fila->idmarcas);
+                $oValueObject->set_idmodelos($fila->idmodelos);
+                $oValueObject->set_version($fila->version);
+                $oValueObject->set_idtipos($fila->idtipos);
+                $oValueObject->set_idusos($fila->idusos);
+                $oValueObject->set_naftero($fila->naftero);
+                $oValueObject->set_valorasegurado($fila->valorasegurado);
+                $aVehiculo[] = $oValueObject;
+                unset($oValueObject);
+            }
+            return $aVehiculo;
+        } else {
+            return FALSE;
+        }
+    }
 
     public function buscarTodo() {
 //        $sql = "SELECT * FROM vehiculos WHERE baja IS NULL OR baja = '0000-00-00';" ;

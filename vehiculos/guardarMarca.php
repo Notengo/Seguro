@@ -36,7 +36,7 @@ if ($_POST['accion'] == 'Eliminar'){
 if($error == 0){
     mysql_query("COMMIT;");
     ?>
-    <div class="form-group has-success">
+    <div class="row has-success">
         <div class="col-xs6">
             <input type="text" value="Los Datos Se Grabaron Correctamente" class="form-control">
             <span class="input-icon fui-check-inverted"></span>
@@ -46,7 +46,7 @@ if($error == 0){
 } else {
     mysql_query("ROLLBACK;");
     ?>
-    <div class="form-group has-error">
+    <div class="row has-error">
         <div class="col-xs6">
             <input type="text" value="Los Datos No Han Sido Almacenados. Error n° <?php echo $error; ?>" class="form-control">
             <span class="input-icon fui-check-inverted"></span>

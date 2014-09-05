@@ -35,6 +35,14 @@ $oUsos->set_idusos($oVehiculo->get_idusos());
 $oUsos = $oMysqlUsos->buscar($oUsos);
 
 /* Aca tengo que buscar las imagenes para poder mostrar en pantalla. */
+/* Comienzo busqueda de imagenes */
+
+$oMysqlImagenes = $oMysql->getImagenesActiveRecord();
+$oImagenes = new ImagenesValueObject();
+$oImagenes->set_idvehiculos($oVehiculo->get_idvehiculos());
+$oImagenes = $oMysqlImagenes->buscar($oImagenes);
+
+/* Fin busqueda de imagenes */
 
 $oMysqlGnc = $oMysql->getGncActiveRecord();
 $oGnc = new GncValueObject();
@@ -63,6 +71,48 @@ if($oGnc){
 <input id="v12" type="hidden" value="<?php echo $oVehiculo->get_naftero(); ?>" />
 <input id="v13" type="hidden" value="<?php echo $oVehiculo->get_valorasegurado(); ?>" />
 
-<input id="v14" type="text" value="<?php echo ($oGnc) ? $oGnc->get_idgnc():''; ?>" />
+<input id="v14" type="hidden" value="<?php echo ($oGnc) ? $oGnc->get_idgnc():''; ?>" />
 <input id="v15" type="hidden" value="<?php echo ($oGnc) ? $oGnc->get_regulador():''; ?>" />
 <input id="v16" type="hidden" value="<?php echo ($oGnc) ? $oGnc->get_marca():''; ?>" />
+
+<!-- Imagenes -->
+<?php
+if(isset($oImagenes[0])) {
+    ?>
+    <img style="display: none;" src="verimagen.php?nro=1&idVehiculos=<?php echo $oVehiculo->get_idvehiculos();?>" id="v17" alt="seguros Adue"/>
+    <?php
+} else {
+    ?>
+    <img style="display: none;" src="#" id="v17" alt="no"/>
+    <?php
+}
+
+if(isset($oImagenes[1])) {
+    ?>
+    <img style="display: none;" src="verimagen.php?nro=2&idVehiculos=<?php echo $oVehiculo->get_idvehiculos();?>" id="v18" alt="seguros Adue"/>
+    <?php
+} else {
+    ?>
+    <img style="display: none;" src="#" id="v18" alt="no"/>
+    <?php
+}
+
+if(isset($oImagenes[2])) {
+    ?>
+    <img style="display: none;" src="verimagen.php?nro=3&idVehiculos=<?php echo $oVehiculo->get_idvehiculos();?>" id="v19" alt="seguros Adue"/>
+    <?php
+} else {
+    ?>
+    <img style="display: none;" src="#" id="v19" alt="no"/>
+    <?php
+}
+
+if(isset($oImagenes[3])) {
+    ?>
+    <img style="display: none;" src="verimagen.php?nro=4&idVehiculos=<?php echo $oVehiculo->get_idvehiculos();?>" id="v20" alt="seguros Adue"/>
+    <?php
+} else {
+    ?>
+    <img style="display: none;" src="#" id="v20" alt="no" />
+    <?php
+}

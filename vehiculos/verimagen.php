@@ -4,7 +4,8 @@ require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
 
 $oMysql = ActiveRecordAbstractFactory::getActiveRecordFactory(ActiveRecordAbstractFactory::MYSQL);
 $oMysql->conectar();
-$sql = "Select foto from imagenes WHERE idvehiculos = 1 AND nro = 1";
+$sql = "Select foto from imagenes WHERE idvehiculos = ".$_GET['idVehiculos']." AND nro = ".$_GET['nro'];
+//$sql = "Select foto from imagenes WHERE idvehiculos = 36 AND nro = 1";
 $resultado = mysql_query($sql);
 $resultado = mysql_fetch_array($resultado);
 

@@ -7,6 +7,7 @@ require_once '../clases/ActiveRecord/MysqlClientesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCilindrosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCondfiscalesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlGncActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlImagenesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlLocalidadesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlMarcasActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlModelosActiveRecord.php';
@@ -137,6 +138,14 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory
     */
    public function getGncActiveRecord() {
        return new MysqlGncActiveRecord();
+   }
+   
+   /**
+    * 
+    * @return \MysqlImagenesActiveRecord
+    */
+   public function getImagenesActiveRecord() {
+       return new MysqlImagenesActiveRecord();
    }
    
    /**

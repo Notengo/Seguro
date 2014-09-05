@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/seguro/vehiculos/buscarVehiculo.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/vehiculos/js/funciones.js</file>
+            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlMarcasActiveRecord.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/poliza/index.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/poliza/js/funciones.js</file>
+            <file>file:/C:/xampp/htdocs/seguro/clases/ValueObject/PolizasValueObject.php</file>
+            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlPolizasActiveRecord.php</file>
             <file>file:/C:/xampp/htdocs/seguro/vehiculos/index.php</file>
-            <file>file:/C:/xampp/htdocs/seguro/clases/ActiveRecord/MysqlGncActiveRecord.php</file>
         </group>
     </open-files>
 </project-private>

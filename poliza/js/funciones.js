@@ -1,0 +1,84 @@
+function objetoAjax() {
+    var xmlhttp = false;
+    try {
+        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+        try {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (E) {
+            xmlhttp = false;
+        }
+    }
+    if (!xmlhttp && typeof XMLHttpRequest !== 'undefined') {
+        xmlhttp = new XMLHttpRequest();
+    }
+    return xmlhttp;
+}
+
+function soloNumeros(evt) {
+    if (window.event) {// IE
+        keynum = evt.keyCode;
+    } else { // otro navegador
+        keynum = evt.which;
+    }
+    if ((keynum > 47 && keynum < 58) || (keynum == 0) || (keynum == 13) || (keynum == 8) || (keynum == 46)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function guardarDatos() {
+    if (document.getElementById("guardar").value === "Nuevo") {
+        document.getElementById('nuevo').style.display = 'initial';
+        document.getElementById('poliza').focus();
+        document.getElementById("guardar").value = "Guardar";
+        document.getElementById("cancelar").className = "btn btn-large btn-block btn-primary";
+        return true;
+    }
+    
+//    if (document.getElementById("guardar").value === "Eliminar" || document.getElementById("guardar").value === "Actualizar") {
+//        idmarca = document.getElementById('marca_hidden').value;
+//    }
+//    if (document.getElementById("guardar").value === "Aceptar") {
+//        location.reload();
+//        return false;
+//    } else {
+//        var accion = document.getElementById("guardar").value;
+//    }
+
+    var nropoliza = document.getElementById('poliza').value;
+    var idcompanias = document.getElementById('compania').value;
+    var idclientes = document.getElementById('cliente_hidden').value;
+    var patente = document.getElementById('patente').value;
+    var idcoberturas = document.getElementById('cobertura').value;
+    var idotrosriesgos = document.getElementById('otroRiesgo').value;
+    var vigenciadesde = document.getElementById('desde').value;
+    var vigenciahasta = document.getElementById('hasta').value;
+    var segvencimiento = document.getElementById('vencimiento2').value;
+    var premio = document.getElementById('premio').value;
+    var prima = document.getElementById('prima').value;
+    var cuotas = document.getElementById('cuota').value;
+    var idformaspago= document.getElementById('formapago').value;
+    var cbu = document.getElementById('cbu').value;
+    var divResultado = document.getElementById('divResultado');
+
+    ajax = objetoAjax();
+    ajax.open("POST", "guardarPoliza.php", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 1) {
+//            divResultado.innerHTML= '<img src="../images/cargando.gif"><br/>Guardando los datos...';
+        } else if (ajax.readyState === 4) {
+            divResultado.innerHTML = ajax.responseText;
+            document.getElementById("guardar").value = "Aceptar";
+        }
+    };
+    ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    ajax.send("nropoliza=" + nropoliza + "&idcompanias=" + idcompanias
+            + "&idclientes=" + idclientes + "&patente=" + patente
+            + "&idcoberturas=" + idcoberturas + "&idotrosriesgos=" + idotrosriesgos
+            + "&vigenciadesde=" + vigenciadesde + "&vigenciahasta=" + vigenciahasta
+            + "&segvencimiento=" + segvencimiento + "&premio=" + premio
+            + "&prima=" + prima + "&cuotas=" + cuotas
+            + "&idformaspago=" + idformaspago + "&cbu=" + cbu);
+}
