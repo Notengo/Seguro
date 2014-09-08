@@ -1,6 +1,6 @@
 <?php
 include_once '../clases/ValueObject/PolizasValueObject.php';
-include_once './activeRecordInterface.php';
+include_once 'activeRecordInterface.php';
 /**
  * Description of MysqlPolizasActiveRecord
  *
@@ -106,7 +106,6 @@ class MysqlPolizasActiveRecord implements ActiveRecord{
         } else {
             $sql .= "NULL);";
         }
-        
         
         
         if (mysql_query($sql)) {

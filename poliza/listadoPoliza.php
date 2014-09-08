@@ -1,10 +1,11 @@
 <?php
+require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+$oMysql = ActiveRecordAbstractFactory::getActiveRecordFactory(ActiveRecordAbstractFactory::MYSQL);
+$oMysql->conectar();
+
+$oMysqlPoliza = $oMysql->getPolizaActiveRecord();
+$oPoliza = new PolizasValueObject();
 
 ?>
 <html>
@@ -15,9 +16,19 @@
     </head>
     <body>
         <table class="table table-striped table-bordered table-hover tab-pane table-condensed">
-            <tr><th>ID</th><th>N&uacute;mero de Poliza</th></tr>
             <tr>
-               
+                <th>Clietne</th>
+                <th>N&uacute;mero de Poliza</th>
+                <th>Veh&iacute;culo</th>
+                <th></th></tr>
+            <tr>
+                <td>Prueba</td>
+                <td>Prueba</td>
+                <td>Prueba</td>
+                <td>
+                    <img src="../images/editar.png" alt="" onclick="verVehiculo(<?php // echo $aVehiculo->get_idvehiculos(); ?>, 'e', <?php // echo $vehiculos; ?>)"/>
+                    <img src="../images/borrar.png" alt="" onclick="verVehiculo(<?php // echo $aVehiculo->get_idvehiculos(); ?>, 'b', '<?php // echo $aModelo->get_descripcion(); ?>', <?php // echo $aModelo->get_idmarcas(); ?>)"/>
+                </td>
             </tr>
         </table>
     </body>    

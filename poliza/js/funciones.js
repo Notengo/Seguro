@@ -36,32 +36,34 @@ function guardarDatos() {
         document.getElementById("cancelar").className = "btn btn-large btn-block btn-primary";
         return true;
     }
-    
-//    if (document.getElementById("guardar").value === "Eliminar" || document.getElementById("guardar").value === "Actualizar") {
-//        idmarca = document.getElementById('marca_hidden').value;
-//    }
-//    if (document.getElementById("guardar").value === "Aceptar") {
-//        location.reload();
-//        return false;
-//    } else {
-//        var accion = document.getElementById("guardar").value;
-//    }
 
-    var nropoliza = document.getElementById('poliza').value;
-    var idcompanias = document.getElementById('compania').value;
-    var idclientes = document.getElementById('cliente_hidden').value;
-    var patente = document.getElementById('patente').value;
-    var idcoberturas = document.getElementById('cobertura').value;
-    var idotrosriesgos = document.getElementById('otroRiesgo').value;
-    var vigenciadesde = document.getElementById('desde').value;
-    var vigenciahasta = document.getElementById('hasta').value;
-    var segvencimiento = document.getElementById('vencimiento2').value;
-    var premio = document.getElementById('premio').value;
-    var prima = document.getElementById('prima').value;
-    var cuotas = document.getElementById('cuota').value;
-    var idformaspago= document.getElementById('formapago').value;
-    var cbu = document.getElementById('cbu').value;
-    var divResultado = document.getElementById('divResultado');
+    if (document.getElementById("guardar").value === "Eliminar"
+            || document.getElementById("guardar").value === "Actualizar") {
+        idmarca = document.getElementById('marca_hidden').value;
+    }
+    if (document.getElementById("guardar").value === "Aceptar") {
+//        location.reload();
+        location.href = '../poliza';
+        return false;
+    } else {
+        var accion = document.getElementById("guardar").value;
+    }
+
+    var nropoliza = document.getElementById('poliza').value,
+            idcompanias = document.getElementById('compania').value,
+            idclientes = document.getElementById('cliente_hidden').value,
+            patente = document.getElementById('patente').value,
+            idcoberturas = document.getElementById('cobertura').value,
+            idotrosriesgos = document.getElementById('otroRiesgo').value,
+            vigenciadesde = document.getElementById('desde').value,
+            vigenciahasta = document.getElementById('hasta').value,
+            segvencimiento = document.getElementById('vencimiento2').value,
+            premio = document.getElementById('premio').value,
+            prima = document.getElementById('prima').value,
+            cuotas = document.getElementById('cuota').value,
+            idformaspago = document.getElementById('formapago').value,
+            cbu = document.getElementById('cbu').value,
+            divResultado = document.getElementById('divResultado');
 
     ajax = objetoAjax();
     ajax.open("POST", "guardarPoliza.php", true);
@@ -80,5 +82,6 @@ function guardarDatos() {
             + "&vigenciadesde=" + vigenciadesde + "&vigenciahasta=" + vigenciahasta
             + "&segvencimiento=" + segvencimiento + "&premio=" + premio
             + "&prima=" + prima + "&cuotas=" + cuotas
-            + "&idformaspago=" + idformaspago + "&cbu=" + cbu);
+            + "&idformaspago=" + idformaspago + "&cbu=" + cbu
+            + "&accion=" + accion);
 }

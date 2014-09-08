@@ -429,8 +429,8 @@ function ajax_showOptionsTipo(inputObj, paramToExternalFile, e) {
     }
 }
 
-function ajax_showOptionsUso(inputObj, paramToExternalFile, e) {
-    var ajax_list_externalFile = 'lista_uso.php';	// Path to external file
+function ajax_showOptionsPatente(inputObj, paramToExternalFile, e) {
+    var ajax_list_externalFile = 'lista_patente.php';	// Path to external file
     if (e.keyCode === 13 || e.keyCode === 9)
         return;
     if (ajax_list_currentLetters[inputObj.name] === inputObj.value)

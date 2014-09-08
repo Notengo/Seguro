@@ -1,4 +1,10 @@
 <?php
+// Se requieren los script para acceder a los datos de la DB
+require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
+//require_once '../clases/ActiveRecord/MysqlActiveRecordAbstractFactory.php';
+
+$oMysql = ActiveRecordAbstractFactory::getActiveRecordFactory(ActiveRecordAbstractFactory::MYSQL);
+$oMysql->conectar();
 //$id= $_GET['usu'];
 //echo "$id";
 ?>
@@ -29,8 +35,14 @@
                         <div class="col-lg-1"></div>
                         <div class="col-lg-5">
                             <label class="label label-success">Compañ&iacute;a</label>
-                            <input type="text" name="compania" id="compania" class="form-control" placeholder="Nombre de la compa&ntilde;ia"/>
-                            <input type="hidden" name="compania_ID" id="compania_hidden"/>
+                            <select name="compania" id="compania" class="form-control" >
+                                <option value="0">Seleccione</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+<!--                            <input type="text" name="compania" id="compania" class="form-control" placeholder="Nombre de la compa&ntilde;ia"/>
+                            <input type="hidden" name="compania_ID" id="compania_hidden"/>-->
                         </div>
                         <div class="col-lg-1">
                             <br>
@@ -42,8 +54,11 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label class="label label-success">Cliente</label>
-                            <input type="text" name="cliente" id="cliente" class="form-control" placeholder="Apellido, Nombre"/>
-                            <input type="hidden" name="cliente_ID" id="cliente_hidden" />
+                            <input type="text" name="cliente" id="cliente" class="form-control" data-toggle="tooltip" 
+                                   placeholder="Cliente Asegurado" title="Cliente Asegurado" alt="Cliente Asegurado"
+                                   onkeyup="ajax_showOptionsCliente(this, 'getClienteByLetters', event);"
+                                   value="<?php echo (isset($oCliente)) ? $oCliente->get_apellido() . ', ' . $oCliente->get_nombre() : ''; ?>" />
+                            <input type="hidden" name="cliente_ID" id="cliente_hidden" value="<?php echo (isset($oCliente)) ? $oCliente->get_idclientes() : ''; ?>" />
                         </div>
                         <div class="col-lg-1">
                             <br>
@@ -55,7 +70,12 @@
                     <div class="row">
                         <div class="col-lg-2">
                             <label class="label label-success">Patente</label>
-                            <input type="text" name="patente" id="patente" class="form-control" placeholder="seleccione"/>
+                            <input type="text" name="patente" id="patente" class="form-control" data-toggle="tooltip" 
+                                   title="Matricula Veh&iacute;culo Asegurado" alt="Matricula Veh&iacute;culo"
+                                   onkeyup="ajax_showOptionsPatente(this, 'getPatenteByLetters', event);"
+                                   value="<?php echo (isset($oCliente)) ? $oCliente->get_apellido() . ', ' . $oCliente->get_nombre() : ''; ?>" />
+                            <input type="hidden" name="patente_ID" id="patente_hidden" value="" />
+                            <!--<input type="text" name="patente" id="patente" class="form-control" placeholder="seleccione"/>-->
                         </div>
                         <div class="col-lg-1">
                             <br>
