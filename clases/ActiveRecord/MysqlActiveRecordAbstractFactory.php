@@ -7,6 +7,10 @@ require_once '../clases/ActiveRecord/MysqlCallesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlClientesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCilindrosActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCondfiscalesActiveRecord.php';
+
+require_once '../clases/ActiveRecord/MysqlCoberturasActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlCuotasActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlGncActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlImagenesActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlLocalidadesActiveRecord.php';
@@ -100,6 +104,20 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory {
         return new MysqlCondfiscalesActiveRecord();
     }
 
+    /**
+     * @return MysqlCoberturasActiveRecord
+     */
+    public function getCoberturasActiveRecord() {
+        return new MysqlCoberturasActiveRecord();
+    }
+
+    /**
+     * @return MysqlCuotasActiveRecord
+     */
+    public function getCuotaActiveRecord() {
+        return new MysqlCuotasActiveRecord();
+    }
+    
     /**
      * 
      * @return \MysqlTelefonosActiveRecord

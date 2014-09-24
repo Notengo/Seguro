@@ -22,6 +22,9 @@ abstract class ActiveRecordAbstractFactory {
     public abstract function getClientesActiveRecord();
     public abstract function getCilindrosActiveRecord();
     public abstract function getCondfiscalesActiveRecord();
+    public abstract function getCoberturasActiveRecord();
+    public abstract function getCuotaActiveRecord();
+
     public abstract function getGncActiveRecord();
     public abstract function getImagenesActiveRecord();
     public abstract function getLocalidadesActiveRecord();

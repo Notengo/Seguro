@@ -76,23 +76,17 @@ var $PDFVersion;         // PDF version number
 // esta funcion fue agregada para crear tablas
 function TablaBasica($header)
    {
-   	 $this->Ln(20);
-   	 $this->Cell(200,0,'Lista de Productos y Servicios',0,0,'C');
+    $va=  array(1111,'leonardo javier','2014-09-05',230,'cupon:7','2/6');
+    $this->Ln(10);
+    $this->Cell(200,0,'Lista de Cobro Asegurados',0,0,'C');
     //Cabecera
     $this->Ln(4);
     foreach($header as $col)
-    $this->Cell(47,7,$col,1,0,'C');
-    $this->Ln();
+      
+    $this->Cell(30,8,$col,1,0,'C');
     
-      $this->Cell(47,5,"hola",1,0,'C');
-      $this->Cell(47,5,"hola2",1,0,'C');
-      $this->Cell(47,5,"hola3",1,0,'C');
-      $this->Cell(47,5,"hola4",1,0,'C');
-      $this->Ln();
-      $this->Cell(47,5,"linea ",1,0,'C');
-      $this->Cell(47,5,"linea 2",1,0,'C');
-      $this->Cell(47,5,"linea 3",1,0,'C');
-      $this->Cell(47,5,"linea 4",1,0,'C');
+    $this->Ln();
+ 
    }
 // fin  
 function FPDF($orientation='P', $unit='mm', $size='A4')

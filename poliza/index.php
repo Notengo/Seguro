@@ -16,6 +16,7 @@ $oMysql->conectar();
         <script src="js/ajax-dynamic-list.js" type="text/javascript"></script>
         <script src="js/ajax.js" type="text/javascript"></script>
         <script src="js/funciones.js" type="text/javascript"></script>
+        <script src="js/modal.js" type="text/javascript"></script>
 
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../bootstrap/css/bootstrap-theme.min.css">
@@ -60,10 +61,10 @@ $oMysql->conectar();
                                    value="<?php echo (isset($oCliente)) ? $oCliente->get_apellido() . ', ' . $oCliente->get_nombre() : ''; ?>" />
                             <input type="hidden" name="cliente_ID" id="cliente_hidden" value="<?php echo (isset($oCliente)) ? $oCliente->get_idclientes() : ''; ?>" />
                         </div>
-                        <div class="col-lg-1">
+<!--                        <div class="col-lg-1">
                             <br>
                             <div class="glyphicon glyphicon-plus"></div>
-                        </div>
+                        </div>-->
                     </div>
                     <br>
 
@@ -77,27 +78,26 @@ $oMysql->conectar();
                             <input type="hidden" name="patente_ID" id="patente_hidden" value="" />
                             <!--<input type="text" name="patente" id="patente" class="form-control" placeholder="seleccione"/>-->
                         </div>
-                        <div class="col-lg-1">
+<!--                        <div class="col-lg-1">
                             <br>
                             <div class="glyphicon glyphicon-plus"></div>
                         </div>
-                        <div class="col-lg-1"></div>
+                        <div class="col-lg-1"></div>-->
                     </div>
                     <br>
 
                     <div class="row">
                         <div class="col-lg-2">
                             <label class="label label-success">Cobertura</label>
-                            <select name="cobertura" id="cobertura" class="form-control" >
-                                <option value="0">Seleccione</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                            <div id="divcobertura">
+                                <?php include_once 'selectCobertura.php'; ?>
+                            </div>
                         </div>
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
+                            <a href="#" data-toggle="modal" data-target="#myModal" onclick="altaModal(4)">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                         </div>
 
                         <div class="col-lg-1"></div>
@@ -195,9 +195,27 @@ $oMysql->conectar();
             <div class="row">
                 <legend>Listado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</legend>
             </div>
-            <?php include_once './listadoPoliza.php'; ?>   
+            <?php include_once './listadoPoliza.php'; ?>
         </div>
-    </body>    
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Marca</h4>
+                    </div>
+                    <div class="modal-body" id="cuerpoModal">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="botonModal" class="btn btn-primary" onclick="guardarModal()">Guardar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input id="guardarModal" type="hidden" value="" />
+    </body>
     <script src="../bootstrap/js/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 </html>

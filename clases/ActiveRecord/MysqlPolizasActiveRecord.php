@@ -15,12 +15,57 @@ class MysqlPolizasActiveRecord implements ActiveRecord{
         
     }
 
+    /**
+     * 
+     * @param PolizasValueObject $oValueObject
+     * @return boolean|array
+     */
     public function buscar($oValueObject) {
-        
+        $sql = "SELECT * FROM `polizas`;";
+        $resultado = mysql_query($sql);
+        if($resultado){
+            $aPoliza = array();
+            while ($fila = mysql_fetch_object($resultado)) {
+                $oValueObject = new PolizasValueObject();
+            }
+            return $aPoliza;
+        } else {
+            return false;
+        }
     }
 
+    /**
+     * 
+     * @return boolean|array
+     */
     public function buscarTodo() {
-        
+        $sql = "SELECT * FROM `polizas`;";
+        $resultado = mysql_query($sql);
+        if($resultado){
+            $aPoliza = array();
+            while ($fila = mysql_fetch_object($resultado)) {
+                $oValueObject = new PolizasValueObject();
+                $oValueObject->set_nropoliza($fila->nropoliza);
+                $oValueObject->set_idcompanias($fila->idcompanias);
+                $oValueObject->set_idclientes($fila->idclientes);
+                $oValueObject->set_patente($fila->patente);
+                $oValueObject->set_idcoberturas($fila->idcoberturas);
+                $oValueObject->set_idotrosriesgos($fila->idotrosriesgos);
+                $oValueObject->set_vigenciadesde($fila->vigenciadesde);
+                $oValueObject->set_vigenciahasta($fila->vigenciahasta);
+                $oValueObject->set_segvencimiento($fila->segvencimiento);
+                $oValueObject->set_premio($fila->premio);
+                $oValueObject->set_prima($fila->prima);
+                $oValueObject->set_cuotas($fila->cuotas);
+                $oValueObject->set_idformaspago($fila->idformaspago);
+                $oValueObject->set_cbu($fila->cbu);
+                $aPoliza[] = $oValueObject;
+                unset($oValueObject);
+            }
+            return $aPoliza;
+        } else {
+            return false;
+        }
     }
 
     public function contar() {

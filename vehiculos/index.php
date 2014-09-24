@@ -284,6 +284,6 @@ if (isset($_GET['usu'])) {
         ?>
         <?php include_once '../includes/php/footer.php'; ?>
         <script src="../bootstrap/js/jquery.min.js"></script>
-        <script src="../bootstrap/js/bootstrap.js"></script>   
+        <script src="../bootstrap/js/bootstrap.min.js"></script>   
     </body>
 </html>

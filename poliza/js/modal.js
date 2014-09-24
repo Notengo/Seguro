@@ -31,8 +31,8 @@ function altaModal(item) {
         abrir = 'modalTipo.php';
     }
     if (item === 4) {
-        document.getElementById('myModalLabel').innerHTML = 'Alta de Tipo de Usos';
-        abrir = 'modalUso.php';
+        document.getElementById('myModalLabel').innerHTML = 'Alta de Tipo de Cobertura';
+        abrir = 'modalCobertura.php';
     }
     document.getElementById('guardarModal').value = item;
     var divResultado = document.getElementById('cuerpoModal');
@@ -51,37 +51,38 @@ function altaModal(item) {
 
 function guardarModal() {
     var item = document.getElementById('item').value;
-    if (item === '1') {
-        var marca = document.getElementById('marca_modal').value;
-        var divResultado = document.getElementById('divResultadoModal');
+    if (item === '4') {
+        var nombre = document.getElementById('nombre_modal').value,
+                codigo = document.getElementById('codigo_modal').value,
+                descripcion = document.getElementById('descripcion_modal').value,
+                divResultado = document.getElementById('divResultadoModal');
         ajax = objetoAjax();
-        ajax.open("POST", "guardarMarca.php", true);
+        ajax.open("POST", "guardarcobertura.php", true);
         ajax.onreadystatechange = function() {
             if (ajax.readyState === 1) {
 //            divResultado.innerHTML= '<img src="../images/cargando.gif"><br/>Guardando los datos...';
             } else if (ajax.readyState === 4) {
                 divResultado.innerHTML = ajax.responseText;
+                refrescar4();
                 document.getElementById("botonModal").className = "btn btn-primary oculto";
             }
         };
         ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        ajax.send("marca=" + marca + "&accion=Guardar");
+        ajax.send("nombre=" + nombre
+                + "&codigo=" + codigo
+                + "&descripcion=" + descripcion
+                + "&accion=Guardar");
     }
-    if (item === '2') {
-        var modelo = document.getElementById('modelo_modal').value;
-        var idmarca = document.getElementById('marca_modal').value;
-        var divResultado = document.getElementById('divResultadoModal');
-        ajax = objetoAjax();
-        ajax.open("POST", "guardarModelo.php", true);
-        ajax.onreadystatechange = function() {
-            if (ajax.readyState === 1) {
-//            divResultado.innerHTML= '<img src="../images/cargando.gif"><br/>Guardando los datos...';
-            } else if (ajax.readyState === 4) {
-                divResultado.innerHTML = ajax.responseText;
-                document.getElementById("botonModal").className = "btn btn-primary oculto";
-            }
-        };
-        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        ajax.send("modelo= " + modelo + "&idmarca= " + idmarca + "&accion=Guardar");
-    }
+}
+
+function refrescar4() {
+    ajax = objetoAjax();
+    ajax.open("POST", "selectCobertura.php", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            document.getElementById("divcobertura").innerHTML = ajax.responseText;
+        }
+    };
+    ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    ajax.send();
 }

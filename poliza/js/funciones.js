@@ -85,3 +85,52 @@ function guardarDatos() {
             + "&idformaspago=" + idformaspago + "&cbu=" + cbu
             + "&accion=" + accion);
 }
+
+function guardarCuotas() {
+    if (document.getElementById("guardar").value === "Nuevo") {
+        document.getElementById('nuevo').style.display = 'initial';
+        document.getElementById("guardar").value = "Guardar";
+        document.getElementById("cancelar").className = "btn btn-large btn-block btn-primary";
+        document.getElementById('poliza').focus();
+        return true;
+    }
+
+//    if(document.getElementById("guardar").value === "Cancelar" || document.getElementById("guardar").value === "Aceptar"){
+    var cliente = '';
+    if (document.getElementById("guardar").value === "Eliminar" || document.getElementById("guardar").value === "Actualizar") {
+        cliente = document.getElementById('cliente').value;
+    }
+    if (document.getElementById("guardar").value === "Aceptar") {
+        location.reload();
+        return false;
+    } else {
+        var accion = document.getElementById("guardar").value;
+    }
+
+    var poliza = document.getElementById('poliza').value,
+            cuotas = document.getElementById('cuotas').value,
+            monto = document.getElementById('monto').value,
+            ven1 = document.getElementById('vencimiento1').value,
+            ven2 = document.getElementById('vencimiento2').value,
+            pagada = document.getElementById('pagada').value,
+            fechapago = document.getElementById('fechapago').value;
+
+    var divResultado = document.getElementById('divResultado');
+
+    ajax = objetoAjax();
+    ajax.open("POST", "guardarCuota.php", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 1) {
+//            divResultado.innerHTML= '<img src="../images/cargando.gif"><br/>Guardando los datos...';
+        } else if (ajax.readyState === 4) {
+            divResultado.innerHTML = ajax.responseText;
+            document.getElementById("guardar").value = "Aceptar";
+        }
+    };
+    ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    ajax.send("poliza=" + poliza + "&cuotas=" + cuotas
+            + "&monto=" + monto + "&ven1=" + ven1
+            + "&ven2=" + ven2 + "&pagada=" + pagada
+            + "&fechapago=" + fechapago);
+}

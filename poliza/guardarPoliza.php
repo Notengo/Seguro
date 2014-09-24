@@ -6,6 +6,9 @@ $oMysql->conectar();
 $oMysqlPoliza = $oMysql->getPolizaActiveRecord();
 $oPoliza = new PolizasValueObject();
 
+$oMysqlCuotas = $oMysql->getCuotaActiveRecord();
+$oCuota = new CuotasValueObject;
+
 $oPoliza->set_nropoliza($_POST['nropoliza']);
 $oPoliza->set_idcompanias($_POST['idcompanias']);
 $oPoliza->set_idclientes($_POST['idclientes']);
@@ -28,6 +31,50 @@ mysql_query("BEGIN;");
 if (!$oMysqlPoliza->guardar($oPoliza)) {
     $error = 1;
 }
+
+$vigenciaDesde = explode('-', $_POST['vigenciadesde']);
+
+$oCuota->set_nropoliza($_POST['nropoliza']);
+$oCuota->set_monto($_POST['premio'] / $_POST['cuotas']);
+for ($i = 1; $i <= $_POST['cuotas']; $i++) {
+    $oCuota->set_nrocuota($i);
+
+    /*
+     * Si el dia del segundo vencimiento es  menor que el del primer vencimiento,
+     * el mes del segundo vencimiento aumenta en 1, y se el mes es 12 y aumenta en 1
+     * el año aumenta en 1
+     */
+
+    /* Seteo de la fecha de vigencia desde. */
+    $anio = $vigenciaDesde[0];
+    $mes = ($vigenciaDesde[1] + $i - 1);
+    if ($mes >= 13) {
+        $mes = $mes - 12;
+        $anio ++;
+    }
+
+    $oCuota->set_vencimiento1($anio . "-" . $mes . "-" . $vigenciaDesde[2]);
+
+    /* Segundo vencimiento. */
+    $mes2 = $mes;
+    if ($_POST['segvencimiento'] <= $vigenciaDesde[2]) {
+        $mes2 = $mes + 1;
+    }
+
+    $anio2 = $anio;
+    if ($mes2 >= 13) {
+        $mes2 = $mes2 - 12;
+        $anio2 ++;
+    }
+
+    $oCuota->set_vencimiento2($anio2 . "-" . $mes2 . "-" . $_POST['segvencimiento']);
+//    var_dump($oCuota);
+//    echo $i ." Vencimiento 1: ".$oCuota->get_vencimiento1() . "- vencimiento 2: " . $oCuota->get_vencimiento2() ." - ". $oCuota->get_monto(). " <br>";
+    if(!$oMysqlCuotas->guardar($oCuota)){
+        $error = 2;
+    }
+}
+
 if ($error == 0) {
     mysql_query("COMMIT;");
     ?>
