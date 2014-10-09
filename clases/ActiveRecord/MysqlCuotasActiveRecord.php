@@ -13,17 +13,91 @@ class MysqlCuotasActiveRecord implements ActiveRecord {
     /**
      * 
      * @param CuotasValueObject $oValueObject
+     * @return boolean
      */
     public function actualizar($oValueObject) {
-        
+        $sql = "UPDATE cuotas SET fechapago = "
+                . "'" . $oValueObject->get_fechapago()
+                . "', pago = " . $oValueObject->get_pago()
+                . " WHERE nrocuota = " . $oValueObject->get_nrocuota()
+                . " AND nropoliza = '" . $oValueObject->get_nropoliza() . "';";
+        $resultado = mysql_query($sql);
+        if ($resultado) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function borrar($oValueObject) {
         
     }
 
+    /**
+     * 
+     * @param CuotasValueObject $oValueObject
+     */
     public function buscar($oValueObject) {
-        
+        $sql = "SELECT * FROM `cuotas` WHERE nropoliza = '"
+                . $oValueObject->get_nropoliza . "';";
+    }
+
+    /**
+     * 
+     * @param CuotasValueObject $oValueObject
+     * @return boolean|\CuotasValueObject
+     */
+    public function buscarPFecha($oValueObject) {
+        $sql = "SELECT * FROM cuotas WHERE fechapago = '"
+                . $oValueObject->get_fechapago() . "';";
+        $resultado = mysql_query($sql) or die(false);
+        if ($resultado) {
+            $aCuotas = array();
+            while ($tupla = mysql_fetch_object($resultado)) {
+                $oValueObject = new CuotasValueObject();
+                $oValueObject->set_nrocuota($tupla->nrocuota);
+                $oValueObject->set_nropoliza($tupla->nropoliza);
+                $oValueObject->set_monto($tupla->monto);
+                $oValueObject->set_vencimiento1($tupla->vencimiento1);
+                $oValueObject->set_vencimiento2($tupla->vencimiento2);
+                $oValueObject->set_pago($tupla->pago);
+                $oValueObject->set_fechapago($tupla->fechapago);
+                $aCuotas[] = $oValueObject;
+                unset($oValueObject);
+            }
+            return $aCuotas;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * 
+     * @param CuotasValueObject $oValueObject
+     * @return boolean|\CuotasValueObject
+     */
+    public function buscarPoliza($oValueObject) {
+        $sql = "SELECT * FROM cuotas WHERE nropoliza = '"
+                . $oValueObject->get_nropoliza() . "';";
+        $resultado = mysql_query($sql) or die(false);
+        if ($resultado) {
+            $aCuotas = array();
+            while ($tupla = mysql_fetch_object($resultado)) {
+                $oValueObject = new CuotasValueObject();
+                $oValueObject->set_nrocuota($tupla->nrocuota);
+                $oValueObject->set_nropoliza($tupla->nropoliza);
+                $oValueObject->set_monto($tupla->monto);
+                $oValueObject->set_vencimiento1($tupla->vencimiento1);
+                $oValueObject->set_vencimiento2($tupla->vencimiento2);
+                $oValueObject->set_pago($tupla->pago);
+                $oValueObject->set_fechapago($tupla->fechapago);
+                $aCuotas[] = $oValueObject;
+                unset($oValueObject);
+            }
+            return $aCuotas;
+        } else {
+            return FALSE;
+        }
     }
 
     public function buscarTodo() {

@@ -24,12 +24,17 @@ abstract class ActiveRecordAbstractFactory {
     public abstract function getCondfiscalesActiveRecord();
     public abstract function getCoberturasActiveRecord();
     public abstract function getCuotaActiveRecord();
+    public abstract function getCompaniaActiveRecord();
 
     public abstract function getGncActiveRecord();
     public abstract function getImagenesActiveRecord();
     public abstract function getLocalidadesActiveRecord();
     public abstract function getMarcasActiveRecord();
     public abstract function getModelosActiveRecord();
+    public abstract function getOtrosRiesgosActiveRecord();
+
+    public abstract function getPlanillaActiveRecord();
+    
     public abstract function getPolizaActiveRecord();
     public abstract function getTelefonosActiveRecord();
     public abstract function getTiposActiveRecord();

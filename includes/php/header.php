@@ -21,7 +21,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vah&iacute;culos&nbsp;<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Veh&iacute;culos&nbsp;<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="../vehiculos/marcas.php">Marcas</a></li>
                         <li><a href="../vehiculos/modelos.php">Modelos</a></li>
@@ -30,19 +30,12 @@
                         <li><a href="../vehiculos">Veh&iacute;culos</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Soluci&oacute;n de problemas&nbsp;<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="../solucionproblemas/planillas.php">N&uacute;mero de planilla</a></li>
-                        <li><a href="../solucionproblemas/correccion.php">Correcci&oacute;n pago planillas</a></li>
-                    </ul>
-                </li>
                 <li><a href="../clientes">Clientes</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Polizas&nbsp;<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="../poliza">Polizas</a></li>
-                        <li><a href="../poliza/cuotasPoliza.php">Cuotas</a></li>
+                        <li><a href="../poliza/index.php">Listado de polizas</a></li>
+                        <li><a href="#">Cuota de la poliza</a></li>
                         <li><a href="#">Tipo de polizas</a></li>
                         <!--<li class="divider"></li>-->
                     </ul>
@@ -54,6 +47,28 @@
                         <li><a href="#">Listado de otros riesgos</a></li>
                         <!--<li class="divider"></li>-->
                     </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Imprimir<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="../planillas/">Planilla Diaria</a></li>
+                        <li><a href="../planillas/planillasdeHoy.php">Planillas de Hoy</a></li>
+                        <li><a href="../planillas/buscarPorNro.php">Buscar por Planilla</a></li>
+                        <li><a href="../planillas/buscarPlanilla.php">Buscar por fecha</a></li>
+                        <!--<li class="divider"></li>-->
+                    </ul>
+                </li>
+                <!--                <li class="dropdown text-right">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sesion<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="/seguro/includes/php/logout.php">Cerrar Sesion</a></li>
+                                        <a href="logout.php"></a>
+                                    </ul>
+                                </li>-->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/seguro/includes/php/logout.php">Cerrar Sesion</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

@@ -4,7 +4,7 @@
  * @author Escritorio
  */
 class OtrosRiesgosValueObject {
-    private $_idotrosriesgos, $_nombre, $_decripcion;
+    private $_idotrosriesgos, $_nombre, $_descripcion;
     public function get_idotrosriesgos() {
         return $this->_idotrosriesgos;
     }
@@ -13,7 +13,7 @@ class OtrosRiesgosValueObject {
         return $this->_nombre;
     }
 
-    public function get_decripcion() {
+    public function get_descripcion() {
         return $this->_decripcion;
     }
 
@@ -27,7 +27,7 @@ class OtrosRiesgosValueObject {
         return $this;
     }
 
-    public function set_decripcion($_decripcion) {
+    public function set_descripcion($_decripcion) {
         $this->_decripcion = $_decripcion;
         return $this;
     }

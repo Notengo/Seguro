@@ -10,6 +10,9 @@ require_once '../clases/ActiveRecord/MysqlCondfiscalesActiveRecord.php';
 
 require_once '../clases/ActiveRecord/MysqlCoberturasActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlCuotasActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlCompaniasActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlOtrosRiesgosActiveRecord.php';
+require_once '../clases/ActiveRecord/MysqlPlanillasActiveRecord.php';
 
 require_once '../clases/ActiveRecord/MysqlGncActiveRecord.php';
 require_once '../clases/ActiveRecord/MysqlImagenesActiveRecord.php';
@@ -117,7 +120,7 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory {
     public function getCuotaActiveRecord() {
         return new MysqlCuotasActiveRecord();
     }
-    
+
     /**
      * 
      * @return \MysqlTelefonosActiveRecord
@@ -205,4 +208,27 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory {
         return new MysqlVehiculosActiveRecord();
     }
 
+    /**
+     * @return MysqlCompaniasActiveRecord
+     * 
+     */
+    public function getCompaniaActiveRecord() {
+        return new MysqlCompaniasActiveRecord();
+    }
+
+    /**
+     * 
+     * @return \MysqlOtrosRiesgosActiveRecord
+     */
+    public function getOtrosRiesgosActiveRecord() {
+        return new MysqlOtrosRiesgosActiveRecord();
+    }
+    
+    /**
+     * 
+     * @return \MysqlPlanillasActiveRecord
+     */
+    public function getPlanillaActiveRecord() {
+        return new MysqlPlanillasActiveRecord();
+    }
 }

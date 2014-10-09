@@ -89,6 +89,18 @@ function TablaBasica($header)
  
    }
 // fin  
+   
+function TablaDatos($datos)
+   {
+   
+    foreach($datos as $col)
+      
+    $this->Cell(30,8,$col,0,0,'C');
+    
+    $this->Ln();
+ 
+   }
+// fin     
 function FPDF($orientation='P', $unit='mm', $size='A4')
 {
 	// Some checks

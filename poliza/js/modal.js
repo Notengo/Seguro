@@ -27,8 +27,8 @@ function altaModal(item) {
         abrir = 'modalModelo.php';
     }
     if (item === 3) {
-        document.getElementById('myModalLabel').innerHTML = 'Alta de Tipo de Veh&iacute;culo';
-        abrir = 'modalTipo.php';
+        document.getElementById('myModalLabel').innerHTML = 'Alta de Otros Riesgos';
+        abrir = 'modalOtrosRiesgos.php';
     }
     if (item === 4) {
         document.getElementById('myModalLabel').innerHTML = 'Alta de Tipo de Cobertura';
@@ -73,6 +73,24 @@ function guardarModal() {
                 + "&descripcion=" + descripcion
                 + "&accion=Guardar");
     }
+    if (item === '3') {
+        var nombre = document.getElementById('nombre_modal').value,
+                descripcion = document.getElementById('descripcion_modal').value,
+                divResultado = document.getElementById('divResultadoModal');
+        ajax = objetoAjax();
+        ajax.open("POST", "guardarOtroRiesgo.php", true);
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState === 4) {
+                divResultado.innerHTML = ajax.responseText;
+                refrescar3();
+                document.getElementById("botonModal").className = "btn btn-primary oculto";
+            }
+        };
+        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        ajax.send("nombre=" + nombre
+                + "&descripcion=" + descripcion
+                + "&accion=Guardar");
+    }
 }
 
 function refrescar4() {
@@ -81,6 +99,17 @@ function refrescar4() {
     ajax.onreadystatechange = function() {
         if (ajax.readyState === 4) {
             document.getElementById("divcobertura").innerHTML = ajax.responseText;
+        }
+    };
+    ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    ajax.send();
+}
+function refrescar3() {
+    ajax = objetoAjax();
+    ajax.open("POST", "selectOtroRiesgo.php", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            document.getElementById("divotroriesgo").innerHTML = ajax.responseText;
         }
     };
     ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

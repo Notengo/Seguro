@@ -384,6 +384,7 @@ function guardarVehiculos() {
         }
     };
     ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    alert(vehiculo + gnc + "&accion=" + accion);
     ajax.send(vehiculo + gnc + "&accion=" + accion);
     /* Fin Almacenamiento del vehiculo. */
     return true;

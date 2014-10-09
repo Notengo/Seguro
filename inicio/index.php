@@ -1,3 +1,4 @@
+<?php include_once '../login/validar.php'; ?>
 <!DOCTYPE html>
 <html>
     <head>

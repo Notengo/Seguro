@@ -5,8 +5,14 @@ require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
 
 $oMysql = ActiveRecordAbstractFactory::getActiveRecordFactory(ActiveRecordAbstractFactory::MYSQL);
 $oMysql->conectar();
-//$id= $_GET['usu'];
-//echo "$id";
+
+extract($_GET, EXTR_OVERWRITE);
+if (isset($usu)) {
+    $oMysqlCliente = $oMysql->getClientesActiveRecord();
+    $oCliente = new ClientesValueObject();
+    $oCliente->set_idclientes($usu);
+    $oCliente = $oMysqlCliente->buscar($oCliente);
+}
 ?>
 <html>
     <head>
@@ -19,7 +25,7 @@ $oMysql->conectar();
         <script src="js/modal.js" type="text/javascript"></script>
 
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap-theme.min.css">
+        <!--<link rel="stylesheet" href="../bootstrap/css/bootstrap-theme.min.css">-->
         <link href="../includes/css/otros.css" rel="stylesheet" type="text/css"/>
     </head>
     <body onload="document.getElementById('poliza').focus();">
@@ -36,18 +42,15 @@ $oMysql->conectar();
                         <div class="col-lg-1"></div>
                         <div class="col-lg-5">
                             <label class="label label-success">Compañ&iacute;a</label>
-                            <select name="compania" id="compania" class="form-control" >
-                                <option value="0">Seleccione</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-<!--                            <input type="text" name="compania" id="compania" class="form-control" placeholder="Nombre de la compa&ntilde;ia"/>
-                            <input type="hidden" name="compania_ID" id="compania_hidden"/>-->
+                            <div id="divcobertura">
+                                <?php include_once 'selectCompania.php'; ?>
+                            </div>
                         </div>
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
+                            <a href="#" data-toggle="modal" data-target="#myModal" onclick="altaModal(1)">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                         </div>
                     </div>
 
@@ -61,10 +64,6 @@ $oMysql->conectar();
                                    value="<?php echo (isset($oCliente)) ? $oCliente->get_apellido() . ', ' . $oCliente->get_nombre() : ''; ?>" />
                             <input type="hidden" name="cliente_ID" id="cliente_hidden" value="<?php echo (isset($oCliente)) ? $oCliente->get_idclientes() : ''; ?>" />
                         </div>
-<!--                        <div class="col-lg-1">
-                            <br>
-                            <div class="glyphicon glyphicon-plus"></div>
-                        </div>-->
                     </div>
                     <br>
 
@@ -74,15 +73,9 @@ $oMysql->conectar();
                             <input type="text" name="patente" id="patente" class="form-control" data-toggle="tooltip" 
                                    title="Matricula Veh&iacute;culo Asegurado" alt="Matricula Veh&iacute;culo"
                                    onkeyup="ajax_showOptionsPatente(this, 'getPatenteByLetters', event);"
-                                   value="<?php echo (isset($oCliente)) ? $oCliente->get_apellido() . ', ' . $oCliente->get_nombre() : ''; ?>" />
+                                   value="<?php echo (isset($oVehiculo)) ? $oVehiculo->get_patente() : ''; ?>" />
                             <input type="hidden" name="patente_ID" id="patente_hidden" value="" />
-                            <!--<input type="text" name="patente" id="patente" class="form-control" placeholder="seleccione"/>-->
                         </div>
-<!--                        <div class="col-lg-1">
-                            <br>
-                            <div class="glyphicon glyphicon-plus"></div>
-                        </div>
-                        <div class="col-lg-1"></div>-->
                     </div>
                     <br>
 
@@ -104,16 +97,15 @@ $oMysql->conectar();
 
                         <div class="col-lg-4">
                             <label class="label label-success">Otros Riesgos</label>
-                            <select name="otroRiesgo" id="otroRiesgo" class="form-control" >
-                                <option value="0">Ninguno</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                            <div id="divotroriesgo">
+                                <?php include_once './selectOtroRiesgo.php'; ?>
+                            </div>
                         </div>
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
+                            <a href="#" data-toggle="modal" data-target="#myModal" onclick="altaModal(3)">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                         </div>
                     </div>
                     <br>
@@ -186,7 +178,7 @@ $oMysql->conectar();
                         <input type="button" id="guardar" value="Nuevo" class="btn btn-large btn-block btn-primary" onclick="guardarDatos();" />
                     </div>
                     <div class="col-sm-2">
-                        <input type="button" id="cancelar" value="Cancelar" class="oculto" onclick="location.reload();" />
+                        <input type="button" id="cancelar" value="Cancelar" class="btn btn-large btn-block btn-primary oculto" onclick="location.reload();" />
                     </div>
                     <div class="col-sm-8" id="divResultado"></div>
                 </div>
