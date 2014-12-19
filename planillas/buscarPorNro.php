@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/php/header.php';
+
 require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
 require_once '../clases/ActiveRecord/MysqlActiveRecordAbstractFactory.php';
 
@@ -42,6 +42,7 @@ $oPlanilla= $oMysqlPlanilla->buscarNro($oPlanilla);
         <link href="../includes/css/otros.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <?php require_once '../includes/php/header.php'; ?>
         <div class="container">
             <legend>Busqueda por Numero de Planilla</legend>
         <div class="row">
@@ -73,6 +74,7 @@ $oPlanilla= $oMysqlPlanilla->buscarNro($oPlanilla);
                  $idC = $aPlanilla->get_idCompania();
                  $_fecha = $aPlanilla->get_fecha();
                  $nro = $aPlanilla->get_nroPlanilla();
+                 $idUsu = $aPlanilla->get_idUsuario();
                     $MysqlCompania = $oMysql->getCompaniaActiveRecord();
                     $oCompania = new CompaniasValueObject();
                     $oCompania = $MysqlCompania->buscarC($idC);
@@ -85,7 +87,7 @@ $oPlanilla= $oMysqlPlanilla->buscarNro($oPlanilla);
                 echo "<td>$nombreCo</td>";
                 echo "<td>$_fecha</td>";
                 echo "<td>$nro</td>";
-                echo "<td><a href='vistaPreviaPlanillaBusqueda.php?idCompania=$idC&idPlanilla=$idP&nroPlanilla=$nro'><img src='../images/Original Size/note.png' alt='Ver Planilla' title='Ver Planilla'/></a></td></tr>";
+                echo "<td><a href='vistaPreviaPlanillaBusqueda.php?idCompania=$idC&idPlanilla=$idP&nroPlanilla=$nro&fecha=$_fecha&idUsu=$idUsu'><img src='../images/Original Size/note.png' alt='Ver Planilla' title='Ver Planilla'/></a></td></tr>";
             }
             }
         ?>

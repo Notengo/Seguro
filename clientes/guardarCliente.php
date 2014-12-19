@@ -8,13 +8,13 @@ $oCliente = new ClientesValueObject();
 
 mysql_query("BEGIN;");
 $error = 0;
-if ($_POST['accion'] == 'Eliminar'){
+if ($_POST['accion'] == 'Eliminar') {
     $oCliente->set_idclientes($_POST['cliente']);
-    if(!$oMysqlCliente->borrar($oCliente)){
+    if (!$oMysqlCliente->borrar($oCliente)) {
         $error = 5;
     }
 } else {
-    if($_POST['accion'] == 'Actualizar'){
+    if ($_POST['accion'] == 'Actualizar') {
         $oCliente->set_idclientes($_POST['cliente']);
     }
     $apellido = $_POST["apellido"];
@@ -38,6 +38,20 @@ if ($_POST['accion'] == 'Eliminar'){
     $celular = $_POST['celular'];
     $correo = $_POST['correo'];
 
+    $apellido = strtoupper($apellido);
+    $nombre = strtoupper($nombre);
+    $condicionfiscal = strtoupper($condicionfiscal);
+    $localidad = strtoupper($localidad);
+    $barrio = strtoupper($barrio);
+    $calle = strtoupper($calle);
+    $correo = strtoupper($correo);
+    
+    /* Invierto la fecha de nacimiento */
+    if(strpos($nacimiento, '/') !== false){
+        $fecha = explode('/', $nacimiento);
+        $nacimiento = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
+    }
+        
     $oCliente->set_apellido($apellido);
     $oCliente->set_nombre($nombre);
     $oCliente->set_fechanacimiento($nacimiento);
@@ -60,7 +74,7 @@ if ($_POST['accion'] == 'Eliminar'){
     $oCalle = new CallesValueObject();
     $oCalle->setNombre($calle);
 
-    if($oMysqlCalle->existe($oCalle) > 0){
+    if ($oMysqlCalle->existe($oCalle) > 0) {
         $oCallePrueba = $oMysqlCalle->buscarPorNombre($oCalle);
         $oCliente->set_idcalles($oCallePrueba->getIdcalles());
     } else {
@@ -70,81 +84,117 @@ if ($_POST['accion'] == 'Eliminar'){
     /* Fin de buscar la calle. */
 
     /* Grabacion del cliente. */
-    if($_POST['accion'] == 'Guardar') {
-        if(!$oMysqlCliente->guardar($oCliente)){
+    if ($_POST['accion'] == 'Guardar') {
+        if (!$oMysqlCliente->guardar($oCliente)) {
             $error = 1;
         }
         /* Comienzo Almacenamiento de los telefonos. */
         $oMysqlTel = $oMysql->getTelefonosActiveRecord();
         $oTelefono = new TelefonosValueObject();
-        if($telefono != ''){
+        if ($telefono != '') {
             $oTelefono->set_idclientes($oCliente->get_idclientes());
             $oTelefono->set_numero($telefono);
-            if(!$oMysqlTel->guardar($oTelefono)){
+            if (!$oMysqlTel->guardar($oTelefono)) {
+                echo 'leo';
                 $error = 3;
             }
         }
-        if($celular != ''){
+        if ($celular != '') {
             $oTelefono->set_idclientes($oCliente->get_idclientes());
             $oTelefono->set_numero($celular);
-            if(!$oMysqlTel->guardar($oTelefono)){
+            if (!$oMysqlTel->guardar($oTelefono)) {
                 $error = 4;
             }
         }
         /* Fin Almacenamiento de los telefonos. */
     } else {
-        if(!$oMysqlCliente->actualizar($oCliente)){
+        if (!$oMysqlCliente->actualizar($oCliente)) {
             $error = 2;
         }
         /* Para actualizar el telefono y el celular, debo de buscar los registros del cliente
-            y recorrerlo para obtener el id y poder actualizarlo.
+          y recorrerlo para obtener el id y poder actualizarlo.
          */
-        
+
         $oMysqlTel = $oMysql->getTelefonosActiveRecord();
         $oTelefono = new TelefonosValueObject();
         $oTelefono->set_idclientes($oCliente->get_idclientes());
         $oTelefono = $oMysqlTel->buscarPorCliente($oTelefono);
-        
-        $idFijo = $oTelefono[0]->get_idtelefonos();
-        $idCelular = $oTelefono[1]->get_idtelefonos();
-        unset($oTelefono);
 
-        $oTelefono = new TelefonosValueObject();
-        $oTelefono->set_idclientes($oCliente->get_idclientes());
-        
-        $oTelefono->set_numero($telefono);
-        $oTelefono->set_idtelefonos($idFijo);
-        if(!$oMysqlTel->actualizar($oTelefono)){
-            $error = 6;
-        }
-        $oTelefono->set_numero($celular);
-        $oTelefono->set_idtelefonos($idCelular);
-        if(!$oMysqlTel->actualizar($oTelefono)){
-            $error = 7;
+        if (count($oTelefono) == 2) {
+            $idFijo = $oTelefono[0]->get_idtelefonos();
+            $idCelular = $oTelefono[1]->get_idtelefonos();
+            unset($oTelefono);
+
+            $oTelefono = new TelefonosValueObject();
+            $oTelefono->set_idclientes($oCliente->get_idclientes());
+
+            $oTelefono->set_numero($telefono);
+            $oTelefono->set_idtelefonos($idFijo);
+            if (!$oMysqlTel->actualizar($oTelefono)) {
+                $error = 6;
+            }
+            $oTelefono->set_numero($celular);
+            $oTelefono->set_idtelefonos($idCelular);
+            if (!$oMysqlTel->actualizar($oTelefono)) {
+                $error = 7;
+            }
+        } elseif (count($oTelefono) == 0) {
+            $oMysqlTel = $oMysql->getTelefonosActiveRecord();
+            $oTelefono = new TelefonosValueObject();
+            if ($telefono != '') {
+                $oTelefono->set_idclientes($oCliente->get_idclientes());
+                $oTelefono->set_numero($telefono);
+                if (!$oMysqlTel->guardar($oTelefono)) {
+                    $error = 3;
+                }
+            }
+            if ($celular != '') {
+                $oTelefono->set_idclientes($oCliente->get_idclientes());
+                $oTelefono->set_numero($celular);
+                if (!$oMysqlTel->guardar($oTelefono)) {
+                    $error = 4;
+                }
+            }
+        } elseif (count($oTelefono) == 1) {
+            $idFijo = $oTelefono[0]->get_idtelefonos();
+            unset($oTelefono);
+
+            $oTelefono = new TelefonosValueObject();
+            $oTelefono->set_numero($telefono);
+            $oTelefono->set_idtelefonos($idFijo);
+            
+            $oTelefono->set_idclientes($oCliente->get_idclientes());
+            $oTelefono->set_numero($telefono);
+            if (!$oMysqlTel->actualizar($oTelefono)) {
+                $error = 6;
+            }
+            if ($celular != '') {
+                $oTelefono->set_idclientes($oCliente->get_idclientes());
+                $oTelefono->set_numero($celular);
+                if (!$oMysqlTel->guardar($oTelefono)) {
+                    $error = 4;
+                }
+            }
         }
     }
 }
-        
-//$error = 1;
 
-if($error == 0){
+$error = 1;
+
+if ($error == 0) {
     mysql_query("COMMIT;");
     ?>
-    <div class="form-group has-success">
-        <div class="col-xs6">
-            <input type="text" value="Los Datos Se Grabaron Correctamente" class="form-control">
-            <span class="input-icon fui-check-inverted"></span>
-        </div>
+    <div class="row has-success">
+        <input type="text" value="Los Datos Se Grabaron Correctamente" class="form-control">
+        <span class="input-icon fui-check-inverted"></span>
     </div>
     <?php
 } else {
     mysql_query("ROLLBACK;");
     ?>
-    <div class="form-group has-error">
-        <div class="col-xs6">
-            <input type="text" value="Los Datos No Han Sido Almacenados. Error n° <?php echo $error; ?>" class="form-control">
-            <span class="input-icon fui-check-inverted"></span>
-        </div>
+    <div class="row has-error">
+        <input type="text" value="Los Datos No Han Sido Almacenados. Error n° <?php echo $error; ?>" class="form-control">
+        <span class="input-icon fui-check-inverted"></span>
     </div>
     <?php
 }

@@ -36,6 +36,8 @@ class MysqlPlanillasActiveRecord implements ActiveRecord {
                 $oValueObject->set_idCompania($valores->idCompania);
                 $oValueObject->set_fecha($valores->fecha);
                 $oValueObject->set_nroPlanilla($valores->nroPlanilla);
+                $oValueObject->set_idUsuario($valores->idUsuario);
+                $oValueObject->set_nroConfirmacion($valores->nroConfirmacion);
                 $aPlanilla[] = $oValueObject;
                 unset($oValueObject);
             }
@@ -67,6 +69,7 @@ class MysqlPlanillasActiveRecord implements ActiveRecord {
                 $oValueObject->set_idCompania($valores->idCompania);
                 $oValueObject->set_fecha($valores->fecha);
                 $oValueObject->set_nroPlanilla($valores->nroPlanilla);
+                $oValueObject->set_idUsuario($valores->idUsuario);
                 $aPlanilla[] = $oValueObject;
                 unset($oValueObject);
             }
@@ -94,6 +97,8 @@ class MysqlPlanillasActiveRecord implements ActiveRecord {
                 $oValueObject->set_idCompania($valores->idCompania);
                 $oValueObject->set_fecha($valores->fecha);
                 $oValueObject->set_nroPlanilla($valores->nroPlanilla);
+                $oValueObject->set_idUsuario($valores->idUsuario);
+                $oValueObject->set_nroConfirmacion($valores->nroConfirmacion);
                 $aPlanilla[] = $oValueObject;
                 unset($oValueObject);
             }
@@ -124,11 +129,13 @@ class MysqlPlanillasActiveRecord implements ActiveRecord {
      * @return boolean
      */
     public function guardar($oValueObject) {
-        $sql = "INSERT INTO planilla (idPlanilla, idCompania, fecha, nroPlanilla) VALUES("
+        $sql = "INSERT INTO planilla (idPlanilla, idCompania, fecha, nroPlanilla, idUsuario, nroConfirmacion) VALUES("
                 . "'" . $oValueObject->get_idPlanilla() . "', "
                 . "'" . $oValueObject->get_idCompania() . "', "
                 . "'" . $oValueObject->get_fecha() . "', "
-                . "'" . $oValueObject->get_nroPlanilla() . "')";
+                . "'" . $oValueObject->get_nroPlanilla() . "',"
+                . "'".$oValueObject->get_idUsuario()."',"
+                . "'".$oValueObject->get_nroConfirmacion()."')";
         if (mysql_query($sql)) {
             $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM planilla;");
             $id = mysql_fetch_array($result);

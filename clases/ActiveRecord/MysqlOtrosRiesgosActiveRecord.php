@@ -10,11 +10,34 @@ require_once '../clases/ValueObject/OtrosRiesgosValueObject.php';
  */
 class MysqlOtrosRiesgosActiveRecord implements ActiveRecord {
 
+    
+     /**
+     * 
+     * @param OtrosRiesgosValueObject $oValueObject
+     * @return boolean
+     */
     public function actualizar($oValueObject) {
+        $sql="UPDATE otrosriesgos SET nombre='".$oValueObject->get_nombre()."',"
+                . "descripcion='".$oValueObject->get_descripcion()."' "
+                . "where idotrosriesgos=".$oValueObject->get_idotrosriesgos()."";
+        if(mysql_query($sql) or die (false))
+        {
+            return true;
+        }else{return false;}
         
     }
+   /**
+     * 
+     * @param OtrosRiesgosValueObject $oValueObject
+     * @return boolean
+     */
 
     public function borrar($oValueObject) {
+        $sql="DELETE FROM otrosriesgos WHERE idotrosriesgos=".$oValueObject->get_idotrosriesgos()."";
+        if(mysql_query($sql)or die(FALSE))
+        {
+           return true; 
+        }else {return false; }
         
     }
 
@@ -61,7 +84,7 @@ class MysqlOtrosRiesgosActiveRecord implements ActiveRecord {
     public function guardar($oValueObject) {
         $sql = "INSERT INTO otrosriesgos (nombre, descripcion) VALUES("
                 . "'" . $oValueObject->get_nombre() . "', "
-                . "'" . $oValueObject->get_descripcion() . "')";
+                . "'" . strtoupper($oValueObject->get_descripcion()) . "')";
         if (mysql_query($sql)) {
             $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM otrosriesgos;");
             $id = mysql_fetch_array($result);
@@ -71,7 +94,6 @@ class MysqlOtrosRiesgosActiveRecord implements ActiveRecord {
             return true;
         } else {
             return false;
-            ;
         }
     }
 

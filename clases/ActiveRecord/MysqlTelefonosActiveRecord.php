@@ -42,6 +42,25 @@ class MysqlTelefonosActiveRecord implements ActiveRecord{
         }
         else {return FALSE;}
     }
+
+    /**
+     * 
+     * @param TelefonosValueObject $oValueObject
+     * @return boolean
+     */
+    public function buscarCliente($oValueObject) {
+        $sql = "SELECT * FROM telefonos WHERE idclientes = "
+                . $oValueObject->get_idclientes();
+        $resultado = mysql_query($sql);
+        $fila = mysql_fetch_object($resultado);
+        if($fila){
+            $oValueObject->set_idtelefonos($fila->idtelefonos);
+            $oValueObject->set_idclientes($fila->idclientes);
+            $oValueObject->set_numero($fila->numero);
+            return $oValueObject;
+        }
+        else {return FALSE;}
+    }
     
     /**
      * Busca todos los datps por el el identificador del cliente.

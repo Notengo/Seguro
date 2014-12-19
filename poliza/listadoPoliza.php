@@ -27,10 +27,20 @@ unset($oModelos);
 
 $oMysqlVehiculo = $oMysql->getVehiculoActiveRecord();
 $oVehiculo = new VehiculosValueObject();
+
+/* Aca tengo que buscar los datos del vehiculo */
+//$oVehiculo->set_idvehiculos($vehiculo);
+
 $oVehiculo = $oMysqlVehiculo->buscarTodo();
 $vehiculos = array();
 foreach ($oVehiculo as $aVehiculo) {
-    $vehiculos[$aVehiculo->get_patente()] = $marcas[$aVehiculo->get_idmarcas()] . ", " . $modelos[$aVehiculo->get_idmarcas()][$aVehiculo->get_idmodelos()];
+    if ($aVehiculo->get_idmarcas() != 0 && $aVehiculo->get_idmodelos() != 0) {
+        $vehiculos[$aVehiculo->get_patente()] = $marcas[$aVehiculo->get_idmarcas()] . ", " . $modelos[$aVehiculo->get_idmarcas()][$aVehiculo->get_idmodelos()];
+    } elseif ($aVehiculo->get_idmarcas() == 0 && $aVehiculo->get_idmodelos() != 0) {
+        $vehiculos[$aVehiculo->get_patente()] = $marcas[$aVehiculo->get_idmarcas()];
+    } elseif ($aVehiculo->get_idmarcas() == 0 && $aVehiculo->get_idmodelos() == 0) {
+        $vehiculos[$aVehiculo->get_patente()] = '';
+    }
 }
 
 $oMysqlCliente = $oMysql->getClientesActiveRecord();
@@ -40,12 +50,20 @@ $cliente = array();
 foreach ($oCliente as $aCliente) {
     $cliente[$aCliente->get_idclientes()] = $aCliente->get_apellido() . ' ' . $aCliente->get_nombre();
 }
-if (!isset($usu)) {
-    $oPoliza = $oMysqlPoliza->buscarTodo();
+
+if (isset($_POST['filtro']) && $_POST['filtro'] !='' ) {
+    $oPoliza->set_nropoliza($_POST['filtro']);
+    
+    $oPoliza = $oMysqlPoliza->filtro($oPoliza);
 } else {
-    $oPoliza->set_idclientes($usu);
-    $oPoliza = $oMysqlPoliza->buscarTodoCliente($oPoliza);
+    if (!isset($usu)) {
+        $oPoliza = $oMysqlPoliza->buscarTodo();
+    } else {
+        $oPoliza->set_idclientes($usu);
+        $oPoliza = $oMysqlPoliza->buscarTodoCliente($oPoliza);
+    }
 }
+
 unset($oCliente);
 unset($oMysqlCliente);
 ?>
@@ -83,6 +101,7 @@ unset($oMysqlCliente);
                         <tr class="<?php echo ($aPoliza->get_vigenciahasta() < date('Y-m-d')) ? 'warning' : ''; ?>">
                             <td><?php echo $cliente[$aPoliza->get_idclientes()]; ?></td>
                             <td><?php echo $aPoliza->get_nropoliza(); ?></td>
+                            <!--<td><?php // echo $aPoliza->get_patente() . ", " . (isset($vehiculos[$aPoliza->get_patente()])) ? '' : $vehiculos[$aPoliza->get_patente()]; ?></td>-->
                             <td><?php echo $aPoliza->get_patente() . ", " . $vehiculos[$aPoliza->get_patente()]; ?></td>
                             <td>
                                 <a class="glyphicon glyphicon-usd" href="../cuotas/index.php?nropoliza=<?php echo $aPoliza->get_nropoliza(); ?>" title="Cobro cuotas"></a>

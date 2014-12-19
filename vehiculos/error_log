@@ -1,0 +1,31 @@
+[14-Oct-2014 22:49:52 UTC] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/aduepasc/public_html/vehiculos/lista_modelo.php on line 17
+[14-Oct-2014 22:49:54 UTC] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/aduepasc/public_html/vehiculos/lista_modelo.php on line 17
+[14-Oct-2014 22:49:56 UTC] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/aduepasc/public_html/vehiculos/lista_modelo.php on line 17
+[03-Nov-2014 00:15:23 UTC] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'aduepasc'@'localhost' (using password: NO) in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 4
+[03-Nov-2014 00:15:23 UTC] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 4
+[03-Nov-2014 00:15:23 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Error retrieving headers' in /home/aduepasc/public_html/vehiculos/subirArchivo.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 17
+[03-Nov-2014 00:15:58 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Error retrieving headers' in /home/aduepasc/public_html/vehiculos/subirArchivo.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 17
+[03-Nov-2014 11:46:26 UTC] PHP Fatal error:  Call to undefined function file_post_contents() in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 25
+[03-Nov-2014 11:49:57 UTC] PHP Fatal error:  Call to undefined function file_post_contents() in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 25
+[03-Nov-2014 11:56:28 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Error retrieving headers' in /home/aduepasc/public_html/vehiculos/subirArchivo.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 17
+[03-Nov-2014 12:09:18 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Error retrieving headers' in /home/aduepasc/public_html/vehiculos/subirArchivo.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 17
+[03-Nov-2014 12:18:29 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Error retrieving headers' in /home/aduepasc/public_html/vehiculos/subirArchivo.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 13
+[03-Nov-2014 12:22:58 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Error retrieving headers' in /home/aduepasc/public_html/vehiculos/subirArchivo.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/aduepasc/public_html/vehiculos/subirArchivo.php on line 13

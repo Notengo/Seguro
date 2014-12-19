@@ -14,7 +14,18 @@ class MysqlCompaniasActiveRecord implements ActiveRecord {
         
     }
 
+    /**
+     * 
+     * @param CompaniasValueObject $oValueObject
+     * @return boolean
+     */
+    
     public function borrar($oValueObject) {
+        $sql="delete from companias where idcompanias=".$oValueObject->get_idcompanias()."";
+        if(mysql_query($sql)or die(false))
+        {
+            return true;
+        }else{return false;}
         
     }
 
@@ -67,8 +78,7 @@ class MysqlCompaniasActiveRecord implements ActiveRecord {
     public function guardar($oValueObject) {
         $sql = "INSERT INTO companias (razonsocial, nroproductor, cuit, direccion,"
                 . " numero, piso, depto, cp, telefono, email, link, imagen) "
-                . "VALUES ("
-                . "'" . $oValueObject->get_razonsocial() . "', "
+                . "VALUES ('". $oValueObject->get_razonsocial() . "', "
                 . $oValueObject->get_nroproductor() . ", "
                 . "'" . $oValueObject->get_cuit() . "', "
                 . "'" . $oValueObject->get_direccion() . "', "

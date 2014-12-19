@@ -4,7 +4,9 @@ $oMysql = ActiveRecordAbstractFactory::getActiveRecordFactory(ActiveRecordAbstra
 $oMysql->conectar();
 $oMysqlCliente = $oMysql->getClientesActiveRecord();
 $oCliente = new ClientesValueObject();
-if(isset($_POST['filtro'])){
+
+$oMyTel = $oMysql->getTelefonosActiveRecord();
+if (isset($_POST['filtro'])) {
     $oCliente->set_apellido($_POST['filtro']);
     $oCliente->set_nombre($_POST['filtro']);
     $oCliente->set_documento($_POST['filtro']);
@@ -14,7 +16,6 @@ if(isset($_POST['filtro'])){
 }
 
 /* Realizar filtro, si se manda la variable de filtro de lo contrario que busque todo. */
-
 ?>
 <table class="table table-striped table-bordered table-hover">
     <tr class="success">
@@ -31,10 +32,20 @@ if(isset($_POST['filtro'])){
             <td><?php echo $aCliente->get_idclientes(); ?></td>
             <td><?php echo $aCliente->get_apellido() . ', ' . $aCliente->get_nombre(); ?></td>
             <td><?php echo $aCliente->get_documento(); ?></td>
-            <td>11122233</td>
             <td>
-<!--                <img src="../images/editar.png" alt="" onclick="ver(<?php // echo $aCliente->get_idclientes(); ?>, 'e')"/>
-                <img src="../images/borrar.png" alt="" onclick="ver(<?php // echo $aCliente->get_idclientes(); ?>, 'b')"/>
+                <?php
+                $oTel = new TelefonosValueObject();
+                $oTel->set_idclientes($aCliente->get_idclientes());
+                $oTel = $oMyTel->buscarCliente($oTel);
+                if ($oTel) {
+                    echo $oTel->get_numero();
+                }
+                unset($oTel);
+                ?>
+            </td>
+            <td>
+    <!--                <img src="../images/editar.png" alt="" onclick="ver(<?php // echo $aCliente->get_idclientes();  ?>, 'e')"/>
+                <img src="../images/borrar.png" alt="" onclick="ver(<?php // echo $aCliente->get_idclientes();  ?>, 'b')"/>
                 <a href="../vehiculos/index.php?usu=<?php echo $aCliente->get_idclientes(); ?>"><img src="../images/car_20.png" alt="Carga Vehiculo" /></a>-->
                 <img src="../images/editar.png" alt="" onclick="ver(<?php echo $aCliente->get_idclientes(); ?>, 'e')"/>&nbsp;
                 <img src="../images/borrar.png" alt="" onclick="ver(<?php echo $aCliente->get_idclientes(); ?>, 'b')"/>&nbsp;
@@ -42,7 +53,7 @@ if(isset($_POST['filtro'])){
                 <a href="../vehiculos/index.php?usu=<?php echo $aCliente->get_idclientes(); ?>"><img src="../images/car_20.png" alt="Carga Vehiculo" title="vehiculos"/></a>
             </td>
         </tr>
-        <?php
-    }
-    ?>
+    <?php
+}
+?>
 </table>

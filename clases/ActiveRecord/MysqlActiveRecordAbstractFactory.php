@@ -1,29 +1,53 @@
 <?php
-
 // Se requiere de la clase ActiveRecordAbstractFactory
 require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
+
+require_once '../clases/ActiveRecord/MysqlAccesorioActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlBarriosActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlCallesActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlClientesActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlCilindrosActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlCondfiscalesActiveRecord.php';
 
 require_once '../clases/ActiveRecord/MysqlCoberturasActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlCuotasActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlCompaniasActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlOtrosRiesgosActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlPlanillasActiveRecord.php';
 
+require_once '../clases/ActiveRecord/MysqlFormasPagoActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlGncActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlImagenesActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlLocalidadesActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlMarcasActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlModelosActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlPolizasActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlTelefonosActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlTiposActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlUsosActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlUsuarioActiveRecord.php';
+
+require_once '../clases/ActiveRecord/MysqlUsuarioCompaniaActiveRecord.php';
+
 require_once '../clases/ActiveRecord/MysqlVehiculosActiveRecord.php';
 
 /**
@@ -43,14 +67,11 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory {
         return parent::getActiveRecordFactory($motor);
     }
 
-//    $mysql_host = "mysql4.000webhost.com";
-//    $mysql_database = "a1226679_seguro";
-//    $mysql_user = "a1226679_seguro";
-//    $mysql_password = "S3gur0";
-//   const HOST = 'mysql4.000webhost.com';
-//   const USER = 'a1226679_seguro';
-//   const PASS = 'S3gur0';
-//   const DB = 'a1226679_seguro';
+//    const HOST = "localhost";
+//    const USER = "aduepasc_seguro";
+//    const DB = "aduepasc_seguro";
+//    const PASS = "4du3p4s_s3gur0";
+
     const HOST = 'localhost';
     const USER = 'root';
     const PASS = 'root';
@@ -223,7 +244,7 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory {
     public function getOtrosRiesgosActiveRecord() {
         return new MysqlOtrosRiesgosActiveRecord();
     }
-    
+
     /**
      * 
      * @return \MysqlPlanillasActiveRecord
@@ -231,4 +252,30 @@ class MysqlActiveRecordAbstractFactory extends ActiveRecordAbstractFactory {
     public function getPlanillaActiveRecord() {
         return new MysqlPlanillasActiveRecord();
     }
+
+    /**
+     * 
+     * @return MysqlFormasPagoActiveRecord
+     */
+    public function getFormasPagoActiveRecord() {
+        return new MysqlFormasPagoActiveRecord();
+    }
+
+    /**
+     * 
+     * @return MysqlAccesoriosActiveRecord
+     */
+    public function getAccesoriosActiveRecord() {
+        return new MysqlAccesorioActiveRecord();
+    }
+
+    /**
+     * 
+     * @return MysqlUsuarioCompaniaActiveRecord
+     */
+    public function getUsuarioCompaniaActiveRecord() {
+        return new MysqlUsuarioCompaniaActiveRecord();
+    }
+
+    
 }

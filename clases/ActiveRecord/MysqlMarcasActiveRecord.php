@@ -1,13 +1,15 @@
 <?php
+
 require_once 'activeRecordInterface.php';
 //require_once '../ValueObject/MarcasValueObject.php';
 require_once '../clases/ValueObject/MarcasValueObject.php';
+
 /**
  * Description of MysqlMarcasActiveRecord
  *
  * @author ssrolanr
  */
-class MysqlMarcasActiveRecord implements ActiveRecord{
+class MysqlMarcasActiveRecord implements ActiveRecord {
 
     /**
      * @param MarcasValueObject $oValueObject
@@ -15,10 +17,10 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
      */
     public function actualizar($oValueObject) {
         $sql = "UPDATE marcas SET descripcion = '"
-                . $oValueObject->get_descripcion() . "' "
+                . strtoupper($oValueObject->get_descripcion()) . "' "
                 . "WHERE idmarcas = " . $oValueObject->get_idmarcas() . ";";
         $resultado = mysql_query($sql) or die(false);
-        if($resultado){
+        if ($resultado) {
             return TRUE;
         } else {
             return FALSE;
@@ -33,7 +35,7 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
     public function borrar($oValueObject) {
         $sql = "DELETE FROM marcas WHERE idmarcas = " . $oValueObject->get_idmarcas() . ";";
         $resultado = mysql_query($sql) or die(false);
-        if($resultado){
+        if ($resultado) {
             return TRUE;
         } else {
             return FALSE;
@@ -49,9 +51,39 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
         $sql = "SELECT * FROM marcas WHERE idmarcas = "
                 . $oValueObject->get_idmarcas() . ";";
         $resultado = mysql_query($sql) or die(false);
-        if($resultado){
+        if ($resultado) {
             $fila = mysql_fetch_object($resultado);
             $oValueObject->set_descripcion($fila->descripcion);
+            return $oValueObject;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * 
+     * @param MarcasValueObject $oValueObject
+     * @return boolean
+     */
+    public function buscarDescripcion($oValueObject) {
+        $sql = "SELECT * FROM marcas WHERE descripcion = '"
+                . $oValueObject->get_descripcion() . "';";
+        $resultado = mysql_query($sql);
+        $fila = mysql_fetch_object($resultado);
+        if ($fila) {
+            $oValueObject->set_idmarcas($fila->idmarcas);
+            return $oValueObject;
+        } else
+            $sql = "INSERT INTO marcas (descripcion) VALUES ('"
+                    . strtoupper($oValueObject->get_descripcion()) . "');";
+        if (mysql_query($sql)) {
+            $sql = "SELECT idmarcas FROM marcas WHERE descripcion = '"
+                . $oValueObject->get_descripcion() . "';";
+            $result = mysql_query($sql);
+            $id = mysql_fetch_array($result);
+            if ($id[0] <> 0) {
+                $oValueObject->set_idmarcas($id[0]);
+            }
             return $oValueObject;
         } else {
             return FALSE;
@@ -66,7 +98,7 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
         $sql = "SELECT * FROM marcas;";
         $resultado = mysql_query($sql) or die(false);
         $aMarcas = array();
-        if($resultado){
+        if ($resultado) {
             while ($fila = mysql_fetch_object($resultado)) {
                 $oValueObject = new MarcasValueObject();
                 $oValueObject->set_idmarcas($fila->idmarcas);
@@ -79,7 +111,7 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
             return FALSE;
         }
     }
-    
+
     /**
      * 
      * @return int
@@ -88,7 +120,7 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
         $sql = "SELECT COUNT(*) FROM marcas;";
         $resultado = mysql_query($sql);
         $resultado = mysql_fetch_array($resultado);
-        if($resultado[0] > 0){
+        if ($resultado[0] > 0) {
             return $resultado[0];
         } else {
             return 0;
@@ -104,7 +136,7 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
         $sql = "SELECT COUNT(*) FROM marcas WHERE descripcion = '" . $oValueObject->get_descripcion() . "';";
         $resultado = mysql_query($sql);
         $resultado = mysql_fetch_array($resultado);
-        if($resultado[0] > 0){
+        if ($resultado[0] > 0) {
             return TRUE;
         } else {
             return FALSE;
@@ -118,11 +150,11 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
      */
     public function guardar($oValueObject) {
         $sql = "INSERT INTO marcas (descripcion) VALUES ('"
-                . $oValueObject->get_descripcion() . "');";
+                . strtoupper($oValueObject->get_descripcion()) . "');";
         if (mysql_query($sql) or die(false)) {
             $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM marcas");
             $id = mysql_fetch_array($result);
-            if($id[0]<>0) {
+            if ($id[0] <> 0) {
                 $oValueObject->set_idmarcas($id[0]);
             }
             return TRUE;
@@ -130,4 +162,5 @@ class MysqlMarcasActiveRecord implements ActiveRecord{
             return FALSE;
         }
     }
+
 }

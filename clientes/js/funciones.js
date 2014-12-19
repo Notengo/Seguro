@@ -167,7 +167,7 @@ function validarFecha(fecha) {
             return false;
         }
         fecha.style.borderColor = '';
-        validaMayorQue(fecha, anio, mes, dia);
+//        validaMayorQue(fecha, anio, mes, dia);
         return true;
     }
 }
@@ -207,21 +207,6 @@ function fechaInvertir(fecha) {
         if (mes < 10)
             mes = '0' + mes;
         return dia + "/" + mes + "/" + anio;
-    }
-}
-
-function soloNumeros(evt) {
-    //asignamos el valor de la tecla a keynum
-    if (window.event) {// IE
-        keynum = evt.keyCode;
-    } else { // otro navegador
-        keynum = evt.which;
-    }
-//comprobamos si se encuentra en el rango
-    if ((keynum > 46 && keynum < 58) || (keynum == 0) || (keynum == 13) || (keynum == 8) || (keynum == 46)) {
-        return true;
-    } else {
-        return false;
     }
 }
 

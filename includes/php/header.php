@@ -28,6 +28,7 @@
                         <li><a href="../vehiculos/usos.php">Usos</a></li>
                         <li><a href="../vehiculos/tipos.php">Tipos</a></li>
                         <li><a href="../vehiculos">Veh&iacute;culos</a></li>
+                        <li><a href="../vehiculos/listadoPatente.php">Patentes</a></li>
                     </ul>
                 </li>
                 <li><a href="../clientes">Clientes</a></li>
@@ -44,17 +45,26 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Riesgos&nbsp;<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Listado de veh&iacute;culos</a></li>
-                        <li><a href="#">Listado de otros riesgos</a></li>
+                        <li><a href="../riesgos/">Listado de otros riesgos</a></li>
                         <!--<li class="divider"></li>-->
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Imprimir<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Planilla<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="../planillas/">Planilla Diaria</a></li>
                         <li><a href="../planillas/planillasdeHoy.php">Planillas de Hoy</a></li>
                         <li><a href="../planillas/buscarPorNro.php">Buscar por Planilla</a></li>
                         <li><a href="../planillas/buscarPlanilla.php">Buscar por fecha</a></li>
+                        <li><a href="../nplanilla/">Actualizar Planilla</a></li>
+                        <!--<li class="divider"></li>-->
+                    </ul>
+                </li>
+                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Productores<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="../usuarios/">Productores</a></li>
+                        
                         <!--<li class="divider"></li>-->
                     </ul>
                 </li>

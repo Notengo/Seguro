@@ -37,7 +37,7 @@ $oMysql->conectar();
                     </div>
                     <div class="col-sm-3 col-lg-3">
                         <label class="label-success label">Fecha Nacimiento</label>
-                        <input class="form-control" data-toggle="tooltip" name="nacimiento" id="nacimiento" title="Fecha de nacimiento" alt="Fecha de nacimiento" type="date" value=""  />
+                        <input class="form-control" data-toggle="tooltip" name="nacimiento" id="nacimiento" title="Fecha de nacimiento" alt="Fecha de nacimiento" type="text" value="" onblur="validarFecha(this)" onKeypress="return fechaControl(this.id, event);" maxlength="10" />
                     </div>
                 </div>
                 <br>

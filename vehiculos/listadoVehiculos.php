@@ -1,7 +1,7 @@
 <?php
-if(isset($_GET['usu'])){
+if (isset($_GET['usu'])) {
     $filtro = $_GET['usu'];
-} elseif(isset($_POST['usu'])){
+} elseif (isset($_POST['usu'])) {
     $filtro = $_POST['usu'];
 }
 require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
@@ -13,7 +13,7 @@ $oMysql->conectar();
 $oMysqlVehiculo = $oMysql->getVehiculoActiveRecord();
 $oVehiculo = new VehiculosValueObject();
 /* Busco todos los vehiculos si es que no se posee un id de cliente. */
-if(!isset($filtro)){
+if (!isset($filtro)) {
     $oVehiculo = $oMysqlVehiculo->buscarTodo();
 } else {
     $oVehiculo->set_idclientes($filtro);
@@ -22,10 +22,10 @@ if(!isset($filtro)){
 
 $oMysqlCliente = $oMysql->getClientesActiveRecord();
 $oCliente = new ClientesValueObject();
-$oCliente = $oMysqlCliente->buscarTodo();
+$oCliente = $oMysqlCliente->buscarCompleto();
 $cliente = array();
 foreach ($oCliente as $aCliente) {
-    $cliente[$aCliente->get_idclientes()]=$aCliente->get_apellido() . ' ' . $aCliente->get_nombre();
+    $cliente[$aCliente->get_idclientes()] = $aCliente->get_apellido() . ' ' . $aCliente->get_nombre();
 }
 unset($oCliente);
 unset($oMysqlCliente);
@@ -40,15 +40,15 @@ $oModelo = $oMysqlModelo->buscarTodo();
 
 $marcas = array();
 foreach ($oMarcas as $aMarcas) {
-    $marcas[$aMarcas->get_idmarcas()]=$aMarcas->get_descripcion();
+    $marcas[$aMarcas->get_idmarcas()] = $aMarcas->get_descripcion();
 }
 $modelos = array();
 foreach ($oModelo as $aModelo) {
-    $modelos[$aModelo->get_idmodelos()]=$aModelo->get_descripcion();
+    $modelos[$aModelo->get_idmodelos()] = $aModelo->get_descripcion();
 }
 ?>
 <table class="table table-striped table-bordered table-hover table-responsive">
-    <tr>
+    <tr class="success">
         <th>Asegurado</th>
         <th>Matricula</th>
         <th>Marca</th>
@@ -60,15 +60,27 @@ foreach ($oModelo as $aModelo) {
     foreach ($oVehiculo as $aVehiculo) {
         $vehiculos[$aVehiculo->get_idvehiculos()] = new VehiculosValueObject();
         $vehiculos[$aVehiculo->get_idvehiculos()] = $aVehiculo;
+        
+        
+
         ?>
+    
         <tr>
             <td><?php echo $cliente[$aVehiculo->get_idclientes()]; ?></td>
             <td><?php echo $aVehiculo->get_patente(); ?></td>
-            <td><?php echo $marcas[$aVehiculo->get_idmarcas()]; ?></td>
-            <td><?php echo $modelos[$aVehiculo->get_idmodelos()]; ?></td>
+            <td><?php echo ($aVehiculo->get_idmarcas()) ? $marcas[$aVehiculo->get_idmarcas()] : ''; ?></td>
+            <td><?php echo ($aVehiculo->get_idmodelos()) ? $modelos[$aVehiculo->get_idmodelos()] : ''; ?></td>
             <td>
-                <img src="../images/editar.png" alt="" onclick="verVehiculo(<?php echo $aVehiculo->get_idvehiculos(); ?>, 'e', <?php echo $vehiculos; ?>)"/>
-                <img src="../images/borrar.png" alt="" onclick="verVehiculo(<?php echo $aVehiculo->get_idvehiculos(); ?>, 'b', '<?php echo $aModelo->get_descripcion(); ?>', <?php echo $aModelo->get_idmarcas(); ?>)"/>
+                <img src="../images/editar.png" alt="" onclick="verVehiculo(<?php echo $aVehiculo->get_idvehiculos(); ?>, 'e', <?php echo $vehiculos; ?>)"/>&nbsp;
+                <img src="../images/borrar.png" alt="" onclick="verVehiculo(<?php echo $aVehiculo->get_idvehiculos(); ?>, 'b', '<?php echo $aModelo->get_descripcion(); ?>', <?php echo $aModelo->get_idmarcas(); ?>)"/>&nbsp;
+               
+                <a href="accesorios.php?idv=<?php echo $aVehiculo->get_idvehiculos(); ?>&idc=<?php echo $filtro; ?>">
+                    <img src="../images/cars.png" alt="Accesorios" width="20" title="Accesorios" />&nbsp;
+                    </a>
+                
+                <a href="../poliza/index.php?vehiculo=<?php echo $aVehiculo->get_idvehiculos(); ?>">
+                    <img src="../images/poliza3.png" alt="Poliza" width="20" title="polizas" />
+                </a>
             </td>
         </tr>
         <?php

@@ -1,4 +1,3 @@
-<?php ?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -13,23 +12,23 @@
     <body style="">
         <div style="width: 100%;">
             <div style="alignment-adjust: central">
-            
+
             </div>
         </div>    
         <div class="container">
             <div class="row">
-                    <div class="col-lg-4"></div>
-                    <div class="col-md-4">
-                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><img src="../images/login/log.png"/></a> 
-                    </div>
+                <div class="col-lg-4"></div>
+                <div class="col-md-4">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><img src="../images/login/log.png"/></a> 
                 </div>
-            
+            </div>
+
             <form class="form-horizontal" action="accederLogin.php" method="POST">  
-                
+
                 <div class="row">
                     <div class="col-lg-4"></div>
                     <div class="col-lg-4">
-                         
+
                         <input type="text" name="user" id="user" class="form-control" placeholder="usuario.."/>
                     </div>
                 </div>
@@ -37,7 +36,7 @@
                 <div class="row">
                     <div class="col-lg-4"></div>
                     <div class="col-lg-4">
-                        
+
                         <input type="password" name="pass" id="pass" class="form-control" placeholder="contraseña.."/>
                     </div>
                 </div>
@@ -49,6 +48,6 @@
                     </div>
                 </div>
             </form>
-        
-   </div>         
+
+        </div>         
     </body>

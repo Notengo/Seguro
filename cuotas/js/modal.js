@@ -37,7 +37,11 @@ function altaModal(nropoliza, nrocuota, monto, vencimiento1, vencimiento2) {
 function guardarModal() {
     var nropoliza = document.getElementById('nropoliza').value,
             nrocuota = document.getElementById('nrocuota').value,
-            fechapago = document.getElementById('fechapago').value;
+            fechapago = document.getElementById('fechapago').value,
+            recibo = document.getElementById('recibo').value,
+            vencimiento1 = document.getElementById('vencimiento1').value,
+            vencimiento2 = document.getElementById('vencimiento2').value,
+            monto = document.getElementById('monto').value;
 
     var divResultado = document.getElementById('divResultadoModal');
 
@@ -54,7 +58,11 @@ function guardarModal() {
 
     ajax.send("nropoliza=" + nropoliza
             + "&nrocuota=" + nrocuota
-            + "&fechapago=" + fechapago);
+            + "&fechapago=" + fechapago
+            + "&vencimiento1=" + vencimiento1
+            + "&vencimiento2=" + vencimiento2
+            + "&monto=" + monto
+            + "&recibo=" + recibo);
 }
 
 function realizarCobro() {

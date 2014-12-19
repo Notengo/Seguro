@@ -1,0 +1,16 @@
+
+
+cambios:
+
+01/09/2014
+
+*agregue icono de poliza en listado de cliente(verTodos.php)->agregue imagen de poliza en la carpeta "images"
+*modifique index.php de "poliza" para recuperar el id del cliente con _GET
+*agregue campo "fecha de vencimiento" en la pantalla vehiculos en la parte de GAS.
+*agregue un capo mas en la base de datos "gnc" -> (fechavencimiento=DATE)
+* agregue "cuotasPoliza" en "polizas"
+*en "index" de polizas se cambio el input tipo text de forma de pago por un select
+
+05/09/2014
+
+se creo la carpeta planillas con el creador de las planillas enn pdf (modelos)

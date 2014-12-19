@@ -14,6 +14,10 @@ $oCuota->set_nropoliza($nropoliza);
 $oCuota->set_nrocuota($nrocuota);
 $oCuota->set_pago(1);
 $oCuota->set_fechapago($fechapago);
+$oCuota->setRecibo($recibo);
+$oCuota->set_vencimiento1($vencimiento1);
+$oCuota->set_vencimiento2($vencimiento2);
+$oCuota->set_monto($monto);
 
 /* Actualizo con la fecha de cobro (en la que se pago la cuota). */
 if (!$oMysqlCuotas->actualizar($oCuota)) {

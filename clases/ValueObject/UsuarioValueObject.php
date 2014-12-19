@@ -1,70 +1,60 @@
 <?php
-/**
- * Description of UsuarioValueObject
- * @version    1.0
- * @author Martin Remedi <remedi.martin@gmail.com>
- * @license http://www.gnu.org/licenses/ GPL License
- * @copyright (c) 2013, Martin Remedi
- */
+
 class UsuarioValueObject {
-    private $identificador, $nombre, $apellido, $clave, $fechaalta;
-    private $perfil, $dni;
-    
-    public function getPerfil() {
-        return $this->perfil;
+    private $_nombreUser, $_pass, $nombreReal, $_apellidoReal, $_nro, $_idUsuario;
+    public function set_nombreUser($_nombreUser) {
+        $this->_nombreUser = $_nombreUser;
+        return $this;
     }
 
-    public function setPerfil($perfil) {
-        $this->perfil = $perfil;
+    public function set_pass($_pass) {
+        $this->_pass = $_pass;
+        return $this;
     }
 
-    public function getDni() {
-        return $this->dni;
+    public function setNombreReal($nombreReal) {
+        $this->nombreReal = $nombreReal;
+        return $this;
     }
 
-    public function setDni($dni) {
-        $this->dni = $dni;
+    public function set_apellidoReal($_apellidoReal) {
+        $this->_apellidoReal = $_apellidoReal;
+        return $this;
     }
 
-        public function getIdentificador() {
-        return $this->identificador;
+    public function set_nro($_nro) {
+        $this->_nro = $_nro;
+        return $this;
+    }
+    public function set_idUsuario($_idUsuario) {
+        $this->_idUsuario = $_idUsuario;
+        return $this;
     }
 
-    public function setIdentificador($identificador) {
-        $this->identificador = $identificador;
+        public function get_nombreUser() {
+        return $this->_nombreUser;
     }
 
-    public function getNombre() {
-        return $this->nombre;
+    public function get_pass() {
+        return $this->_pass;
     }
 
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
+    public function getNombreReal() {
+        return $this->nombreReal;
     }
 
-    public function getApellido() {
-        return $this->apellido;
+    public function get_apellidoReal() {
+        return $this->_apellidoReal;
     }
 
-    public function setApellido($apellido) {
-        $this->apellido = $apellido;
+    public function get_nro() {
+        return $this->_nro;
     }
 
-    public function getClave() {
-        return $this->clave;
+    public function get_idUsuario() {
+        return $this->_idUsuario;
     }
 
-    public function setClave($clave) {
-        $this->clave = $clave;
-    }
-
-    public function getFechaalta() {
-        return $this->fechaalta;
-    }
-
-    public function setFechaalta($fechaalta) {
-        $this->fechaalta = $fechaalta;
-    }
 
 }
 

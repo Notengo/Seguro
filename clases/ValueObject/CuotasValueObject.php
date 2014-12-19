@@ -5,13 +5,11 @@
  *
  * @author Linkin informatica
  */
+class CuotasValueObject {
 
+    private $_nropoliza, $_nrocuota, $_monto, $_vencimiento1, $_vencimiento2;
+    private $_pago, $_fechapago, $recibo, $_planilla;
 
-class CuotasValueObject{
-    
-    private $_nropoliza,$_nrocuota,$_monto,$_vencimiento1,$_vencimiento2;
-    private $_pago,$_fechapago;
-    
     ///////////////////////////
     public function get_nropoliza() {
         return $this->_nropoliza;
@@ -69,5 +67,21 @@ class CuotasValueObject{
         $this->_fechapago = $_fechapago;
     }
 
+    function getRecibo() {
+        return $this->recibo;
+    }
 
+    function setRecibo($recibo) {
+        $this->recibo = $recibo;
+        return $this;
+    }
+
+    public function get_planilla() {
+        return $this->_planilla;
+    }
+
+    public function set_planilla($_planilla) {
+        $this->_planilla = $_planilla;
+        return $this;
+    }
 }

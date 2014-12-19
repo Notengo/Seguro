@@ -19,6 +19,28 @@ class MysqlCuotasActiveRecord implements ActiveRecord {
         $sql = "UPDATE cuotas SET fechapago = "
                 . "'" . $oValueObject->get_fechapago()
                 . "', pago = " . $oValueObject->get_pago()
+                . ", recibo = '" . $oValueObject->getRecibo() . "'"
+                . ", vencimiento1 = '" . $oValueObject->get_vencimiento1() . "'"
+                . ", vencimiento2 = '" . $oValueObject->get_vencimiento2() . "'"
+                . " WHERE nrocuota = " . $oValueObject->get_nrocuota()
+                . " AND nropoliza = '" . $oValueObject->get_nropoliza() . "';";
+        
+        echo $sql;
+        $resultado = mysql_query($sql);
+        if ($resultado) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @param CuotasValueObject $oValueObject
+     * @return boolean
+     */
+    public function enPlanilla($oValueObject) {
+        $sql = "UPDATE cuotas SET planilla = " . $oValueObject->get_planilla()
                 . " WHERE nrocuota = " . $oValueObject->get_nrocuota()
                 . " AND nropoliza = '" . $oValueObject->get_nropoliza() . "';";
         $resultado = mysql_query($sql);
@@ -62,6 +84,7 @@ class MysqlCuotasActiveRecord implements ActiveRecord {
                 $oValueObject->set_vencimiento2($tupla->vencimiento2);
                 $oValueObject->set_pago($tupla->pago);
                 $oValueObject->set_fechapago($tupla->fechapago);
+                $oValueObject->setRecibo($tupla->recibo);
                 $aCuotas[] = $oValueObject;
                 unset($oValueObject);
             }
@@ -91,6 +114,7 @@ class MysqlCuotasActiveRecord implements ActiveRecord {
                 $oValueObject->set_vencimiento2($tupla->vencimiento2);
                 $oValueObject->set_pago($tupla->pago);
                 $oValueObject->set_fechapago($tupla->fechapago);
+                $oValueObject->setRecibo($tupla->recibo);
                 $aCuotas[] = $oValueObject;
                 unset($oValueObject);
             }
@@ -117,12 +141,22 @@ class MysqlCuotasActiveRecord implements ActiveRecord {
      * @param CuotasValueObject $oValueObject
      */
     public function guardar($oValueObject) {
-        $sql = "INSERT INTO cuotas (nropoliza, nrocuota, monto, vencimiento1, vencimiento2,pago,fechapago)"
+        $sql = "INSERT INTO cuotas (nropoliza, nrocuota, monto, vencimiento1, vencimiento2, pago, fechapago, recibo)"
                 . " VALUES ('" . $oValueObject->get_nropoliza() . "', '"
                 . $oValueObject->get_nrocuota() . "', "
                 . "'" . $oValueObject->get_monto() . "', '" . $oValueObject->get_vencimiento1()
-                . "', '" . $oValueObject->get_vencimiento2() . "', '" . $oValueObject->get_pago()
-                . "', '" . $oValueObject->get_fechapago() . "')";
+                . "', '" . $oValueObject->get_vencimiento2() . "' ";
+        if ($oValueObject->get_pago() != '') {
+            $sql .= ", '" . $oValueObject->get_pago() . "'";
+        } else {
+            $sql .= ", 0";
+        }
+        if ($oValueObject->get_fechapago() != '') {
+            $sql .= ", '" . $oValueObject->get_fechapago() . "'";
+        } else {
+            $sql .= ", '0000-00-00'";
+        }
+        $sql .= ", '" . $oValueObject->getRecibo() . "')";
         if (mysql_query($sql)) {
             return TRUE;
         } else {

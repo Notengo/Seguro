@@ -21,6 +21,9 @@ $nombre=$_POST['nombrep'];
 $apellido=$_POST['apellidop'];
 $nro=$_POST['nrop'];
 $_nroPlanilla=$_POST['nropla'];
+if(isset($_POST['confirmacion']))    
+{$nroConfirmacion = $_POST['confirmacion'];}
+else {$nroConfirmacion = "S/N";}
 
 $oMysqlCuotas= $oMysql->getCuotaActiveRecord();
 $oCuota= new CuotasValueObject();
@@ -28,7 +31,7 @@ $oCuota= new CuotasValueObject();
 $oMysqlPlanilla= $oMysql->getPlanillaActiveRecord();
 $oPlanilla= new PlanillasValueObject();
 $_fecha = date('Y-m-d');
-$fechapago = date('Y-m-d');
+$fechapago = $_POST['fecha'];
 
 $oPlanilla->set_idPlanilla($_nroPlanilla);
 $oPlanilla->set_fecha($_fecha);
@@ -55,7 +58,7 @@ foreach ($oCuota as $aCuota)
 //////////////////////////////////////////////////////////////////
 $tabla="";
         $total=0;
-        $sql="SELECT p.nropoliza, p.idcompanias, p.cuotas, c.monto, c.fechapago, c.nrocuota, cl.apellido, cl.nombre FROM polizas p "
+        $sql="SELECT p.nropoliza, p.idcompanias, p.cuotas, c.monto, c.fechapago, c.nrocuota, cl.apellido, cl.nombre, c.recibo FROM polizas p "
                                 . "INNER JOIN cuotas c ON p.nropoliza = c.nropoliza "
                                 . "INNER JOIN clientes cl ON p.idclientes = cl.idclientes "
                                 . "WHERE c.fechapago = '$fechapago' AND idcompanias='$idCompania'";
@@ -68,32 +71,27 @@ class PDF extends FPDF
 {
 	function Header()
 	{       $fecha=date('d-m-Y');
-		$this->image('logo.png',10,10,25);
-		$this->SetFont('arial','B',25);
-		$this->Cell(80);
-		$this->Cell(30,10,' Seguros Adue ',0,0,'C');
 		$this->SetFont('arial','I', 10);
 		$this->Cell(0,5,'fecha',0,0,'R');
                 $this->Ln(4);
                 $this->Cell(0,5,$fecha,0,0,'R');
 		$this->Ln(4);
                 $this->SetFont('arial','B', 14);
-		$this->Cell(0,10,'planilla diaria',0,0,'C');
-	
-		
-		$this->Ln(20);
-		global $compania,$nombre,$apellido,$nro,$_nroPlanilla,$cont;
+
+		global $compania,$nombre,$apellido,$nro,$_nroPlanilla,$cont,$nroConfirmacion;
 		$this->SetFont('arial','I',12);
-		
-                $this->Cell(0,10,'Aseguradora:'.$compania,0,'L');
+                
+		$this->Cell(0,10,'Num. Planilla: '. $_nroPlanilla,0,'L');
 		$this->Ln(4);
-		$this->Cell(0,10,'Planilla:'. $_nroPlanilla,0,'L');
+                $this->Cell(0,10,'Confrimacion: '.$nroConfirmacion,0,'L');
 		$this->Ln(4);
-		$this->Cell(0,10,'Productor:'.$nombre.' '.$apellido,0,'L');
+                $this->Cell(0,10,'Aseguradora: '.$compania,0,'L');
 		$this->Ln(4);
-                $this->Cell(0,10,'Nº Productor:'.$nro,0,'L');
+		$this->Cell(0,10,'Productor: '.$nombre.' '.$apellido,0,'L');
+		$this->Ln(4);
+                $this->Cell(0,10,'Num. Productor: '.$nro,0,'L');
                 $this->Ln(4);
-		$this->Line(1,60,209,60);
+		//$this->Line(1,60,209,60);
                 $this->Ln(4);
                 $this->SetFont('arial','B',10);
 	  
@@ -101,12 +99,7 @@ class PDF extends FPDF
 	
 	function Footer()
 	{       
-            global $total;
-            $this->SetY(-15);
-                $this->Ln(4);
-                $this->Line(1,270 , 209, 270);
-		$this->SetFont('arial','B',8);
-		$this->Cell(0,10,'PESOS: '.$total,0,0,'C');
+         
 	}
 
 
@@ -120,10 +113,19 @@ class PDF extends FPDF
 
 $a=new PDF();
 $a->AddPage();
-$cabecerat=array('poliza','Socio','fecha pago','importe','recibo','CU/CL');
-$a->TablaBasica($cabecerat);
-
-
+$a->Ln(10);
+    $a->Cell(200,0,'Lista de Cobro Asegurados',0,0,'C');
+    //Cabecera
+    $a->SetMargins(0.5,0);
+    $a->Ln(4);
+    $a->Cell(25,8,'poliza',1,0,'C');
+    $a->Cell(90,8,'Socio',1,0,'C');
+    $a->Cell(23,8,'Fecha',1,0,'C');
+    $a->Cell(20,8,'Importe',1,0,'C');
+    $a->Cell(20,8,'Recibo',1,0,'C');
+    $a->Cell(13,8,'CU/CL',1,0,'C');
+    $a->Cell(18,8,'Recibo',1,0,'C');
+    $a->Ln();
 if ($resultado) {
     
                 while ($fila = mysql_fetch_object($resultado)) {
@@ -134,11 +136,25 @@ if ($resultado) {
                 $apellido = $fila->apellido;
                 $nombre = $fila->nombre;
                 $cuotas=$fila->cuotas;
+                $recibo=$fila->recibo;
                 $total=$total+$monto;
                 $datos=array("$poliza","$nombre $apellido","$fechapago","$monto","cupon:0".$nrocuota,"$nrocuota/$cuotas");
-                
-                $a->TablaDatos($datos);            
+                $a->SetFont('Arial','I', 10);
+                $a->Cell(25,8,$poliza,0,0,'C');
+                $a->Cell(90,8,$nombre.' '.$apellido,0,0,'C');
+                $a->Cell(23,8,$fechapago,0,0,'C');
+                $a->Cell(20,8,$monto,0,0,'C');
+                $a->Cell(20,8,'cupon:0'.$nrocuota,0,0,'C');
+                $a->Cell(13,8,$nrocuota.'/'.$cuotas,0,0,'C');
+                $a->Cell(18,8,$recibo,0,0,'C');
+                $a->Ln();            
             }
+                $a->Ln(4);
+                $a->Cell(0,10,'-------------------------------------------------------------------------------------------------',0,0,'C');
+                $a->Ln(4);
+                //$a->Line(0,10 ,10,10);
+		$a->SetFont('arial','B',8);
+		$a->Cell(0,10,'PESOS: '.$total,0,0,'C');
 
         } 
 //include_once 'listadoPlanilla.php';

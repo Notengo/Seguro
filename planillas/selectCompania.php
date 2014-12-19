@@ -7,8 +7,8 @@ $oMysqlCompania = $oMysql->getCompaniaActiveRecord();
 $oCompania = new CompaniasValueObject();
 $oCompania = $oMysqlCompania->buscarTodo();
 ?>
-<select name="compania" id="compania" class="form-control" >
-    <option value="0">Seleccione..</option>
+<select name="compania" id="compania" class="form-control" onchange="buscanro()" >
+    <option value="0">Seleccione Compa&ntilde;ia..</option>
     <?php
     foreach ($oCompania as $aCompania) {
         ?>

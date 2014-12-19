@@ -11,7 +11,32 @@ include_once 'activeRecordInterface.php';
 class MysqlPolizasActiveRecord implements ActiveRecord {
 
     public function actualizar($oValueObject) {
-        
+        $sql = "UPDATE polizas SET "
+//                . "nropoliza = '" . $oValueObject->get_nropoliza() . "', "
+                . "idcompanias = " . $oValueObject->get_idcompanias() . ", "
+                . "idclientes = " . $oValueObject->get_idclientes() . ", "
+                . "patente = '" . $oValueObject->get_patente() . "', "
+                . "idcoberturas = " . $oValueObject->get_idcoberturas() . ", "
+                . "idotrosriesgos = " . $oValueObject->get_idotrosriesgos() . ", "
+                . "vigenciadesde = '" . $oValueObject->get_vigenciadesde() . "', "
+                . "vigenciahasta = '" . $oValueObject->get_vigenciahasta() . "', "
+                . "segvencimiento = " . $oValueObject->get_segvencimiento() . ", "
+                . "premio = '" . $oValueObject->get_premio() . "', "
+                . "prima = '" . $oValueObject->get_prima() . "', "
+                . "cuotas = " . $oValueObject->get_cuotas() . ", "
+                . "idformaspago = " . $oValueObject->get_idformaspago() . ", "
+                . "cbu = '" . $oValueObject->get_cbu() . "', "
+//                . "fechaalta, "
+//                . "fechabaja, "
+                . "idvehiculos = " . $oValueObject->get_idvehiculos() . ", "
+                . "observacion = '" . $oValueObject->get_observacion() . "'"
+                . " WHERE nropoliza = '" . $oValueObject->get_nropoliza() . "'";
+
+        if (mysql_query($sql)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
     /**
@@ -63,10 +88,47 @@ class MysqlPolizasActiveRecord implements ActiveRecord {
 
     /**
      * 
+     * @param PolizasValueObject $oValueObject
+     * @return boolean|array
+     */
+    public function filtro($oValueObject) {
+        $sql = "SELECT * FROM `polizas` WHERE nropoliza LIKE '%" . $oValueObject->get_nropoliza() . "%'";
+        $resultado = mysql_query($sql);
+        if ($resultado) {
+            $aPoliza = array();
+            while ($fila = mysql_fetch_object($resultado)) {
+                $oValueObject = new PolizasValueObject();
+                $oValueObject->set_nropoliza($fila->nropoliza);
+                $oValueObject->set_idcompanias($fila->idcompanias);
+                $oValueObject->set_idclientes($fila->idclientes);
+                $oValueObject->set_patente($fila->patente);
+                $oValueObject->set_idcoberturas($fila->idcoberturas);
+                $oValueObject->set_idotrosriesgos($fila->idotrosriesgos);
+                $oValueObject->set_vigenciadesde($fila->vigenciadesde);
+                $oValueObject->set_vigenciahasta($fila->vigenciahasta);
+                $oValueObject->set_segvencimiento($fila->segvencimiento);
+                $oValueObject->set_premio($fila->premio);
+                $oValueObject->set_prima($fila->prima);
+                $oValueObject->set_cuotas($fila->cuotas);
+                $oValueObject->set_idformaspago($fila->idformaspago);
+                $oValueObject->set_cbu($fila->cbu);
+                $oValueObject->set_fechabaja($fila->fechabaja);
+                $aPoliza[] = $oValueObject;
+                unset($oValueObject);
+            }
+            return $aPoliza;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
      * @return boolean|array
      */
     public function buscarTodo() {
-        $sql = "SELECT * FROM `polizas`;";
+        $sql = "SELECT * FROM `polizas`;
+";
         $resultado = mysql_query($sql);
         if ($resultado) {
             $aPoliza = array();
@@ -102,7 +164,8 @@ class MysqlPolizasActiveRecord implements ActiveRecord {
      * @return boolean|\PolizasValueObject
      */
     public function buscarTodoCliente($oValueObject) {
-        $sql = "SELECT * FROM polizas WHERE idclientes= " . $oValueObject->get_idclientes() . ";";
+        $sql = "SELECT * FROM polizas WHERE idclientes = " . $oValueObject->get_idclientes() . ";
+";
         $resultado = mysql_query($sql);
         if ($resultado) {
             $aPoliza = array();
@@ -136,8 +199,27 @@ class MysqlPolizasActiveRecord implements ActiveRecord {
         
     }
 
+    /**
+     * 
+     * @param PolizasValueObject $oValueObject
+     * @return boolean
+     */
     public function existe($oValueObject) {
-        
+        $sql = "SELECT COUNT(*) FROM polizas"
+                . " WHERE idclientes = " . $oValueObject->get_idclientes()
+                . " AND idvehiculos = " . $oValueObject->get_idvehiculos() . ";
+";
+        $resultado = mysql_query($sql);
+        if ($resultado) {
+            $resultado = mysql_fetch_array($resultado);
+            if ($resultado[0] > 0) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
     }
 
     /**
@@ -148,7 +230,8 @@ class MysqlPolizasActiveRecord implements ActiveRecord {
     public function guardar($oValueObject) {
         $sql = "INSERT INTO polizas (nropoliza, idcompanias, idclientes, patente, "
                 . "idcoberturas, idotrosriesgos, vigenciadesde, vigenciahasta, "
-                . "segvencimiento, premio, prima, cuotas, idformaspago, cbu) VALUES ('"
+                . "segvencimiento, premio, prima, cuotas, idformaspago, idvehiculos, "
+                . "observacion, cbu) VALUES ('"
                 . $oValueObject->get_nropoliza() . "', ";
         if ($oValueObject->get_idcompanias() != '') {
             $sql .= $oValueObject->get_idcompanias() . ", ";
@@ -210,13 +293,21 @@ class MysqlPolizasActiveRecord implements ActiveRecord {
         } else {
             $sql .= "NULL, ";
         }
+        if ($oValueObject->get_idvehiculos() != '') {
+            $sql .= $oValueObject->get_idvehiculos() . ", ";
+        } else {
+            $sql .= "NULL, ";
+        }
+        if ($oValueObject->get_observacion() != '') {
+            $sql .= "'" . $oValueObject->get_observacion() . "', ";
+        } else {
+            $sql .= "NULL, ";
+        }
         if ($oValueObject->get_cbu() != '') {
             $sql .= "'" . $oValueObject->get_cbu() . "');";
         } else {
             $sql .= "NULL);";
         }
-
-
         if (mysql_query($sql)) {
             return TRUE;
         } else {

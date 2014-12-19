@@ -1,0 +1,1 @@
+[31-Oct-2014 11:48:24 UTC] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/aduepasc/public_html/clases/ActiveRecord/MysqlPolizasActiveRecord.php on line 149

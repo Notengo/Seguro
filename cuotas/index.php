@@ -34,6 +34,7 @@ $oCuota = $oMyCuotas->buscarPoliza($oCuota);
                 <table class="table table-bordered table-hover">
                     <tr>
                         <th>N&ordm; Poliza</th>
+                        <th>Cuota</th>
                         <th>Monto</th>
                         <th>1&ordf; vencimiento</th>
                         <th>2&ordf; vencimiento</th>
@@ -43,8 +44,9 @@ $oCuota = $oMyCuotas->buscarPoliza($oCuota);
                     <?php
                     foreach ($oCuota as $aCuota) {
                         ?>
-                        <tr class="<?php echo ($aCuota->get_fechapago() != '0000-00-00') ? 'text-success' : 'text-danger'; ?>">
-                            <th><?php echo $aCuota->get_nropoliza() . '/' . $aCuota->get_nrocuota(); ?></th>
+                        <tr class="<?php echo ($aCuota->get_fechapago() != '0000-00-00') ? 'success' : 'text-danger'; ?>">
+                            <th><?php echo $aCuota->get_nropoliza(); ?></th>
+                            <th><?php echo $aCuota->get_nrocuota(); ?></th>
                             <td><?php echo '$' . $aCuota->get_monto(); ?></td>
                             <td><?php echo $aCuota->get_vencimiento1(); ?></td>
                             <td><?php echo $aCuota->get_vencimiento2(); ?></td>

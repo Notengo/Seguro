@@ -10,7 +10,7 @@ include_once '../clases/ValueObject/BarriosValueObject.php';
 class MysqlBarriosActiveRecord implements ActiveRecord{
     public function actualizar($oValueObject) {
         $sql = "UPDATE barrios SET nombre = '"
-                . $oValueObject->get_nombre() ."' "
+                . strtoupper($oValueObject->get_nombre()) ."' "
                 . "WHERE idbarrios = "
                 . $oValueObject->get_idbarrios() . ";";
         if (mysql_query($sql)) {
@@ -103,7 +103,7 @@ class MysqlBarriosActiveRecord implements ActiveRecord{
      */
     public function guardar($oValueObject) {
         $sql = "INSERT INTO barrios (nombre) VALUES ('"
-                . $oValueObject->get_nombre() ."');";
+                . strtoupper($oValueObject->get_nombre()) ."');";
         if (mysql_query($sql) or die(false)) {
             return TRUE;
         } else {

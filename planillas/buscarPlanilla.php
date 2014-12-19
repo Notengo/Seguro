@@ -1,6 +1,4 @@
 <?php
-require_once '../includes/php/header.php';
-
 require_once '../clases/ActiveRecord/ActiveRecordAbstractFactory.php';
 require_once '../clases/ActiveRecord/MysqlActiveRecordAbstractFactory.php';
 
@@ -9,24 +7,27 @@ $oMysql->conectar();
 
 $oMysqlPlanilla = $oMysql->getPlanillaActiveRecord();
 $oPlanilla = new PlanillasValueObject();
-$fecha=null;
+$fechadesde=null;
+$fechahasta=null;
 $idcompania=null;
 $bandera=0;
 
 if(isset($_POST['busca']))
 {
-    if ($_POST['fecha1']=="" || $_POST['compania']==""){
+    if ($_POST['fecha1']=="" || $_POST['fecha2']=="" || $_POST['compania']==""){
         echo"<div class='alert alert-danger'>ERROR falta seleccionar algun parametro</div>";
         }else{
-                $fecha=$_POST['fecha1'];
+                $fechadesde = $_POST['fecha1'];
+                $fechahasta = $_POST['fecha2'];
                 $idcompania=$_POST['compania'];
                 $bandera=1;
              }
 }
 
-$oPlanilla->set_fecha($fecha);
+$oPlanilla->set_fecha($fechadesde);
+$oPlanilla->set_fecha2($fechahasta);
 $oPlanilla->set_idCompania($idcompania);
-$oPlanilla= $oMysqlPlanilla->buscar($oPlanilla);
+$oPlanilla= $oMysqlPlanilla->buscarDosParametros($oPlanilla);
 
 ?>
 <html>
@@ -40,23 +41,34 @@ $oPlanilla= $oMysqlPlanilla->buscar($oPlanilla);
         <link href="../includes/css/otros.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <?php require_once '../includes/php/header.php';?>
         <div class="container">
             <legend>Busqueda de Fecha</legend>
         <div class="row">
+            <div class="container">
+            <div class="row">    
             <form action="buscarPlanilla.php" method="post">
-            <div class="col-lg-2"></div>
             <div class="col-lg-4">
                 <label class="label label-info">compa&ntilde;ia a buscar</label>    
             <?php include_once './selectCompania.php';?>     
-            </div>
-            <div class="col-lg-4">
-                <label class="label label-info">fecha a buscar</label>
+            </div>   
+            <div class="col-lg-2">
+                <label class="label label-info">fecha desde</label>
                 <input type="date" name="fecha1" id="fecha1" class="form-control"/>   
             </div>
-            <div class="col-lg-1">
+            <div class="col-lg-2">
+                <label class="label label-info">fecha hasta</label>
+                <input type="date" name="fecha2" id="fecha2" class="form-control"/>   
+            </div>
+            </div>
+                <br>    
+            <div class="row">    
+            <div class="col-lg-2">
                 <input type="submit" name="busca" id="busca" value="Buscar" class="form-control"/>
-                    </div>
+            </div>
+            </div>    
             </form>
+            </div>    
         </div>
         <br>
         <table class="table">
@@ -71,6 +83,7 @@ $oPlanilla= $oMysqlPlanilla->buscar($oPlanilla);
                  $idC = $aPlanilla->get_idCompania();
                  $_fecha = $aPlanilla->get_fecha();
                  $nro = $aPlanilla->get_nroPlanilla();
+                 $idUsu = $aPlanilla->get_idUsuario();
                     $MysqlCompania = $oMysql->getCompaniaActiveRecord();
                     $oCompania = new CompaniasValueObject();
                     $oCompania = $MysqlCompania->buscarC($idC);
@@ -83,7 +96,7 @@ $oPlanilla= $oMysqlPlanilla->buscar($oPlanilla);
                 echo "<td>$nombreC</td>";
                 echo "<td>$_fecha</td>";
                 echo "<td>$nro</td>";
-                echo "<td><a href='vistaPreviaPlanillaBusqueda.php?idCompania=$idC&idPlanilla=$idP&nroPlanilla=$nro'><img src='../images/Original Size/note.png' alt='Ver Planilla' title='Ver Planilla'/></a></td></tr>";
+                echo "<td><a href='vistaPreviaPlanillaBusqueda.php?idCompania=$idC&idPlanilla=$idP&nroPlanilla=$nro&fecha=$_fecha&idUsu=$idUsu'><img src='../images/Original Size/note.png' alt='Ver Planilla' title='Ver Planilla'/></a></td></tr>";
             }
         }  
         ?>

@@ -15,7 +15,7 @@ class MysqlUsosActiveRecord implements ActiveRecord {
      */
     public function actualizar($oValueObject) {
         $sql = "UPDATE usos SET descripcion = '"
-                . $oValueObject->get_descripcion() . "' "
+                . strtoupper($oValueObject->get_descripcion()) . "' "
                 . "WHERE idusos = " . $oValueObject->get_idusos() . ";";
         $resultado = mysql_query($sql) or die(false);
         if($resultado){
@@ -118,7 +118,7 @@ class MysqlUsosActiveRecord implements ActiveRecord {
      */
     public function guardar($oValueObject) {
         $sql = "INSERT INTO usos (descripcion) VALUES ('"
-                . $oValueObject->get_descripcion() . "');";
+                . strtoupper($oValueObject->get_descripcion()) . "');";
         if (mysql_query($sql) or die(false)) {
             $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM usos");
             $id = mysql_fetch_array($result);

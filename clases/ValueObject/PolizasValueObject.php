@@ -9,7 +9,7 @@ class PolizasValueObject {
 
     private $_nropoliza, $_idcompanias, $_idclientes, $_patente, $_idcoberturas, $_idotrosriesgos;
     private $_vigenciadesde, $_vigenciahasta, $_segvencimiento, $_premio, $_prima, $_cuotas, $_idformaspago,
-            $_cbu, $_fechabaja;
+            $_cbu, $_fechabaja, $_idvehiculos, $_observacion;
 
     public function get_nropoliza() {
         return $this->_nropoliza;
@@ -129,6 +129,24 @@ class PolizasValueObject {
 
     public function set_fechabaja($_fechabaja) {
         $this->_fechabaja = $_fechabaja;
+        return $this;
+    }
+
+    function get_idvehiculos() {
+        return $this->_idvehiculos;
+    }
+
+    function set_idvehiculos($_idvehiculos) {
+        $this->_idvehiculos = $_idvehiculos;
+        return $this;
+    }
+
+    function get_observacion() {
+        return $this->_observacion;
+    }
+
+    function set_observacion($_observacion) {
+        $this->_observacion = $_observacion;
         return $this;
     }
 }

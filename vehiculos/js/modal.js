@@ -34,7 +34,7 @@ function altaModal(item) {
         document.getElementById('myModalLabel').innerHTML = 'Alta de Tipo de Usos';
         abrir = 'modalUso.php';
     }
-    document.getElementById('guardarModal').value = item;
+    document.getElementById('valorModal').value = item;
     var divResultado = document.getElementById('cuerpoModal');
     ajax = objetoAjax();
     ajax.open("POST", abrir, true);
@@ -83,5 +83,35 @@ function guardarModal() {
         };
         ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         ajax.send("modelo= " + modelo + "&idmarca= " + idmarca + "&accion=Guardar");
+    }
+    if (item === '3') {
+        var tipo = document.getElementById('tipo_modal').value,
+                idtipo = document.getElementById('tipo_hidden').value;
+        var divResultado = document.getElementById('divResultadoModal');
+        ajax = objetoAjax();
+        ajax.open("POST", "guardarTipo.php", true);
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState === 4) {
+                divResultado.innerHTML = ajax.responseText;
+                document.getElementById("botonModal").className = "btn btn-primary oculto";
+            }
+        };
+        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        ajax.send("tipo= " + tipo + "&idtipo= " + idtipo + "&accion=Guardar");
+    }
+    if (item === '4') {
+        var uso = document.getElementById('uso_modal').value,
+                iduso = document.getElementById('uso_hidden').value;
+        var divResultado = document.getElementById('divResultadoModal');
+        ajax = objetoAjax();
+        ajax.open("POST", "guardarUso.php", true);
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState === 4) {
+                divResultado.innerHTML = ajax.responseText;
+                document.getElementById("botonModal").className = "btn btn-primary oculto";
+            }
+        };
+        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        ajax.send("uso= " + uso + "&iduso= " + iduso + "&accion=Guardar");
     }
 }

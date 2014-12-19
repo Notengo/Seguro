@@ -15,7 +15,7 @@ class MysqlCallesActiveRecord implements ActiveRecord{
      */
     public function actualizar($oValueObject) {
         $sql = "UPDATE calles SET nombre = '"
-                . $oValueObject->getNombre() ."' "
+                . strtoupper($oValueObject->getNombre()) ."' "
                 . "WHERE idcalles = "
                 . $oValueObject->getIdcalles() . ";";
         if (mysql_query($sql)) {
@@ -116,7 +116,7 @@ class MysqlCallesActiveRecord implements ActiveRecord{
      * @return boolean
      */
     public function guardar($oValueObject) {
-        $sql = "INSERT INTO calles (nombre) VALUES ('" . $oValueObject->getNombre() ."');";
+        $sql = "INSERT INTO calles (nombre) VALUES ('" . strtoupper($oValueObject->getNombre()) ."');";
         if (mysql_query($sql) or die(false)) {
             $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM calles");
             $id = mysql_fetch_array($result);

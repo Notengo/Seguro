@@ -7,11 +7,34 @@ $oMysql = ActiveRecordAbstractFactory::getActiveRecordFactory(ActiveRecordAbstra
 $oMysql->conectar();
 
 extract($_GET, EXTR_OVERWRITE);
+$no = 'si';
+if (isset($vehiculo)) {
+    $oMysqlVehiculo = $oMysql->getVehiculoActiveRecord();
+    $oVehiculo = new VehiculosValueObject();
+    $oVehiculo->set_idvehiculos($vehiculo);
+    $oVehiculo = $oMysqlVehiculo->buscar($oVehiculo);
+
+    $usu = $oVehiculo->get_idclientes();
+}
+
 if (isset($usu)) {
     $oMysqlCliente = $oMysql->getClientesActiveRecord();
     $oCliente = new ClientesValueObject();
     $oCliente->set_idclientes($usu);
     $oCliente = $oMysqlCliente->buscar($oCliente);
+}
+if (isset($vehiculo)) {
+    $oMyPoliza = $oMysql->getPolizaActiveRecord();
+    $oPoliza = new PolizasValueObject();
+    $oPoliza->set_idclientes($usu);
+    $oPoliza->set_patente($oVehiculo->get_patente());
+    $oPoliza->set_idvehiculos($vehiculo);
+
+    if (!$oMyPoliza->existe($oPoliza)) {
+        $no = 'no';
+    } else {
+        $no = 'si';
+    }
 }
 ?>
 <html>
@@ -33,7 +56,7 @@ if (isset($usu)) {
         <div class="container">
             <div>
                 <legend>Poliza</legend>
-                <div id="nuevo" class="oculto">
+                <div id="nuevo" class="<?php echo ($no == 'si') ? 'oculto' : '' ?>">
                     <div class="row">
                         <div class="col-lg-3">
                             <label class="label label-success">Nº de Poliza</label>
@@ -42,16 +65,16 @@ if (isset($usu)) {
                         <div class="col-lg-1"></div>
                         <div class="col-lg-5">
                             <label class="label label-success">Compañ&iacute;a</label>
-                            <div id="divcobertura">
+                            <div id="divcompania">
                                 <?php include_once 'selectCompania.php'; ?>
                             </div>
                         </div>
-                        <div class="col-lg-1">
-                            <br>
-                            <a href="#" data-toggle="modal" data-target="#myModal" onclick="altaModal(1)">
-                                <div class="glyphicon glyphicon-plus"></div>
-                            </a>
-                        </div>
+                        <!--                        <div class="col-lg-1">
+                                                    <br>
+                                                    <a href="#" data-toggle="modal" data-target="#myModal" onclick="altaModal(1)">
+                                                        <div class="glyphicon glyphicon-plus"></div>
+                                                    </a>
+                                                </div>-->
                     </div>
 
                     <br>
@@ -74,7 +97,7 @@ if (isset($usu)) {
                                    title="Matricula Veh&iacute;culo Asegurado" alt="Matricula Veh&iacute;culo"
                                    onkeyup="ajax_showOptionsPatente(this, 'getPatenteByLetters', event);"
                                    value="<?php echo (isset($oVehiculo)) ? $oVehiculo->get_patente() : ''; ?>" />
-                            <input type="hidden" name="patente_ID" id="patente_hidden" value="" />
+                            <input type="hidden" name="patente_ID" id="patente_hidden" value="<?php echo (isset($vehiculo)) ? $vehiculo : ''; ?>" />
                         </div>
                     </div>
                     <br>
@@ -116,16 +139,31 @@ if (isset($usu)) {
                         <!--</legend>-->
                         <div class="col-lg-2">
                             <label class="label label-success">desde</label>
-                            <input type="date" name="desde" id="desde" class="form-control" value="<?php echo date('Y-m-d'); ?>"/>
+                            <input type="text" name="desde" id="desde" class="form-control" value="<?php echo date('d/m/Y'); ?>" onblur="validarFecha(this)" onKeypress="return fechaControl(this.id, event);" maxlength="10" />
                         </div>
                         <div class="col-lg-2">
+                            <?php
+                            $mes = date('m');
+                            $anio = date('Y');
+                            $mes = $mes + 6;
+                            if ($mes > 12) {
+                                $mes = $mes - 12;
+                                $anio++;
+                            }
+                            ?>
                             <label class="label label-success">hasta</label>
-                            <input type="date" name="hasta" id="hasta" class="form-control" value="<?php echo (date('m') >= 6) ? date('Y-') . "12-31" : date('Y-') . "06-30"; ?>"/>
+                            <input type="text" name="hasta" id="hasta" class="form-control" value="<?php
+                            echo date('d') . '/';
+                            if ($mes < 10) {
+                                echo '0' . $mes;
+                            }
+                            echo '/' . $anio;
+                            ?>" onblur="validarFecha(this)" onKeypress="return fechaControl(this.id, event);" maxlength="10" />
                         </div>
 
                         <div class="col-lg-1">
                             <label class="label label-success">2&ordm; Vencimiento</label>
-                            <input type="text" name="vencimiento2" id="vencimiento2" class="form-control" onkeypress="return soloNumeros(event);" />
+                            <input type="text" name="vencimiento2" id="vencimiento2" class="form-control" onkeypress="return soloNumeros(event);" value="<?php echo date('d'); ?>" />
                         </div>
                     </div>
                     <br>
@@ -145,7 +183,7 @@ if (isset($usu)) {
 
                         <div class="col-lg-1">
                             <label class="label label-success">Cuotas</label>
-                            <input type="number" name="cuota" id="cuota" class="form-control" onkeypress="return soloNumeros(event);" value="<?php echo (date('m') >= 6) ? 12 - date('m') : 6 - date('m'); ?>"/>
+                            <input type="number" name="cuota" id="cuota" class="form-control" onkeypress="return soloNumeros(event);" value="<?php echo '6'; //(date('m') >= 6) ? 12 - date('m') : 6 - date('m');         ?>"/>
                         </div>
                     </div>
                     <br>
@@ -153,17 +191,16 @@ if (isset($usu)) {
                     <div class="row">
                         <div class="col-lg-3">
                             <label class="label label-success">Forma de Pago</label>
-                            <select name="formapago" id="formapago" class="form-control" >
-                                <option value="0">Ninguno</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                            <div id="divformaspago">
+                                <?php include_once 'selectFormasPago.php'; ?>
+                            </div>
                         </div>
 
                         <div class="col-lg-1">
                             <br>
-                            <div class="glyphicon glyphicon-plus"></div>
+                            <a href="#" data-toggle="modal" data-target="#myModal" onclick="altaModal(5)">
+                                <div class="glyphicon glyphicon-plus"></div>
+                            </a>
                         </div>
 
                         <div class="col-lg-4">
@@ -172,14 +209,39 @@ if (isset($usu)) {
                         </div>
                     </div>
                     <br>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="label label-success">Observaci&oacute;n</label>
+                            <textarea rows="4" maxlength="1000" name="observacion" id="observacion" class="form-control" > </textarea>
+                        </div>
+                    </div>
+                    <br>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2">
-                        <input type="button" id="guardar" value="Nuevo" class="btn btn-large btn-block btn-primary" onclick="guardarDatos();" />
-                    </div>
-                    <div class="col-sm-2">
-                        <input type="button" id="cancelar" value="Cancelar" class="btn btn-large btn-block btn-primary oculto" onclick="location.reload();" />
-                    </div>
+                    <?php
+                    if ($no == 'si') {
+                        ?>
+                        <div class="col-sm-2">
+                            <input type="button" id="guardar" value="Nuevo" class="btn btn-large btn-block btn-primary" onclick="guardarDatos();" />
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="button" id="cancelar" value="Cancelar" class="btn btn-large btn-block btn-primary oculto" onclick="location.reload();" />
+                        </div>
+                        <?php
+                    } else {
+                        ?>
+                        <div class="col-sm-2">
+                            <!--<input type="button" id="guardar" value="Nuevo" class="btn btn-large btn-block btn-primary" onclick="guardarDatos();" />-->
+                            <input type="button" id="guardar" value="Guardar" class="btn btn-large btn-block btn-primary" onclick="guardarDatos();" />
+                        </div>
+                        <div class="col-sm-2">
+                            <!--<input type="button" id="cancelar" value="Cancelar" class="btn btn-large btn-block btn-primary oculto" onclick="location.reload();" />-->
+                            <input type="button" id="cancelar" value="Cancelar" class="btn btn-large btn-block btn-primary" onclick="location.reload();" />
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <div class="col-sm-8" id="divResultado"></div>
                 </div>
             </div>
@@ -187,7 +249,21 @@ if (isset($usu)) {
             <div class="row">
                 <legend>Listado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</legend>
             </div>
-            <?php include_once './listadoPoliza.php'; ?>
+            <div class="row">
+                <div class="col-sm-1 col-lg-1">Buscador</div>
+                <div class="col-sm-5 col-lg-5">
+                    <input type="text" class="form-control" id="filtro" name="filtro" onkeypress="return enter(event)"/>
+                </div>
+                <div class="col-sm-2 col-lg-2">
+                    <a type="button" class="btn btn-default" onclick="filtrar()">
+                        <img src="../images/Original Size/search.png" width="20px" />
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive" id="listadoPoliza">
+                <?php include_once 'listadoPoliza.php'; ?>
+            </div>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

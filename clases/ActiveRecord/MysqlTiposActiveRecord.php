@@ -15,7 +15,7 @@ class MysqlTiposActiveRecord implements ActiveRecord {
      */
     public function actualizar($oValueObject) {
         $sql = "UPDATE tipos SET descripcion = '"
-                . $oValueObject->get_descripcion() . "' "
+                . strtoupper($oValueObject->get_descripcion()) . "' "
                 . "WHERE idtipos = " . $oValueObject->get_idtipos() . ";";
         $resultado = mysql_query($sql) or die(false);
         if($resultado){
@@ -118,7 +118,7 @@ class MysqlTiposActiveRecord implements ActiveRecord {
      */
     public function guardar($oValueObject) {
         $sql = "INSERT INTO tipos (descripcion) VALUES ('"
-                . $oValueObject->get_descripcion() . "');";
+                . strtoupper($oValueObject->get_descripcion()) . "');";
         if (mysql_query($sql) or die(false)) {
             $result = mysql_query("SELECT DISTINCT LAST_INSERT_ID() FROM tipos");
             $id = mysql_fetch_array($result);

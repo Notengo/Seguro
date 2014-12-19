@@ -1,14 +1,7 @@
 <?php
 include_once 'activeRecordInterface.php';
 include_once '../clases/ValueObject/UsuarioValueObject.php';
-/**
- * Description of MysqlUsuarioActiveRecord
- *
- * @version    1.0
- * @author Martin Remedi <remedi.martin@gmail.com>
- * @license http://www.gnu.org/licenses/ GPL License
- * @copyright (c) 2013, Martin Remedi
- */
+
 class MysqlUsuarioActiveRecord implements ActiveRecord{
     /**
      * 
@@ -31,28 +24,33 @@ class MysqlUsuarioActiveRecord implements ActiveRecord{
     }
 
     public function borrar($oValueObject) {
+        
         if($oValueObject) return FALSE;
         else return FALSE;
     }
 
-    /**
+   /**
      * 
-     * @param UsuarioValueObject $oValueObject
-     * @return UsuarioValueObject | false
+     * @return \UsuarioValueObject|boolean
      */
     public function buscar($oValueObject) {
-        $sql = "SELECT * FROM usuario u";
-        $sql .= " WHERE u.identificador = '".$oValueObject->getIdentificador()."';";
+        $sql="SELECT * FROM usuarios WHERE nombreUser='".$oValueObject->get_nombreUser()."'";
         $resultado = mysql_query($sql);
-        if($resultado){
-            $fila = mysql_fetch_object($resultado);
-            $oValueObject->setApellido($fila->apellido);
-            $oValueObject->setFechaalta($fila->fechaalta);
-            $oValueObject->setIdentificador($fila->identificador);
-            $oValueObject->setNombre($fila->nombre);
-//            $oValueObject->setTipousuario($fila->tipousuario);
-            $oValueObject->setClave('');
-            return $oValueObject;
+        if($resultado)
+            {
+            $aUsuario = array();
+            while ($fila = mysql_fetch_object($resultado))
+            {
+            $oUsuario = new UsuarioValueObject();
+            $oUsuario->set_nombreUser($fila->nombreUser);
+            $oUsuario->set_pass($fila->pass);
+            $oUsuario->setNombreReal($fila->nombreReal);
+            $oUsuario->set_apellidoReal($fila->apellidoReal);
+            $oUsuario->set_idUsuario($fila->idUsuario);
+            $aUsuario[] = $oUsuario;
+                unset($oUsuario);
+            }
+            return $aUsuario;
         } else {
             return FALSE;
         }
@@ -89,21 +87,48 @@ class MysqlUsuarioActiveRecord implements ActiveRecord{
      * @return \UsuarioValueObject|boolean
      */
     public function buscarTodo() {
-        $sql = "SELECT * FROM usuario u;";
+        $sql = "SELECT * FROM usuarios u;";
         $resultado = mysql_query($sql);
         if($resultado){
             $aUsuario = array();
             while ($fila = mysql_fetch_object($resultado)) {
                 $oUsuario = new UsuarioValueObject();
-                $oUsuario->setApellido($fila->apellido);
-                $oUsuario->setFechaalta($fila->fechaalta);
-                $oUsuario->setIdentificador($fila->identificador);
-                $oUsuario->setNombre($fila->nombre);
-                $oUsuario->setPerfil($fila->perfil);
-                $oUsuario->setDni($fila->dni);
-                $oUsuario->setClave('');
-                $oUsuario->setFechaalta($fila->fechaalta);
+                $oUsuario->set_nombreUser($fila->nombreUser);
+                $oUsuario->set_pass($fila->pass);
+                $oUsuario->setNombreReal($fila->nombreReal);
+                $oUsuario->set_apellidoReal($fila->apellidoReal);
+                
+                $oUsuario->set_idUsuario($fila->idUsuario);
                 $aUsuario[] = $oUsuario;
+                unset($oUsuario);
+            }
+            return $aUsuario;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    
+    
+    /**
+     * 
+     * @return \UsuarioValueObject|boolean
+     */
+    public function buscarId($oValueObject) {
+        $sql="SELECT * FROM usuarios WHERE idUsuario='".$oValueObject->get_idUsuario()."'";
+        $resultado = mysql_query($sql);
+        if($resultado)
+            {
+            $aUsuario = array();
+            while ($fila = mysql_fetch_object($resultado))
+            {
+            $oUsuario = new UsuarioValueObject();
+            $oUsuario->set_nombreUser($fila->nombreUser);
+            $oUsuario->set_pass($fila->pass);
+            $oUsuario->setNombreReal($fila->nombreReal);
+            $oUsuario->set_apellidoReal($fila->apellidoReal);
+            $oUsuario->set_idUsuario($fila->idUsuario);
+            $aUsuario[] = $oUsuario;
                 unset($oUsuario);
             }
             return $aUsuario;
@@ -151,15 +176,10 @@ class MysqlUsuarioActiveRecord implements ActiveRecord{
      * @return boolean
      */
     public function guardar($oValueObject) {
-        $sql = "INSERT INTO usuario (";
-        $sql .="identificador, nombre, apellido, clave, perfil, fechaalta, dni)";
-        $sql .="VALUE('".$oValueObject->getIdentificador()."', ";
-        $sql .="'".$oValueObject->getNombre()."', ";
-        $sql .="'".$oValueObject->getApellido()."', ";
-        $sql .="MD5('".$oValueObject->getClave()."'), ";
-        $sql .="'".$oValueObject->getPerfil()."', ";
-        $sql .="'".$oValueObject->getFechaalta()."', ";
-        $sql .="".$oValueObject->getDni().");";
+        $sql = "INSERT INTO usuarios (nombreUser,pass,nombreReal,apellidoReal,baja)"
+                . "VALUES ('".$oValueObject->get_nombreUser()."','".$oValueObject->get_pass()."',"
+                . "'".$oValueObject->getNombreReal()."','".$oValueObject->get_apellidoReal()."',"
+                . "1)";
 //        if(!existe($oValueObject)){
             if(mysql_query($sql)) return TRUE;
             else return FALSE;
